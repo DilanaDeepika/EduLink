@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" href="asset/css/nav.css">
+</head>
 <nav class="navbar">
     <div class="logo">
       <img src="assets/images/logo.png" alt="Institute Logo">
