@@ -1,1 +1,1 @@
-<h1>home page not found</h1>
+<h1>home view page not found</h1>

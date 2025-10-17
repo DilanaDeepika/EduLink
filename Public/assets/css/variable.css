@@ -1,7 +1,7 @@
 :root {
   /* Brand Colors */
-  --color-primary: #0057b7;
-  --color-accent: #ffd700;
+  --color-primary: #1e2a5e;
+  --color-accent: #fed352;
   --color-dark: #333333;
   --color-light: #f9f9f9;
   --color-muted: #e0e0e0;
@@ -9,13 +9,15 @@
   /* Text Colors */
   --text-primary: #1e2a5e;
   --text-secondary: #666666;
+  --text-hover: #9398ad;
 
-  /* Button Colors */
-  --btn-bg: var(--color-primary);
-  --btn-text: #ffffff;
-  --btn-hover-bg: #0046a0;
+  /*  Button Colors */
+  --main-btn-bg: var(--color-accent);
+  --main-btn-text: var(--color-primary);
+  --secondery-btn-bg: var(--color-light);
+  --secondery-btn-border: 2px solid #1e2a5e;
 
   /* Border and Shadow */
-  --border-color: var(--color-muted);
-  --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --border-color: var(--color-primary);
+  --box-shadow: 0 2px 6px #1e2a5ea1;
 }

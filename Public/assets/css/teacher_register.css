@@ -1,68 +1,71 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
 }
 
 body {
-    background-color: white;
+  background-color: white;
 }
 
-.container {
+.teach-reg-container {
   display: flex;
-  gap: 40px;
-  padding: 20px 80px;
+  justify-content: center;
   align-items: flex-start;
-  justify-content: space-between;
+  gap: 240px;
+  padding: 20px 80px;
 }
 
-.left-content {
+.teach-reg-left-content {
   flex: 1;
   max-width: 500px;
   margin-top: 40px;
 }
 
-.left-content h2 {
+.teach-reg-left-content h2 {
   text-align: center;
   font-size: 25px;
   margin-bottom: 50px;
 }
 
-form {
+.teach-reg-left-content form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.name-row {
-    display: flex;
-    gap: 10px;
+.teach-reg-name-row {
+  display: flex;
+  gap: 10px;
 }
 
-.input-half {
-    flex: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+.teach-reg-name-row .input-half {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-form input,
-form select {
-    margin-bottom: 15px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-    font-size: 14px;
+.teach-reg-left-content form input,
+.teach-reg-left-content form select {
+  margin-bottom: 15px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
 }
 
-form select {
-    width: 200px;;
+.teach-reg-left-content form select {
+  appearance: none;
+  width: 100%;
+  background-color: #f5f5f5;
+  color: #888;
 }
 
-.submit-btn,
-.browse-btn {
+.teach-reg-left-content form .submit-btn,
+.teach-reg-left-content form .browse-btn {
   padding: 8px 16px;
   width: 90px;
   text-align: center;
@@ -74,73 +77,74 @@ form select {
   cursor: pointer;
 }
 
-.upload-box {
+.teach-reg-left-content form .upload-box {
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 20px;
   text-align: center;
   height: 200px;
 }
-.upload-icon {
+.teach-reg-left-content form .upload-icon {
   font-size: 30px;
   margin-bottom: 10px;
 }
 
-.upload-txt {
-    padding: 10px;
+.teach-reg-left-content form .upload-txt {
+  padding: 10px;
 }
 
-.right-content {
+.teach-reg-right-content {
   flex: 1;
   max-width: 600px;
+  margin-left: 0;
 }
 
-.img-placeholder {
-    width: 100%;
-    height: 400px;
-    background-color: #ddd;
-    border-radius: 20px;
-    margin-bottom: 20px;
+.teach-reg-right-content .img-placeholder {
+  max-width: 600px;
+  height: 500px;
+  background-color: #ddd;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+.teach-reg-right-content .img-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.teach-reg-checklist {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 15px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 100px;
 }
 
-.checklist {
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    padding: 15px;
-    width: 100%;
-    font-size: 14px;
-    margin-top: 100px;
+.teach-reg-checklist .checklist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
 }
 
-.checklist-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
+.teach-reg-checklist .checklist-item:last-child {
+  border-bottom: none;
 }
 
-.checklist-item:last-child {
-    border-bottom: none;
+.teach-reg-checklist .checklist-item p {
+  margin: 0;
+  font-weight: bold;
 }
 
-.checklist-item p {
-    margin: 0;
-    font-weight: bold;
+.teach-reg-checklist .checklist-item small {
+  display: block;
+  color: #777;
+  margin-top: 4px;
 }
 
-.checklist-item small {
-    display: block;
-    color: #777;
-    margin-top: 4px;
-}
-
-.check-icon {
-    font-size: 24px;
-    color: black;
-}
-
-.footer {
-    height: 60px;
-    background-color: #f0f0f0;
+.teach-reg-checklist .check-icon {
+  font-size: 24px;
+  color: black;
 }

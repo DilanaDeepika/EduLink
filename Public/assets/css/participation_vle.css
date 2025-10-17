@@ -1,0 +1,110 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* Container */
+.container {
+  width: 80%;
+  margin: 40px auto;
+  background: #fff;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px 5px rgb(0, 0, 0, 0.2);
+  min-height: 1000px; 
+}
+
+
+/* Participation Section */
+.participation {
+  margin-top: 20px;
+}
+
+.calendar-icon {
+  width: 15px;   /* size */
+  height: 15px;
+  fill: black;
+}
+
+.month-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #0d2c61;
+  margin-bottom: 15px;
+}
+
+.participation-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.participation-table thead {
+  background-color: #d3d3d3;
+}
+
+.participation-table th,
+.participation-table td {
+  padding: 12px;
+  border: 1px solid #ccc;
+}
+
+.participation-table td {
+  background: #fff;
+}
+
+.participation-table input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+
+/* Participation Row Blocks */
+
+.participation-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 12px 15px;
+  margin: 10px 0; /* space between rows */
+  border-radius: 8px;
+  background-color:  #d3d3d3;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  
+}
+
+.participation-head div {
+  flex: 1;
+  text-align: center;
+  font-weight: bold; 
+}
+
+.participation-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 12px 15px;
+  margin: 10px 0; /* space between rows */
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.participation-row div {
+  flex: 1;
+  text-align: center;
+}
+
+.participation-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}

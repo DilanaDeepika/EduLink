@@ -1,0 +1,196 @@
+:root {
+  --primary-color: #1e2a5e;
+  --secondary-color: #fed352;
+  --background-color: #f4f7fc;
+  --text-color: #333;
+  --light-text-color: #666;
+  --border-color: #e0e0e0;
+  --card-bg: #fff;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* --- Profile Header Banner (Corrected Style) --- */
+.profile-header-banner {
+  position: relative; /* Establishes the positioning context */
+  top: 0;
+  background-color: var(--primary-color);
+  height: 200px;
+  margin-bottom: 100px; /* Space for the overlapping photo */
+  box-shadow: var(--shadow);
+}
+.horizontal-line {
+  position: absolute;
+  width: 100%;
+  top: 220px;
+  background-color: var(--primary-color);
+  height: 10px;
+}
+/* Removed old wave background style */
+.wave-background {
+  display: none;
+}
+
+/* Container for the text (now positioned absolutely) */
+.profile-info {
+  position: absolute;
+  top: 50px; /* Position text from the top */
+  left: 40px;
+  z-index: 2; /* Ensure text is above the line */
+}
+
+/* Style for the photo (positioning now works correctly) */
+.profile-photo {
+  position: absolute;
+  right: 50px;
+  bottom: -80px; /* This now correctly pushes the photo down */
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 6px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  z-index: 5; /* Ensure photo is on top of everything */
+}
+
+.profile-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Style for the student name */
+.student-name {
+  color: var(--secondary-color);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Style for the student ID */
+.student-id {
+  color: #e0e0e0;
+  font-size: 1.2rem;
+  margin: 5px 0 0 0;
+}
+
+/* --- Profile Details Grid --- */
+.profile-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 50px; /* Push down to avoid conflict with photo overlap */
+  margin-bottom: 30px;
+}
+
+.profile-card {
+  background-color: var(--card-bg);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.profile-card h2 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.detail-item {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.detail-item strong {
+  color: var(--primary-color);
+  min-width: 150px; /* Align labels */
+  display: inline-block;
+}
+
+/* --- Exam Details Table --- */
+.exam-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 1rem;
+}
+
+.exam-details-table th,
+.exam-details-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.exam-details-table thead th {
+  background-color: #f8f9fa;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.exam-details-table tbody tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+.exam-details-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Full width card for the table */
+.full-width {
+  grid-column: 1 / -1; /* Spans across all columns in the grid */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .profile-details-grid {
+    grid-template-columns: 1fr; /* Stack cards on smaller screens */
+  }
+
+  .profile-hero {
+    bottom: -30px; /* Adjust overlap for smaller screens */
+  }
+
+  .profile-header-banner {
+    height: 200px;
+  }
+
+  .student-name {
+    font-size: 1.8rem;
+  }
+
+  .profile-photo {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 10px;
+  }
+
+  .profile-card {
+    padding: 20px;
+  }
+
+  .profile-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .detail-item {
+    font-size: 1rem;
+  }
+}

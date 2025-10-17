@@ -1,0 +1,39 @@
+.tabs {
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.tab {
+  position: relative;
+  padding: 10px 20px;
+  text-decoration: none; 
+  color: #444;
+  font-size: 15px;
+  cursor: pointer;
+  outline: none;
+}
+
+.tab:focus,
+.tab:hover,
+.tab:active {
+  text-decoration: none; 
+  outline: none; 
+}
+
+.tab.active {
+  font-weight: bold;
+  color: #0d2c61;
+}
+
+.tab-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background-color: #0d2c61;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}

@@ -1,0 +1,483 @@
+/* Google Font Import */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+/* CSS Variables for your color scheme */
+:root {
+  --primary-color: #1e2a5e;
+  --secondary-color: #fed352;
+  --background-color: #f4f7fa;
+  --card-background: #ffffff;
+  --text-color-dark: #333;
+  --text-color-light: #777;
+  --border-color: #e0e0e0;
+  --sidebar-width: 240px;
+}
+
+/* Basic Reset and Body Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color-dark);
+}
+
+/* Main Layout */
+.dashboard-layout {
+  display: flex;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--card-background);
+  height: 100vh;
+  position: absolute;
+  border-right: 1px solid var(--border-color);
+  padding-top: 2rem;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
+  padding: 2rem;
+  padding-bottom: 13rem;
+}
+
+/* Sidebar Navigation */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  text-decoration: none;
+  color: var(--text-color-light);
+  font-weight: 500;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar-item i {
+  margin-right: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar-item:hover {
+  background-color: #f0f4f8;
+  color: var(--primary-color);
+}
+
+.sidebar-item.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-right: 4px solid var(--secondary-color);
+}
+
+/* Content Sections */
+.content-section {
+  display: none; /* Hide all sections by default */
+}
+
+.content-section.active {
+  display: block; /* Show only the active section */
+}
+
+.content-header {
+  margin-bottom: 2rem;
+}
+
+.content-header h1 {
+  color: var(--primary-color);
+  margin-bottom: 0.25rem;
+}
+
+/* Generic Button Styles */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.btn-primary-light {
+  background-color: #e8eaf6;
+  color: var(--primary-color);
+}
+
+/* --- Settings / Dashboard Specific Styles --- */
+.profile-card {
+  display: flex;
+  align-items: center;
+  background-color: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.profile-avatar {
+  width: 60px;
+  height: 60px;
+  background-color: var(--primary-color);
+  color: white;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+.profile-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.profile-info .btn {
+  padding: 0.5rem 1rem;
+  margin-top: 0.25rem;
+}
+
+.stats-grid,
+.action-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 12px;
+  position: relative;
+}
+
+.stat-card p {
+  color: var(--text-color-light);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card span {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.stat-card i {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+.icon-blue {
+  background-color: #e8eaf6;
+  color: var(--primary-color);
+}
+.icon-yellow {
+  background-color: #fff8e1;
+  color: var(--secondary-color);
+}
+
+.action-card {
+  background-color: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.action-card i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.action-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.action-card p {
+  color: var(--text-color-light);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* --- Edit Profile Specific Styles --- */
+.form-container {
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* --- My Courses Specific Styles --- */
+.course-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.course-info {
+  flex-grow: 1;
+  margin-right: 1.5rem;
+}
+
+.course-info h3 {
+  margin: 0;
+}
+.instructor {
+  color: var(--text-color-light);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+}
+.progress-percent {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+/* --- My Payments Specific Styles --- */
+.table-container {
+  background-color: var(--card-background);
+  padding: 1rem;
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.payment-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.payment-table th,
+.payment-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.payment-table th {
+  color: var(--text-color-light);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-completed {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.status-pending {
+  background-color: #fff8e1;
+  color: #ffab00;
+}
+/* --- New Styles for Updated Edit Profile Section --- */
+
+.edit-profile-layout {
+  display: grid;
+  grid-template-columns: 1fr 3fr; /* One column for avatar, three for the form */
+  gap: 2rem;
+  align-items: start;
+}
+
+.avatar-section {
+  background-color: var(--card-background);
+  padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.avatar-section h3,
+.form-container h3 {
+  width: 100%;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.75rem;
+}
+
+.avatar-display {
+  width: 120px;
+  height: 120px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.avatar-section p {
+  font-size: 0.8rem;
+  color: var(--text-color-light);
+  margin-top: 1rem;
+}
+
+.avatar-section .btn i {
+  margin-right: 0.5rem;
+}
+
+/* Make form inputs take placeholder text color */
+.form-group input::placeholder {
+  color: #aaa;
+}
+/* --- New Styles for Classes List Section --- */
+
+.classes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.class-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--card-background);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.class-info {
+  flex-grow: 1;
+  margin-right: 1.5rem;
+}
+
+.class-info h3 {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.teacher-name {
+  font-weight: 500;
+  color: var(--text-color-dark);
+  margin-bottom: 1rem;
+}
+
+.class-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  color: var(--text-color-light);
+  font-size: 0.9rem;
+}
+
+.class-meta span {
+  display: flex;
+  align-items: center;
+}
+
+.class-meta span i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.class-type-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.class-type-badge.institute {
+  background-color: #e8eaf6;
+  color: var(--primary-color);
+  border-color: #c5cae9;
+}
+
+.class-type-badge.individual {
+  background-color: #fff8e1;
+  color: #ffab00;
+  border-color: #ffe082;
+}

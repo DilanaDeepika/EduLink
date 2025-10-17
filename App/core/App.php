@@ -15,7 +15,6 @@ class App
     {
         $URL = $this->splitURL();
         $filename = "../app/controllers/" . ucfirst($URL[0]) . ".php";
-        
         if(file_exists($filename))
         {
             require $filename;

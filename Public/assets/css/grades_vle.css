@@ -1,0 +1,209 @@
+/* Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+
+/* Container */
+.container {
+  width: 80%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px 5px rgb(0, 0, 0, 0.2);
+  min-height: 1000px; 
+}
+
+/* Stats Boxes */
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 25px 0;
+}
+
+.stat-box {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 400px;
+  padding: 15px 18px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Align text and icon */
+.stat-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stat-box p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-5px); /* Lift slightly and grow */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+  cursor: pointer;
+}
+
+.stat-box h4 {
+  margin: 5px 0 0;
+  font-size: 18px;
+  color: #0d2c61;
+  padding-left: 50px;
+}
+
+/* Icon */
+.stat-box svg {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+}
+
+
+
+/* Table container */
+.table-container {
+  background: #d3d3d3;
+  border-radius: 10px;
+  margin: 0 auto;
+  width: 85%;
+  padding: 20px;
+  overflow: hidden; /* Ensures border-radius on container works */
+  }
+
+table {
+  margin: 0 auto;
+  width: 100%;
+  border-collapse: separate; /* Important to allow row spacing */
+  border-spacing: 0 8px; /* Vertical gap between rows */
+}
+
+/* Header styling */
+thead tr {
+  background: white;
+  padding: 12px 15px;
+  text-align: left;
+  color: #0d2c61;
+  font-size: 14px;
+  border-radius: 6px; /* Round header row */ 
+}
+
+thead th {
+  background: white;
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: bold;
+  color: #0d2c61;
+  font-size: 14px;
+
+}
+
+/* Body rows */
+tbody tr td  {
+  background: white;
+  padding: 12px 15px;
+  font-size: 14px;
+  color: #000000;
+}
+
+/* Rounded corners for body rows */
+tbody tr td:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+tbody tr td:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/* Optional status badge styling */
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.status.complete {
+  background-color: #e6f9ed;
+  color: #219653;
+}
+
+.status.pending {
+  background-color: #fff6e6;
+  color: #f2994a;
+}
+
+.status.not {
+  background-color: #fde7e7;
+  color: #eb5757;
+}
+
+
+/* Optional status badge styling */
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.status.complete {
+  background-color: #e6f9ed;
+  color: #219653;
+}
+
+.status.pending {
+  background-color: #fff6e6;
+  color: #f2994a;
+}
+
+.status.not {
+  background-color: #fde7e7;
+  color: #eb5757;
+}
+
+
+/* Status Styles */
+.status {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.status.complete {
+  background-color: #eaf9ea;
+  color: #27a844;
+  border: 1px solid #27a844;
+}
+
+.status.not {
+  background-color: #fdeaea;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.status.pending {
+  background-color: #fff9e6;
+  color: #ffb200;
+  border: 1px solid #ffb200;
+}
+

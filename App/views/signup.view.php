@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>login_page</title>
-    <link rel="stylesheet" href="asset/css/signup.css">
+        <link
+      href="<?php  echo ROOT ?>/assets/css/signup.css"
+      rel="stylesheet"
+    />
+        <link
+      href="<?php  echo ROOT ?>/assets/css/component/nav.css"
+      rel="stylesheet"
+    />
+    <link
+      href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <main class="main_content">
-        <div class="left_content">
-
+    <?php include __DIR__.'/Component/nav.view.php'; ?>
+    <main class="signup-main_content">
+        <div class="signup-left_content">
+                <img src="<?php  echo ROOT ?>/assets/images/signup.png" alt="signup" />
+          </div>
         </div>
-        <div class="form_content">
+        <div class="signup-form_content">
             
                 <h2>Sign Up With Your Email</h2>
                 <form>
@@ -35,8 +48,6 @@
             
         </div>
     </main>
-    <footer>
-        
-    </footer>
+        <?php include __DIR__.'/Component/footer.view.php'; ?>
 </body>
 </html>

@@ -1,0 +1,243 @@
+/* ===== Colors & base ===== */
+:root {
+  --primary: #1e2a5e;
+  --accent: #fed352;
+  --white: #ffffff;
+  --muted: #f2f4f8;
+  --line: #e6e9f0;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--white);
+  color: var(--primary);
+  margin: 0;
+}
+
+/* container */
+.calendar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* title */
+h2 {
+  text-align: center;
+  color: var(--primary);
+  margin: 6px 0 18px;
+  font-weight: 600;
+}
+
+/* view toggles */
+.view-toggle {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.view-toggle button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin: 0 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.view-toggle button.active {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+/* header / nav */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+.calendar-header .nav-left button,
+.calendar-header .nav-right button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.calendar-header .nav-left button {
+  margin-right: 6px;
+}
+
+.calendar-header .nav-left button:hover {
+  background: #163056;
+}
+.range-label {
+  font-weight: 600;
+  color: var(--primary);
+  text-align: center;
+  min-width: 320px;
+}
+
+/* calendar body card */
+.calendar-body {
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(22, 34, 77, 0.06);
+  padding: 12px;
+}
+
+/* ---------------- MONTH view (table) ---------------- */
+.month-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.month-table th {
+  background: var(--primary);
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 13px;
+}
+.month-table td {
+  width: 14.2857%;
+  height: 110px;
+  vertical-align: top;
+  border: 1px solid var(--line);
+  padding: 8px;
+  position: relative;
+  background: white;
+}
+.month-table td .day-number {
+  float: right;
+  font-weight: 600;
+  color: var(--primary);
+}
+.month-table td:hover {
+  background: var(--muted);
+}
+
+/* container for events */
+.month-table td .events-container {
+  display: flex; /* horizontal layout */
+  flex-wrap: nowrap; /* no wrapping */
+  gap: 4px; /* space between pills */
+  overflow-x: auto; /* scroll if too many */
+  margin-top: 6px;
+  padding-bottom: 2px;
+}
+
+/* highlighted day style (month) */
+.month-table td .event-pill {
+  flex: 0 0 auto; /* don't shrink */
+  background: var(--accent);
+  color: var(--primary);
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  white-space: nowrap; /* keep text in one line */
+}
+
+/* "+X more" pill */
+.month-table td .more-pill {
+  flex: 0 0 auto;
+  background: #ccc;
+  color: var(--primary);
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* ---------------- WEEK view (time grid) ---------------- */
+/* wrapper that sets max height and allows vertical scrolling */
+.week-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* sticky header (days names) */
+.week-days-header {
+  display: flex;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+.week-days-header .time-col-header {
+  width: 60px;
+}
+.week-days-header .day-header {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* scrollable content area */
+.week-scroll {
+  display: flex;
+  gap: 0;
+  border-top: none;
+  max-height: 560px; /* change to suit your page */
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* time column */
+.time-col {
+  width: 60px;
+  background: #fafbfd;
+  color: #444;
+  font-size: 12px;
+  border-right: 1px solid var(--line);
+}
+.time-slot {
+  height: 60px;
+  line-height: 60px;
+  padding-right: 6px;
+  text-align: right;
+  padding-left: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* days columns area */
+.days-columns {
+  flex: 1;
+  display: flex;
+  min-width: 700px;
+}
+.day-column {
+  flex: 1;
+  border-left: 1px solid var(--line);
+  position: relative;
+  min-width: 120px;
+}
+
+/* horizontal hour lines */
+.hour-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: 1px solid rgba(230, 233, 240, 0.9);
+}
+
+/* event boxes (positioned absolutely inside day column) */
+.event-box {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  background: var(--accent);
+  color: var(--primary);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-weight: 600;
+  box-shadow: 0 6px 14px rgba(30, 42, 94, 0.06);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -1,0 +1,202 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.payment-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+/* ---------- HEADER ---------- */
+.payment-header {
+  display: flex;
+  background: #d8d7f2;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.payment-header div {
+  text-align: left;
+  padding-left: 15px;
+}
+
+.payment-header > div:nth-child(1) {
+  flex: 30%;
+}
+.payment-header > div:nth-child(2) {
+  flex: 25%;
+}
+.payment-header > div:nth-child(3) {
+  flex: 20%;
+}
+.payment-header > div:nth-child(4) {
+  flex: 20%;
+}
+
+/* ---------- CARD ---------- */
+.payment-card {
+  display: flex;
+  align-items: center;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+/* Each column flex */
+.payment-card .card-left,
+.payment-card .card-mid,
+.payment-card .card-price,
+.payment-card .card-right {
+  text-align: left;
+  padding-left: 15px;
+}
+
+.payment-card .card-left {
+  flex: 30%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.payment-card .card-mid {
+  flex: 25%;
+}
+.payment-card .card-price {
+  flex: 20%;
+}
+.payment-card .card-right {
+  flex: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* ---------- LEFT SECTION ---------- */
+.payment-card .thumb {
+  width: 100px;
+  height: 60px;
+  background: #ccc;
+  border-radius: 6px;
+}
+
+.payment-card .class-info h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.payment-card .class-info p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: #555;
+}
+
+/* ---------- MIDDLE SECTION ---------- */
+.payment-card .card-mid .month {
+  font-weight: bold;
+  color: #444;
+}
+
+.payment-card .card-mid .date {
+  font-size: 13px;
+  color: #777;
+}
+
+/* ---------- PRICE ---------- */
+.payment-card .card-price p {
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+/* ---------- RIGHT SECTION ---------- */
+.payment-card .status {
+  font-weight: bold;
+  color: #c44;
+  margin-bottom: 5px;
+}
+
+.payment-card .pay-btn {
+  background: #ff5b5b;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* ---------- PAYMENT SUMMARY SECTION ---------- */
+
+.payment-summary .pay-all-btn {
+  display: inline-block;
+  width: 99px;
+  height: 40px;
+  border-radius: 6px;
+  border: none;
+  background: #fed352;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  color: #1e2a5e;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 30px;
+}
+
+.payment-summary .pay-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+}
+.summary-item {
+  width: 50%;
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: 10px;
+}
+
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: #101735b2;
+}
+
+.item-subtitle {
+  font-weight: 300;
+  font-size: 14px;
+  color: rgba(17, 24, 53, 0.452);
+}
+
+.item-price {
+  font-weight: 300;
+  font-size: 16px;
+  margin-left: 20px;
+  color: #101735b2;
+}
+
+.summary-total {
+  font-weight: bold;
+  font-size: 18px;
+  text-align: right;
+  margin-top: 10px;
+}

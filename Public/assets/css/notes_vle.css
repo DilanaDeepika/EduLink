@@ -1,0 +1,71 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* Container */
+.container {
+  width: 80%;
+  margin: 40px auto;
+  background: #fff;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 5px 5px 5px rgb(0, 0, 0, 0.2);
+  min-height: 1000px; 
+}
+
+/* Accordion */
+.accordion {
+  border-bottom: 1px solid #cecaca;
+  margin-bottom: 15px;
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  font-weight: none;
+  color: #000000;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.accordion-header .arrow {
+  margin-right: 10px;
+  font-size: 15px;
+}
+
+.accordion-content {
+  display: none;
+  padding: 2px 0 20px 30px;
+  color: #3f3f3f;
+}
+
+.accordion-content.show {
+  display: block;
+}
+
+/* File Box */
+.file-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #0d2c61;
+  border-radius: 6px;
+  padding: 10px 15px;
+  width: fit-content;
+  margin-top: 10px;
+}
+
+.file-icon {
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+.file-box a {
+  text-decoration: none;
+  color: #0d2c61;
+  font-weight: 500;
+}

@@ -1,0 +1,36 @@
+.navbar {
+  width: 100%;
+  background-color: #0d2c61;
+  color: white;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.class-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.nav-right button {
+  margin-left: 10px;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.progress-btn {
+  background: transparent;
+  color: rgb(211, 174, 39);
+}
+
+.share-btn {
+  background : transparent;
+  color: rgb(211, 174, 39);
+  border: 2px solid rgb(211, 174, 39);    
+}
+
+

@@ -4,13 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Educational Platform - A/L Classes</title>
-    <link href="../../Public/assets/css/style.css" rel="stylesheet" />
-    <link href="../../Public/assets/css/component/card.css" rel="stylesheet" />   
+    <link href="<?php  echo ROOT ?>/assets/css/style.css" rel="stylesheet" />
+    <link href="<?php  echo ROOT ?>/assets/css/component/nav.css" rel="stylesheet" />
+    <link href="<?php  echo ROOT ?>/assets/css/component/card.css" rel="stylesheet" />   
+        <link
+      href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   </head>
   <body>
+    <seciton>
+        <?php include __DIR__.'/Component/nav.view.php'; ?>
+    </section>
     <section class="home-section home-hero-container">
-      <!-- You should add hero content here like an image or text -->
     </section>
     <section class="home-section home-famous-class-container">
       <h3>Level Up Your Learning with Expert-Led Classes</h3>
@@ -18,6 +25,8 @@
         Join live or online classes and build skills that matter — from school
         subjects to exam prep and beyond.
       </p>
+
+      
       <div class="courses-container">
         <?php  foreach (range(1, 5) as $i): ?>
         <?php include __DIR__.'/Component/card.view.php'; ?>
@@ -111,6 +120,6 @@
       </div>
 
     </section>
-    
+    <?php include __DIR__.'/Component/footer.view.php'; ?>
   </body>
 </html>
