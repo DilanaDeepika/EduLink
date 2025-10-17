@@ -41,7 +41,7 @@
 
             <div class="form-actions">
                 <button type="button" class="btn-save-draft">Save as Draft</button>
-                <button type="button" id="btn-next-intended"class="btn-next">Next<i class="fa-solid fa-chevron-right"></i></button>
+                <button type="button" id="btn-next-intended"class="btn-next" onclick="">Next<i class="fa-solid fa-chevron-right"></i></button>
 
             </div>
           </form>

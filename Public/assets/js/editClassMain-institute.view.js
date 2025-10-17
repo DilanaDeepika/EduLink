@@ -1,49 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --------------------------
-    // Elements
-    // --------------------------
-    const navItems = document.querySelectorAll('.sidebar-item');
-    const views = document.querySelectorAll('.view');
-    const progressFill = document.querySelector('.progress-fill');
-    const progressPercentage = document.querySelector('.progress-percentage');
-
-    // --------------------------
-    // Progress update
-    // --------------------------
-    function updateProgress() {
-        if (!progressFill || !progressPercentage) return;
-        const completed = document.querySelectorAll('.sidebar-item.completed').length;
-        const total = navItems.length;
-        const percentage = Math.round((completed / total) * 100);
-        progressFill.style.width = percentage + '%';
-        progressPercentage.textContent = percentage + '%';
-    }
-
-    // --------------------------
-    // Show a section
+    // Utility: show view
     // --------------------------
     function show(sectionId) {
-        views.forEach(v => v.hidden = true); // hide all
+        // Hide all views
+        document.querySelectorAll('.view').forEach(v => v.hidden = true);
+
+        // Show target view
         const target = document.getElementById(sectionId);
         if (target) target.hidden = false;
 
-        navItems.forEach(item => item.classList.remove('active'));
-        const clicked = Array.from(navItems).find(i => i.dataset.target === sectionId);
+        // Update sidebar active/completed
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        const clicked = [...document.querySelectorAll('.sidebar-item')]
+            .find(i => i.dataset.target === sectionId);
         if (clicked) clicked.classList.add('active');
-
-        updateProgress();
     }
 
     // --------------------------
-    // Sidebar click
+    // Sidebar navigation clicks
     // --------------------------
-    navItems.forEach(item => {
-        item.addEventListener('click', () => show(item.dataset.target));
+    document.querySelectorAll('.sidebar-item').forEach(item => {
+        item.addEventListener('click', () => {
+            show(item.dataset.target);
+        });
     });
 
     // --------------------------
-    // Save Basic Info
+    // Save and Next for Basic Info
     // --------------------------
     function saveBasicInfo() {
         const data = {
@@ -58,41 +45,38 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         localStorage.setItem('basicInfoData', JSON.stringify(data));
         alert('✅ Basic Information saved!');
-        document.querySelector('.sidebar-item[data-target="view-core"]')?.classList.add('completed');
-        updateProgress();
     }
 
     document.getElementById('btn-saveChanges_basic')?.addEventListener('click', saveBasicInfo);
+
     document.getElementById('btn-next-basic')?.addEventListener('click', () => {
-        saveBasicInfo();
-        show('view-advance');
-        document.querySelector('.sidebar-item[data-target="view-core"]')?.classList.add('completed');
+        saveBasicInfo();          // save before moving
+        show('view-advance');     // go to Advanced Information
     });
 
     // --------------------------
-    // Save Advanced Info
+    // Save and Next for Advanced Info
     // --------------------------
     function saveAdvancedInfo() {
         const data = {
             advancedTitle: document.getElementById('advanced-title')?.value || '',
             advancedDescription: document.getElementById('advanced-description')?.value || ''
-            // Add more fields if needed
+            // add more fields from Advanced form if needed
         };
         localStorage.setItem('advancedInfoData', JSON.stringify(data));
         alert('✅ Advanced Information saved!');
-        document.querySelector('.sidebar-item[data-target="view-advance"]')?.classList.add('completed');
-        updateProgress();
     }
 
     document.getElementById('btn-saveChanges_advance')?.addEventListener('click', saveAdvancedInfo);
+
     document.getElementById('btn-next-advance')?.addEventListener('click', () => {
         saveAdvancedInfo();
-        // If you have more steps, go next
-        // show('view-nextStep');
+        // For example, go to next step if you have more
+        // show('view-intended');
     });
 
     // --------------------------
-    // Autofill data
+    // Autofill saved data on load
     // --------------------------
     const savedBasic = localStorage.getItem('basicInfoData');
     if (savedBasic) {
@@ -105,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('class-category')?.value = d.classCategory || '';
         document.getElementById('course-description')?.value = d.description || '';
         document.getElementById('course-language')?.value = d.language || '';
-        document.querySelector('.sidebar-item[data-target="view-core"]')?.classList.add('completed');
     }
 
     const savedAdvanced = localStorage.getItem('advancedInfoData');
@@ -113,7 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const d = JSON.parse(savedAdvanced);
         document.getElementById('advanced-title')?.value = d.advancedTitle || '';
         document.getElementById('advanced-description')?.value = d.advancedDescription || '';
-        document.querySelector('.sidebar-item[data-target="view-advance"]')?.classList.add('completed');
     }
 
     // --------------------------

@@ -1,0 +1,365 @@
+/* Container */
+.advanced-info-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+/* Section Title */
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+/* Media Section */
+.media-section {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.media-item {
+    flex: 1;
+}
+
+.media-item h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.media-description {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+.upload-area {
+    border: 2px dashed #d1d5db;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    background-color: #fafafa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.upload-area:hover {
+    border-color: #3b82f6;
+    background-color: #f0f9ff;
+}
+
+.upload-icon {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.upload-btn {
+    background: linear-gradient(135deg, #ff6b6b, #ffa726);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+/* Schedule Section */
+.schedule-section {
+    margin-bottom: 3rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.section-header {
+    margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.25rem;
+}
+
+.section-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+.schedule-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Class Days */
+.class-days h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 1rem;
+}
+
+.days-selector {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.day-option {
+    cursor: pointer;
+}
+
+.day-option input[type="checkbox"] {
+    display: none;
+}
+
+.day-label {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #f3f4f6;
+    color: #6b7280;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    user-select: none;
+    min-width: 40px;
+    text-align: center;
+}
+
+.day-option input[type="checkbox"]:checked + .day-label {
+    background: #3b82f6;
+    color: white;
+}
+
+.day-label:hover {
+    background-color: #e5e7eb;
+}
+
+.day-option input[type="checkbox"]:checked + .day-label:hover {
+    background-color: #2563eb;
+}
+
+/* Time and Capacity */
+.time-capacity {
+    display: flex;
+    gap: 3rem;
+}
+
+.time-section,
+.capacity-section {
+    flex: 1;
+}
+
+.time-section h4,
+.capacity-section h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.time-input {
+    margin-bottom: 0.5rem;
+}
+
+input[type="time"],
+input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+input[type="time"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Publish Section */
+.publish-section {
+    margin-bottom: 3rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.publish-content {
+    display: flex;
+    gap: 2rem;
+}
+
+.publish-item {
+    flex: 1;
+}
+
+.publish-item h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 0.75rem;
+}
+
+.message-options {
+    margin-bottom: 1rem;
+}
+
+.message-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.message-option input[type="radio"] {
+    margin: 0;
+}
+
+.message-option span {
+    font-size: 0.9rem;
+    color: #6b7280;
+}
+
+textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    transition: all 0.2s ease;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* Form Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.btnSavedraft,
+.btnAssign {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btnSavedraft {
+    background-color: #f8fafc;
+    color: #64748b;
+    border: 1px solid #d1d5db;
+}
+
+.btnSavedraft:hover {
+    background-color: #f1f5f9;
+    border-color: #9ca3af;
+}
+
+.btnAssign {
+    background:linear-gradient(135deg, #1C2C62, #324e9b);
+    color: white;
+}
+
+.btnAssign:hover {
+    background: #3b82f6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .advanced-info-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .media-section {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .time-capacity {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .publish-content {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .days-selector {
+        justify-content: center;
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .btnSavedraft,
+    .btnAssign {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    .upload-area {
+        padding: 1.5rem;
+    }
+    
+    .days-selector {
+        gap: 0.25rem;
+    }
+    
+    .day-label {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        min-width: 35px;
+    }
+}

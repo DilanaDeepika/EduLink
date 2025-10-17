@@ -42,7 +42,7 @@
                 </div>
             </nav>
 
-            <div class="sidebar-footer">
+            <div class="sidebar-footer"></div>
         </aside>
 
         <main class="main-content">

@@ -1,4 +1,4 @@
- document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 
   //Handle Next button click
   const btnNext = document.getElementById('btn-next-intended');

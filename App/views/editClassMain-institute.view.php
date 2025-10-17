@@ -4,23 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduLink - Course Setup</title>
-    <link rel="stylesheet" href="../../Public/assets/css/createClassMain_individual.css?v=1.1">
-    <link rel="stylesheet" href="../../Public/assets/css/component/createClassBasicInfo_individual.css?v=1.1">
-    <link rel="stylesheet" href="../../Public/assets/css/component/createClassIntendedLearners_individual.css?v=1.1">
-    <link rel="stylesheet" href="../../Public/assets/css/component/createClassAdvancedInfo_individual.css?v=1.1">
+    <link rel="stylesheet" href="../../Public/assets/css/editClassMain-institute.css?v=1.1">
+    <link rel="stylesheet" href="../../Public/assets/css/component/editClassIntendedLearners-institute.css?v=1.1">
+    <link rel="stylesheet" href="../../Public/assets/css/component/editClassBasicInfo-institute.css?v=1.1">
+    <link rel="stylesheet" href="../../Public/assets/css/component/editClassAdvancedInfo_institute.css?v=1.1">
+    <link rel="stylesheet" href="../../Public/assets/css/component/editClassHeader-institute.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
-    <header class="header">
-        <div class="logo">
-            <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-            EduLink
-        </div>
-        <div class="header-buttons">
-            <button class="btn btn-preview">Preview</button>
-        </div>
-    </header>
+    <?php include __DIR__ . '/Component/editClassHeader-institute.view.php';?>
 
     <div class="container">
         <aside class="sidebar">
@@ -49,29 +42,29 @@
                 </div>
             </nav>
 
-            <div class="sidebar-footer"></div>
+            <div class="sidebar-footer">
         </aside>
 
         <main class="main-content">
             <!-- Intended Learners -->
             <section id="view-intended" class="view">
-            <?php include __DIR__.'/Component/createClassIntendedLearners_individual.view.php';?>
+            <?php include __DIR__.'/Component/editClassIntendedLearners-institute.view.php';?>
             </section>
             
-            <!-- Basic Information -->
+            <!-- Core Information -->
             <section id="view-core" class="view" hidden>
-               <?php include __DIR__.'/Component/createClassBasicInfo_individual.view.php'; ?>
+               <?php include __DIR__.'/Component/editClassBasicInfo-institute.view.php'; ?>
             </section>
             
             <!-- Advanced Information -->
             <section id="view-advance" class="view" hidden>
-               <?php include __DIR__.'/Component/createClassAdvancedInfo_individual.view.php'; ?>
+               <?php include __DIR__.'/Component/editClassAdvancedInfo_institute.view.php'; ?>
             </section>
         </main>
     </div>
 
     <footer class="footer"></footer>
 
-    <script src="../../Public/assets/js/createClassMain_individual.view.js"></script>
+    <script src="../../Public/assets/js/editClassMain-institute.view.js"></script>
 </body>
 </html>

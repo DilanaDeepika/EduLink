@@ -2,8 +2,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   //Handle Next button click
   const btnNext = document.getElementById('btn-next-intended');
+  
   if (btnNext) {
     btnNext.addEventListener('click', function(event) {
+     
       event.preventDefault(); // stop form submission
       show('view-core'); // move to Basic Information section
     });
