@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/component/createClassIntendedLearners.css">
     <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/component/createClassAdvancedInfo.css">
     
+    <link href="<?php  echo ROOT ?>/assets/css/component/nav.css" rel="stylesheet" />
     <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/component/createClassHeader.css">
             <link
       href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css"
@@ -18,7 +19,11 @@
 </head>
 
 <body>
- <?php include __DIR__ . '/Component/createClassHeader.php';?>
+     <?php 
+    ($_SESSION['USER']['role'] == 'institute') 
+        ? include __DIR__ . '/Component/createClassHeader.php' 
+        : include __DIR__ . '/Component/nav.view.php';
+    ?>
 
     <div class="container">
         <aside class="sidebar">
@@ -67,7 +72,7 @@
                 <?php include __DIR__.'/Component/editClassAdvancedInfo.view.php'; ?>
                             <!-- Submit Button -->
                 <div class="form-actions">
-                    <button type="submit" class="btn-next-core">Create Class</button>
+                    <button type="submit" class="btn-next-core">Update Class</button>
                 </div>
 
             </section>

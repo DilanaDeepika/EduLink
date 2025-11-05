@@ -42,8 +42,7 @@ public function index()
                         if ($teacher) {
                             $_SESSION['USER']['teacher_id'] = $teacher->teacher_id;
                         }
-                        print_r($_SESSION);
-                        die();                        
+                      
                         redirect('Home');
                         break;
 
@@ -53,8 +52,6 @@ public function index()
                         if ($institute) {
                             $_SESSION['USER']['institute_id'] = $institute->institute_id;
                         }
-                        print_r($_SESSION);
-                        die();
                         redirect('Home');
                         break;
 
