@@ -1,5 +1,6 @@
 <?php
 
+
 class TeacherVle extends Controller
 {
    public function index($class_id = null)
@@ -7,6 +8,7 @@ class TeacherVle extends Controller
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+
 
         if (!isset($_SESSION['USER']) || $_SESSION['USER']['role'] !== 'teacher') {
             redirect('login');
@@ -164,5 +166,6 @@ class TeacherVle extends Controller
             redirect('TeacherVle/index/' . $class_id);
         }
     }
+
 
 }

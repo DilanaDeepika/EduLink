@@ -93,35 +93,3 @@
       </form>
     </div>
   </div>
-
-  <!-- Quiz Popup (styled) -->
-  <div id="quizPopup" class="popup">
-    <div class="popup-content">
-      <span class="close" onclick="closeCreatePopup('quizPopup')">&times;</span>
-      <h2>Create Quiz</h2>
-      <form id="quizForm" onsubmit="return false;">
-        <div class="form-group">
-          <label for="quizName">Quiz Name:</label>
-          <input type="text" id="quizName" name="quizName" required />
-        </div>
-        <div class="form-group">
-          <label for="quizDescription">Description:</label>
-          <textarea id="quizDescription" name="quizDescription" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="quizTimeLimit">Time Limit (minutes):</label>
-          <input type="number" id="quizTimeLimit" name="quizTimeLimit" min="1" placeholder="e.g., 30" required />
-        </div>
-        <div class="form-group">
-          <label for="numberOfQuestions">Number of Questions:</label>
-          <input type="number" id="numberOfQuestions" name="numberOfQuestions" min="1" max="20" oninput="generateQuestionFields()" placeholder="e.g., 5" required />
-        </div>
-        <div id="questionsContainer"></div>
-        <div class="popup-buttons">
-          <button type="submit">Create Quiz</button>
-          <button type="button" onclick="closeCreatePopup('quizPopup')">Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
