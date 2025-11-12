@@ -14,12 +14,18 @@
 </head>
 <body>
   <?php include __DIR__.'/Component/nav.view.php'; ?>
+  <?php $class = $data['class_details'][0] ?>
+  <?php $teacher = $data['teacher_details'][0] ?>
+  <?php $schedule = $data['Schedule_details'][0] ?>
+  <?php $Objective = $data['Objective_details'][0] ?>
+
 <header class="course-banner" style="background-image: url('<?php echo ROOT ?>/assets/images/edu.png');">
     <div class="banner-overlay">
         <div class="banner-content">
             <div class="class-type-indicator">Institute Class</div>
-            <h1>Welcome to the Advanced Physics Class!</h1>
-            <p class="welcome-message">Unlock the secrets of the universe with our comprehensive course designed for dedicated learners.</p>
+
+            <h1>Welcome to the <?php echo htmlspecialchars( $class->class_name) ; ?> Class!</h1>
+            <p class="welcome-message"><?php  echo htmlspecialchars($class->welcome_message) ; ?></p>
         </div>
     </div>
 </header>
@@ -28,34 +34,36 @@
         <div class="course-details">
             <section class="course-section">
                 <h2>Course Description</h2>
-                <p>This course covers a wide range of topics in advanced physics, from classical mechanics to quantum theory. It is designed to provide students with a deep understanding of the fundamental principles that govern the natural world. Taught by an experienced educator, this class is perfect for those looking to excel in their exams or pursue a career in science.</p>
+                <p><?php echo htmlspecialchars($class->description); ?></p>
             </section>
             
             <section class="course-section">
                 <h2>A Message from Your Teacher</h2>
                 <div class="video-container"> <video width="100%" controls>
-                        <source src="<?php echo ROOT ?>/assets/videos/Tuition_Class.mp4" type="video/mp4">
+                        <source src="<?php echo ROOT ?>/assets/videos/<?php  echo htmlspecialchars($class->trailer_path); ?>" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 </div>
             </section>
+          
             <section class="course-section">
                 <h2>Class Schedule</h2>
                 <div class="schedule-list">
                     <div class="schedule-item">
-                        <span class="day">Mondays:</span>
-                        <span class="time">4:00 PM - 6:00 PM</span>
+                        <span class="day"><?php  echo htmlspecialchars($schedule->day_of_week); ?></span>
+                        <span class="time"><?php  echo htmlspecialchars($schedule->start_time . " - " .$schedule->end_time); ?></span>
                     </div>
+                    <!-- upadte need here-->
                     <div class="schedule-item">
-                        <span class="day">Thursdays:</span>
-                        <span class="time">5:00 PM - 7:00 PM</span>
+                        <span class="day"><?php  echo htmlspecialchars($schedule->day_of_week); ?></span>  
+                        <span class="time"><?php  echo htmlspecialchars($schedule->start_time . " - " .$schedule->end_time); ?></span>
                     </div>
                 </div>
             </section>
-
+               <!-- upadte need here-->
             <section class="course-section">
                 <h2>Who is this course for?</h2>
-                <p class="intended-learners">This course is ideal for A-Level students, university applicants, and anyone with a passion for physics who wishes to deepen their knowledge. A basic understanding of mathematics is recommended.</p>
+                <p class="intended-learners"><?php  echo htmlspecialchars($Objective->objective_text); ?></p>
             </section>
         </div>
 
@@ -63,20 +71,20 @@
             <div class="sidebar-card">
                 <div class="teacher-info">
                     <div class="teacher-image"></div>
-                    <p class="teacher-name">S M Dilana Deepika <span class="verified">✔ Verified</span></p>
+                    <p class="teacher-name"><?php echo htmlspecialchars($teacher->first_name ." " .$teacher->last_name); ?> <span class="verified">✔ Verified</span></p>
                 </div>
                 <hr>
-                
+    
                 <ul class="class-info-list">
-                    <li><strong>Class Name:</strong> <span>Advanced Physics</span></li>
-                    <li><strong>Subject:</strong> <span>Physics</span></li>
-                    <li><strong>Grade/Level:</strong> <span>A-Level</span></li>
-                    <li><strong>Duration:</strong> <span>4 hours per week</span></li>
-                    <li><strong>Language:</strong> <span>English</span></li>
+                    <li><strong>Class Name:</strong> <span><?php echo htmlspecialchars($class->class_name); ?></span></li>
+                    <li><strong>Subject:</strong> <span><?php echo htmlspecialchars($class->subject_name); ?></span></li>
+                    <li><strong>Grade/Level:</strong> <span><?php echo htmlspecialchars($class->grade_level_name); ?></span></li>
+                    <li><strong>Duration:</strong> <span><?php echo htmlspecialchars($class->duration_hours); ?> hours per week</span></li>
+                    <li><strong>Language:</strong> <span><?php echo htmlspecialchars($class->language_name); ?></span></li>
                 </ul>
                 <hr>
 
-                <p class="price">Rs. 1000.00</p>
+                <p class="price">Rs. <?php echo htmlspecialchars($class->monthly_fee); ?></p>
                 <div class="payment-actions">
                     <button class="btn pay">Pay Now!</button>
                     <button class="btn wishlist"><i class="fa-regular fa-heart"></i></button>

@@ -30,7 +30,7 @@
       
       <div class="courses-container">
         <?php  foreach (range(1, 5) as $i): ?>
-        <a href="<?php  echo ROOT ?>/ClassPage" class="card-link-wrapper">
+        <a href="<?php echo ROOT ?>/ClassPage?id=<?php echo $class['class_id']; ?>" class="card-link-wrapper">
         <?php include __DIR__.'/Component/card.view.php'; ?>
         </a>
         <?php endforeach; ?>
