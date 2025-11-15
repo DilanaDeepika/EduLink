@@ -55,7 +55,7 @@
   margin-bottom: 6px;
 }
 
-/* Inputs and textarea */
+/* Inputs, select, textarea */
 .createPopUp .popup input,
 .createPopUp .popup select,
 .createPopUp .popup textarea {
@@ -89,6 +89,8 @@
 .createPopUp .popup .popup-buttons button:hover {
   background-color: #2a3a8a;
 }
+
+/* Question blocks (for quiz) */
 .createPopUp .popup .question-block {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
@@ -96,18 +98,26 @@
   padding: 15px;
   margin-top: 20px;
 }
+
 .createPopUp .popup .question-block h4 {
-  color: #1e2a5e; /* Your primary color */
+  color: #1e2a5e; /* Primary color */
   margin-top: 0;
-  border-bottom: 2px solid #fed352; /* Your secondary color */
+  border-bottom: 2px solid #fed352; /* Secondary color */
   padding-bottom: 5px;
 }
+
 .createPopUp .popup .answer-option {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
 }
+
 .createPopUp .popup .answer-option input[type="radio"] {
   width: auto;
   margin-right: 10px;
 }
+.calendar-container {
+  position: relative;
+}
+
+

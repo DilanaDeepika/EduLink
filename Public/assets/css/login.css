@@ -1,0 +1,115 @@
+.login-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f9fc;
+  color: #1e2a5e;
+}
+
+/* Container */
+.login-page .login-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1170px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* Left side (image placeholder) */
+.login-page .login-illustration {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-page .login-illustration img {
+  width: 100%;
+  height: auto;
+}
+
+/* Right side (form) */
+.login-page .login-form-section {
+  width: 42%;
+  padding: 41px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Heading */
+.login-page .login-form-section h2 {
+  font-size: 1.24rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Input fields */
+.login-page .form-group {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.login-page .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.login-page .form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.3s;
+}
+
+.login-page .form-group input:focus {
+  border-color: #1e2a5e;
+  box-shadow: 0 0 0 2px rgba(30, 42, 94, 0.15);
+}
+
+/* Submit Button */
+.login-page .login-btn {
+  width: 100%;
+  background-color: #1e2a5e;
+  color: #fff;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 600;
+}
+
+.login-page .login-btn:hover {
+  background-color: #16204a;
+}
+
+/* Links section */
+.login-page .extra-links {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.login-page .extra-links a {
+  color: #1e2a5e;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.login-page .extra-links a:hover {
+  color: #fed352;
+}

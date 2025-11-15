@@ -1,0 +1,249 @@
+/* --- Main Container --- */
+.advanced-info-container {
+  max-width: 1280px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.advanced-info-container .section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 3rem;
+  padding: 2rem 2rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* --- Section Layouts --- */
+.advanced-info-container .media-section,
+.advanced-info-container .publish-content {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.advanced-info-container .schedule-section,
+.advanced-info-container .publish-section {
+  margin-bottom: 3rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.advanced-info-container .media-item,
+.advanced-info-container .publish-item,
+.advanced-info-container .time-section,
+.advanced-info-container .capacity-section {
+  flex: 1;
+}
+
+/* --- Section Headings & Text --- */
+.advanced-info-container .section-header {
+  margin-bottom: 1.5rem;
+}
+.advanced-info-container .section-header h2 {
+  font-size: 1.25rem;
+}
+.advanced-info-container .media-item h3 {
+  font-size: 1.1rem;
+}
+.advanced-info-container .class-days h4,
+.advanced-info-container .publish-item h4 {
+  font-size: 1rem;
+}
+
+.advanced-info-container .section-header h2,
+.advanced-info-container .media-item h3 {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.advanced-info-container .class-days h4,
+.advanced-info-container .publish-item h4 {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.75rem;
+}
+
+.advanced-info-container .section-subtitle,
+.advanced-info-container .media-description {
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.advanced-info-container .media-description {
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+/* --- Upload Area --- */
+.advanced-info-container .upload-area {
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  background-color: #fafafa;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.advanced-info-container .upload-area:hover {
+  border-color: #1e2a5e; /* THEME COLOR */
+}
+.advanced-info-container .upload-icon {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* --- Form Fields (Inputs & Textarea) --- */
+.advanced-info-container input[type="number"],
+.advanced-info-container textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+.advanced-info-container input[type="number"]:focus,
+.advanced-info-container textarea:focus {
+  outline: none;
+  border-color: #1e2a5e; /* THEME COLOR */
+  box-shadow: 0 0 0 3px rgba(30, 42, 94, 0.25); /* THEME COLOR */
+}
+.advanced-info-container textarea {
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+}
+.advanced-info-container textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* --- Day & Time Selectors --- */
+.advanced-info-container .days-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.advanced-info-container .day-option {
+  cursor: pointer;
+}
+.advanced-info-container .day-option input[type="checkbox"] {
+  display: none;
+}
+.advanced-info-container .day-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  user-select: none;
+  min-width: 40px;
+  text-align: center;
+}
+.advanced-info-container .day-label:hover {
+  background-color: #e5e7eb;
+}
+.advanced-info-container
+  .day-option
+  input[type="checkbox"]:checked
+  + .day-label {
+  background: #1e2a5e; /* THEME COLOR */
+  color: white;
+}
+.advanced-info-container
+  .day-option
+  input[type="checkbox"]:checked
+  + .day-label:hover {
+  background-color: #324e9b; /* Lighter shade of primary */
+}
+
+/* --- VERTICAL TIME SLOTS --- */
+.advanced-info-container #time-slots-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.advanced-info-container .time-slot {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+.advanced-info-container .time-slot label,
+.advanced-info-container .time-slot span {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+}
+.advanced-info-container .time-slot input[type="time"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.advanced-info-container .time-slot input[name^="start_time"] {
+  margin-bottom: 12px;
+}
+
+/* --- BUTTONS --- */
+.advanced-info-container .upload-btn,
+.advanced-info-container .btn-secondary,
+.advanced-info-container .btn-primary {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+.advanced-info-container .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Upload Button Themed */
+.advanced-info-container .upload-btn {
+  background: #fed352; /* THEME COLOR */
+  color: #1e2a5e; /* THEME COLOR */
+}
+.advanced-info-container .upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(254, 211, 82, 0.4); /* THEME COLOR */
+}
+
+/* Secondary (Draft) Button */
+.advanced-info-container .btn-secondary {
+  background-color: #f8fafc;
+  color: #64748b;
+  border: 1px solid #d1d5db;
+}
+.advanced-info-container .btn-secondary:hover {
+  background-color: #f1f5f9;
+  border-color: #9ca3af;
+}
+
+/* Primary (Create Class) Button Themed */
+.advanced-info-container .btn-primary {
+  background: #1e2a5e; /* THEME COLOR */
+  color: white;
+}
+.advanced-info-container .btn-primary:hover {
+  background: #324e9b; /* Lighter shade of primary */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30, 42, 94, 0.25); /* THEME COLOR */
+}

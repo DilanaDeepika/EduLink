@@ -10,10 +10,6 @@
       rel="stylesheet"
       href="<?php  echo ROOT ?>/assets/css/component/calander.css"
     />
-    <link
-      rel="stylesheet"
-      href="<?php  echo ROOT ?>/assets/css/component/event.css"
-    />
                 <link
       href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css"
       rel="stylesheet"
@@ -46,6 +42,10 @@
             <i class="fa-solid fa-credit-card"></i>
             <span>My Payments</span>
           </a>
+          <a href="#" class="sidebar-item" data-target="community">
+            <i class="fa-solid fa-users"></i>
+            <span>Community</span>
+          </a>
           <a href="#" class="sidebar-item" data-target="my-calendar">
             <i class="fa-regular fa-calendar"></i>
             <span>My Calendar</span>
@@ -58,7 +58,7 @@
           <div class="profile-card">
             <div class="profile-avatar">KG</div>
             <div class="profile-info">
-              <h2>Kevin Gilbert</h2>
+              <h2>sman kumara</h2>
               <button class="btn btn-secondary">Edit Profile</button>
             </div>
           </div>
@@ -81,7 +81,7 @@
             </div>
             <div class="stat-card">
               <p>Total Spent</p>
-              <span>$2,450</span>
+              <span>Rs2,450</span>
               <i class="fa-solid fa-dollar-sign icon-yellow"></i>
             </div>
           </div>
@@ -290,14 +290,53 @@
             </table>
           </div>
         </section>
+        <section id="community" class="content-section">
+          <div class="content-header">
+            <h1><i class="fa-solid fa-users"></i> Community Hub</h1>
+          </div>
 
+          <div class="community-finder">
+            <h3>Find a New Community</h3>
+            <p>Search for study groups and communities to join.</p>
+            <div class="community-search-bar">
+              <input type="search" placeholder="Search by name or subject..." />
+              <button class="btn btn-secondary">Search</button>
+            </div>
+          </div>
+
+          <div class="my-communities-section">
+            <h3>My Communities</h3>
+            <div class="community-list">
+              <div class="community-card">
+                <div class="community-info">
+                  <h3>Physics A-Level Study Group</h3>
+                  <p class="community-admin">Admin: Janaka Abeywardhana</p>
+                  <div class="community-meta">
+                    <span><i class="fa-solid fa-users"></i> 125 Members</span>
+                  </div>
+                </div>
+                <button class="btn btn-primary-light">View Community</button>
+              </div>
+
+              <div class="community-card">
+                <div class="community-info">
+                  <h3>Chemistry Help Desk</h3>
+                  <p class="community-admin">Admin: EduLink Institute</p>
+                  <div class="community-meta">
+                    <span><i class="fa-solid fa-users"></i> 210 Members</span>
+                  </div>
+                </div>
+                <button class="btn btn-primary-light">View Community</button>
+              </div>
+            </div>
+          </div>
+        </section>
         <section id="my-calendar" class="content-section">
           <div class="content-header">
             <h1><i class="fa-regular fa-calendar"></i> My Calendar</h1>
             <p>Stay organized with your upcoming classes and events</p>
           </div>
           <div class="calendar-placeholder">
-            <p>Your calendar will be displayed here.</p>
             <?php include __DIR__.'/Component/calander.php'; ?>
           </div>
         </section>
@@ -305,7 +344,6 @@
     </div>
      <?php include __DIR__.'/Component/footer.view.php'; ?>
           <script src="<?php  echo ROOT ?>/assets/js/calander.js"></script>
-  <script src="<?php  echo ROOT ?>/assets/js/event.js"></script>
     <script src="<?php  echo ROOT ?>/assets/js/profile.js"></script>
   </body>
 </html>

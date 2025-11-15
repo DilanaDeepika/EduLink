@@ -8,12 +8,15 @@ body {
 }
 
 .home-hero-container {
-  width: 100%;
-  height: 600px;
-  margin: 30px auto;
-  background-color: #d9d9d9;
+  height: 800px;
+  overflow: hidden;
 }
 
+.home-hero-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .home-section {
   margin-bottom: 40px;
   padding: 20px 0;
@@ -76,8 +79,7 @@ body {
   width: 100%;
   height: 687px;
   flex-shrink: 0;
-  background: #d9d9d9;
-  box-shadow: 0 -3px 4.3px 0 rgba(0, 0, 0, 0.28);
+  background: #f4f7fa;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -87,7 +89,7 @@ body {
 .home-scroll-btn-left {
   width: 66px;
   height: 61px;
-  background-color: #d9d9d9;
+  background-color: #f4f7fa;
   border: none;
 }
 .home-testimonials {
@@ -144,7 +146,7 @@ body {
   width: 100%;
   height: 381px;
   flex-shrink: 0;
-  background: #d9d9d9;
+  background: #f4f7fa;
 }
 .home-cta-section p {
   color: #000;

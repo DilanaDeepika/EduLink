@@ -13,20 +13,21 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 240px;
-  padding: 20px 80px;
+  gap: 80px;
+  padding: 50px;
 }
 
 .teach-reg-left-content {
   flex: 1;
-  max-width: 500px;
-  margin-top: 40px;
+  max-width: 550px;
 }
 
 .teach-reg-left-content h2 {
-  text-align: center;
-  font-size: 25px;
-  margin-bottom: 50px;
+  text-align: left;
+  font-size: 28px;
+  font-weight: 600;
+  color: #1e2a5e;
+  margin-bottom: 30px;
 }
 
 .teach-reg-left-content form {
@@ -37,114 +38,178 @@ body {
 
 .teach-reg-name-row {
   display: flex;
-  gap: 10px;
-}
-
-.teach-reg-name-row .input-half {
-  flex: 1;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  gap: 15px;
 }
 
 .teach-reg-left-content form input,
-.teach-reg-left-content form select {
-  margin-bottom: 15px;
-  padding: 12px;
+.teach-reg-left-content form select,
+.teach-reg-name-row .input-half {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: 14px;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.teach-reg-left-content form input:focus,
+.teach-reg-left-content form select:focus {
+  border-color: #fed352;
+  box-shadow: 0 0 0 3px rgba(254, 211, 82, 0.25);
 }
 
 .teach-reg-left-content form select {
   appearance: none;
-  width: 100%;
-  background-color: #f5f5f5;
-  color: #888;
+  background-color: white;
+  color: #333;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231E2A5E'%3E%3Cpath d='M7 10l5 5 5-5H7z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
 }
 
-.teach-reg-left-content form .submit-btn,
-.teach-reg-left-content form .browse-btn {
-  padding: 8px 16px;
-  width: 90px;
-  text-align: center;
-  background-color: #333;
-  color: white;
-  border: 1px solid #333;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
+.upload-instructions {
+  padding: 15px;
+  margin: 10px 0;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+.upload-instructions p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555;
+  margin-bottom: 10px;
+}
+.upload-instructions ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+.upload-instructions ul li {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 5px;
+}
+.upload-instructions ul li strong {
+  color: #1e2a5e;
 }
 
-.teach-reg-left-content form .upload-box {
-  border: 1px solid #ccc;
-  border-radius: 3px;
+.upload-box {
+  border: 2px dashed #ccc;
+  border-radius: 8px;
   padding: 20px;
   text-align: center;
-  height: 200px;
+  background-color: #fdfdfd;
 }
-.teach-reg-left-content form .upload-icon {
-  font-size: 30px;
+
+.upload-icon {
+  font-size: 28px;
+  color: #1e2a5e;
   margin-bottom: 10px;
 }
 
-.teach-reg-left-content form .upload-txt {
-  padding: 10px;
-}
-
-.teach-reg-right-content {
-  flex: 1;
-  max-width: 600px;
-  margin-left: 0;
-}
-
-.teach-reg-right-content .img-placeholder {
-  max-width: 600px;
-  height: 500px;
-  background-color: #ddd;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  margin-top: 50px;
-}
-.teach-reg-right-content .img-placeholder img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.teach-reg-checklist {
-  background-color: #f5f5f5;
+.submit-btn {
+  background-color: #1e2a5e;
+  color: white;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
   border-radius: 8px;
-  padding: 15px;
+  cursor: pointer;
   width: 100%;
-  font-size: 14px;
-  margin-top: 100px;
 }
 
-.teach-reg-checklist .checklist-item {
+.browse-btn {
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: #ffffff;
+  color: #1e2a5e;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.browse-btn:hover {
+  background-color: #f8f9fa;
+  border-color: #1e2a5e;
+}
+
+.right-content-wrapper {
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+  max-width: 500px;
+}
+
+.img-placeholder img {
+  width: 100%;
+  display: block;
+}
+
+.teach-reg-checklist {
+  background-color: #f8f9fa;
+  padding: 15px 25px;
+}
+
+.checklist-item {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   padding: 15px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #e9ecef;
 }
-
-.teach-reg-checklist .checklist-item:last-child {
+.checklist-item:last-child {
   border-bottom: none;
 }
-
-.teach-reg-checklist .checklist-item p {
+.checklist-item p {
   margin: 0;
-  font-weight: bold;
+  font-weight: 600;
+  color: #333;
 }
-
-.teach-reg-checklist .checklist-item small {
+.checklist-item small {
   display: block;
   color: #777;
   margin-top: 4px;
 }
-
-.teach-reg-checklist .check-icon {
+.check-icon {
   font-size: 24px;
-  color: black;
+  color: #ccc;
+  margin-left: 15px;
+}
+.checklist-item.uploaded {
+  background-color: #fffbe6;
+  border-left: 4px solid #fed352;
+  padding-left: 15px;
+}
+
+.checklist-item.uploaded .check-icon {
+  color: #fed352;
+}
+
+.upload-info {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.upload-info ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.upload-info li {
+  background-color: #f0f2f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #333;
 }

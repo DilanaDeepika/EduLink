@@ -25,24 +25,28 @@
     <main class="teach-reg-container">
       <section class="teach-reg-left-content">
         <h2>Teacher Account Setup</h2>
-        <form>
+        
+        <form method="POST" action="<?php echo ROOT ?>/signup/save_teacher_details" enctype="multipart/form-data">
+          
           <div class="teach-reg-name-row">
             <input
               type="text"
+              name="first_name"
               placeholder="First Name"
               class="input-half"
               required
             />
             <input
               type="text"
+              name="last_name"
               placeholder="Last Name"
               class="input-half"
               required
             />
           </div>
-          <input type="text" placeholder="Address" required />
-          <input type="text" placeholder="Phone Number" required />
-          <select required>
+          <input type="email" name="contact_email" placeholder="Contact Email" required />
+          <input type="tel" name="phone" placeholder="Phone Number" required />
+          <select name="subject" required>
             <option value="" disabled selected>Select Subject</option>
             <option>Physics</option>
             <option>Chemistry</option>
@@ -55,65 +59,68 @@
             <option>Media</option>
             <option>Political Science</option>
           </select>
-          <div class="upload-box">
+
+          <div class="upload-instructions">
+            <p>For quick verification, please ensure your filenames contain a keyword that matches the document type.</p>
+            <ul>
+              <li><strong>Degree:</strong> "my_degree_scan.pdf"</li>
+              <li><strong>Appointment:</strong> "teacher_appointment.jpg"</li>
+            </ul>
+          </div>
+
+          <input type="file" name="files[]" id="file-upload-input" multiple hidden />
+
+          <label for="file-upload-input" class="upload-box" id="upload-box">
             <div class="upload-icon">
               <i class="fa-solid fa-arrow-up-from-bracket"></i>
             </div>
-            <p class="upload-text">Drag and Drop file<br /><span>or</span></p>
-            <button type="button" class="browse-btn">Browse</button>
-          </div>
+            <div id="upload-info" class="upload-info">
+              <p>Drag and Drop files<br /><span>or</span></p>
+            </div>
+            <button type="button" class="browse-btn" id="browse-btn">Browse</button>
+          </label>
           <button type="submit" class="submit-btn">Submit</button>
         </form>
       </section>
 
       <section class="teach-reg-right-content">
-        <div class="img-placeholder">
-       <img src="<?php  echo ROOT ?>/assets/images/teacher_signup.png" alt="teacher_signup" />
-        </div>
-        <div class="teach-reg-checklist">
-          <div class="checklist-item">
-            <div>
-              <p>Copy of degree certificate</p>
-              <small
-                >Upload a certified copy of your highest academic
-                qualification.</small
-              >
-            </div>
-            <span class="check-icon"
-              ><i class="fa-regular fa-circle-check"></i
-            ></span>
+        <div class="right-content-wrapper">
+          <div class="img-placeholder">
+            <img src="<?php  echo ROOT ?>/assets/images/teacher_signup.png" alt="teacher_signup" />
           </div>
-          <div class="checklist-item">
-            <div>
-              <p>Copy of appointment letter</p>
-              <small
-                >Provide your current or most recent appointment letter.</small
-              >
+          <div class="teach-reg-checklist" id="checklist">
+            <div class="checklist-item" data-keyword="degree">
+              <div>
+                <p>Copy of degree certificate</p>
+                <small>Upload a certified copy of your highest academic qualification.</small>
+              </div>
+              <span class="check-icon"><i class="fa-regular fa-circle-check"></i></span>
             </div>
-            <span class="check-icon"
-              ><i class="fa-regular fa-circle-check"></i
-            ></span>
-          </div>
-          <div class="checklist-item">
-            <div>
-              <p>Copy of last month pay slip</p>
-              <small>Submit a recent payslip as proof of employment.</small>
+            <div class="checklist-item" data-keyword="appointment">
+              <div>
+                <p>Copy of appointment letter</p>
+                <small>Provide your current or most recent appointment letter.</small>
+              </div>
+              <span class="check-icon"><i class="fa-regular fa-circle-check"></i></span>
             </div>
-            <span class="check-icon"
-              ><i class="fa-regular fa-circle-check"></i
-            ></span>
-          </div>
-          <div class="checklist-item">
-            <div>
-              <p>Copy of NIC</p>
-              <small>Upload a clear copy of your NIC (front and back).</small>
+            <div class="checklist-item" data-keyword="slip">
+              <div>
+                <p>Copy of last month pay slip</p>
+                <small>Submit a recent payslip as proof of employment.</small>
+              </div>
+              <span class="check-icon"><i class="fa-regular fa-circle-check"></i></span>
             </div>
-            <span class="check-icon"
-              ><i class="fa-regular fa-circle-check"></i
-            ></span>
+            <div class="checklist-item" data-keyword="nic">
+              <div>
+                <p>Copy of NIC</p>
+                <small>Upload a clear copy of your NIC (front and back).</small>
+              </div>
+              <span class="check-icon"><i class="fa-regular fa-circle-check"></i></span>
+            </div>
           </div>
         </div>
       </section>
     </main>
+    <script src="<?php echo ROOT ?>/assets/js/signUpDetails.js"></script>
   </body>
 </html>

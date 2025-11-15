@@ -1,0 +1,309 @@
+:root {
+  --primary-color: #1e2a5e;
+  --secondary-color: #fed352;
+  --background-color: #f4f7fc;
+  --text-color: #333;
+  --sidebar-text: #ffffff;
+  --card-bg: #ffffff;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --light-gray: #f0f2f5;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+}
+.dashboard {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+/* --- Sidebar Navigation --- */
+.sidebar {
+  width: 260px;
+  background-color: var(--primary-color);
+  color: var(--sidebar-text);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  transition: width 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 0 20px 20px 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.menu-icon {
+  cursor: pointer;
+  font-size: 24px;
+  margin-right: 15px;
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+}
+
+.nav-item a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 25px;
+  text-decoration: none;
+  color: var(--sidebar-text);
+  font-weight: 500;
+  border-left: 5px solid transparent;
+  transition: background-color 0.2s, border-left-color 0.2s;
+}
+
+.nav-item a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-item.active a {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left-color: var(--secondary-color);
+  font-weight: 600;
+}
+
+/* --- Main Content Area --- */
+.main-content {
+  flex-grow: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.content-header {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.content-subheader {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-top: -15px;
+  margin-bottom: 30px;
+}
+
+.content-panel {
+  display: none; /* Hide panels by default */
+}
+
+.content-panel.active {
+  display: block; /* Show active panel */
+}
+
+/* --- ACADEMIC DETAILS STYLES --- */
+.details-card {
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: var(--shadow);
+  margin-bottom: 25px;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.card-title svg {
+  width: 24px;
+  height: 24px;
+  stroke: var(--primary-color);
+}
+
+/* Teacher Card */
+.teacher-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.teacher-details .name {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #000;
+}
+
+.teacher-details .qualification {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.contact-info {
+  margin-top: 20px;
+  display: flex;
+  gap: 50px;
+}
+
+.contact-info div {
+  flex: 1;
+}
+
+.contact-info .label {
+  font-size: 0.8rem;
+  color: #777;
+  margin-bottom: 4px;
+}
+
+/* Schedule Card */
+.schedule-item {
+  background-color: var(--light-gray);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.schedule-day {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.schedule-time {
+  color: #555;
+}
+
+.schedule-location span {
+  display: block;
+  text-align: right;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Paper Marking Panel */
+.marker-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 10px;
+}
+
+.marker-item span {
+  flex: 1;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.marker-item .marker-name {
+  font-weight: 500;
+}
+
+/* --- PERFORMANCE PANEL STYLES --- */
+.progress-item {
+  margin-bottom: 20px;
+}
+.progress-item:last-child {
+  margin-bottom: 0;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.progress-label .title {
+  font-weight: 500;
+  color: #333;
+}
+.progress-label .value {
+  color: #777;
+}
+.progress-label .percentage {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.progress-bar-container {
+  width: 100%;
+  background-color: #e9ecef;
+  border-radius: 20px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 0.5s ease-in-out;
+}
+
+.progress-bar-secondary {
+  background-color: var(--secondary-color);
+}
+
+.progress-bar-primary {
+  background-color: var(--primary-color);
+}
+
+/* Summary Cards */
+.summary-card-row {
+  display: flex;
+  gap: 25px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.summary-card {
+  flex: 1;
+  min-width: 200px;
+  background-color: var(--card-bg);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #e0e0e0;
+}
+
+.summary-card-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--light-gray);
+  flex-shrink: 0;
+}
+.summary-card-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: var(--primary-color);
+}
+
+.summary-card-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.summary-card-label {
+  font-size: 0.9rem;
+  color: #666;
+}

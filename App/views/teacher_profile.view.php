@@ -13,10 +13,6 @@
       rel="stylesheet"
       href="<?php  echo ROOT ?>/assets/css/component/calander.css"
     />
-    <link
-      rel="stylesheet"
-      href="<?php  echo ROOT ?>/assets/css/component/event.css"
-    />
     <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/profile.css" />
     <link
       rel="stylesheet"
@@ -48,6 +44,10 @@
             <i class="fa-solid fa-chalkboard-user"></i>
             <span>My Classes</span>
           </a>
+          <a href="#" class="sidebar-item" data-target="community">
+            <i class="fa-solid fa-users"></i>
+            <span>Community</span>
+        </a>
           <a href="#" class="sidebar-item" data-target="my-calendar">
             <i class="fa-regular fa-calendar"></i>
             <span>My Calendar</span>
@@ -82,7 +82,7 @@
             </div>
             <div class="stat-card">
               <p>Monthly Revenue</p>
-              <span>$3,200</span>
+              <span>Rs3,200</span>
               <i class="fa-solid fa-dollar-sign icon-blue"></i>
             </div>
           </div>
@@ -203,14 +203,50 @@
             </div>
           </div>
         </section>
+        <!-- ======================================== -->
+        <!-- 5. My Community Section     -->
+        <!-- ======================================== -->
+        <section id="community" class="content-section">
+          <div class="content-header">
+            <h1><i class="fa-solid fa-users"></i> My Communities</h1>
+            <button class="btn btn-primary">
+              <i class="fa-solid fa-plus"></i> Create New Community
+            </button>
+          </div>
 
+          <div class="community-search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="search" placeholder="Search your communities by name..." />
+          </div>
+
+          <div class="community-list">
+            <div class="community-card">
+              <div class="community-info">
+                <h3>Physics A-Level Study Group</h3>
+                <div class="community-meta">
+                  <span><i class="fa-solid fa-users"></i> 125 Members</span>
+                </div>
+              </div>
+              <button class="btn btn-secondary">Manage</button>
+            </div>
+
+            <div class="community-card">
+              <div class="community-info">
+                <h3>Combined Maths 2025 Batch</h3>
+                <div class="community-meta">
+                  <span><i class="fa-solid fa-users"></i> 82 Members</span>
+                </div>
+              </div>
+              <button class="btn btn-secondary">Manage</button>
+            </div>
+          </div>
+        </section>        
         <!-- ======================================== -->
         <!-- 5. My Calendar Section (Placeholder)     -->
         <!-- ======================================== -->
         <section id="my-calendar" class="content-section">
           <div class="content-header">
             <h1><i class="fa-regular fa-calendar"></i> My Calendar</h1>
-            <p>This section is under construction.</p>
             <?php include __DIR__.'/Component/calander.php'; ?>
           </div>
         </section>

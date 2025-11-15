@@ -18,6 +18,7 @@
         <?php include __DIR__.'/Component/nav.view.php'; ?>
     </section>
     <section class="home-section home-hero-container">
+      <img src="<?php  echo ROOT ?>/assets/images/hero_3.jpg">
     </section>
     <section class="home-section home-famous-class-container">
       <h3>Level Up Your Learning with Expert-Led Classes</h3>
@@ -29,9 +30,12 @@
       
       <div class="courses-container">
         <?php  foreach (range(1, 5) as $i): ?>
+        <a href="<?php  echo ROOT ?>/ClassPage" class="card-link-wrapper">
         <?php include __DIR__.'/Component/card.view.php'; ?>
+        </a>
         <?php endforeach; ?>
       </div>
+        
     </section>
 
     <section class="home-section home-catergary-container">
@@ -115,7 +119,7 @@
       </p>
         <div class="home-institute ">
         <?php  foreach (range(1, 5) as $i): ?>
-        <div class="ellipse"><img  src="" /> </div>
+        <div class="ellipse"><img  src="<?php  echo ROOT ?>/assets/images/insitute_logo.png" /> </div>
         <?php endforeach; ?>
       </div>
 

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduLink - Welcome</title>
-    <link rel="stylesheet" href="../../Public/assets/css/createClassLanding_institute.css?v=1.1">
-    <link rel="stylesheet" href="../../Public/assets/css/component/createClassHeader_institute.css?v=1.1">
+    <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/createClassLanding_institute.css">
+    <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/component/createClassHeader.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <?php include __DIR__ . '/Component/createClassHeader_institute.view.php';?>
+    <?php include __DIR__ . '/Component/createClassHeader.php';?>
 
 
     <!-- Hero Section -->
@@ -30,14 +30,14 @@
     <section class="pic-section">
         <div class="pic-container">
             <div class="pic-card">
-                <img src="../../Public/assets/images/createClassLandingLeft_institute.png" alt="left-img">
+                <img src="<?php  echo ROOT ?>/assets/images/createClassLandingLeft_institute.png" alt="left-img">
             </div>
 
             <div class="pic-card">
-                <img src="../../Public/assets/images/createClassLandingMiddle_institute.jpg" alt="middle-img">
+                <img src="<?php  echo ROOT ?>/assets/images/createClassLandingMiddle_institute.jpg" alt="middle-img">
             </div>
             <div class="pic-card">
-                <img src="../../Public/assets/images/createClassLandingRight_institute.jpg" alt="right-img">
+                <img src="<?php  echo ROOT ?>/assets/images/createClassLandingRight_institute.jpg" alt="right-img">
             </div>
         </div>
     </section>
@@ -97,6 +97,6 @@
     <footer class="footer">
         
     </footer>
-    <script src="../../Public/assets/js/createClassLanding_institute.view.js"></script>
+    <script src="<?php  echo ROOT ?>/assets/js/createClassLanding_institute.js"></script>
 </body>
 </html>

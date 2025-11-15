@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EduLink - Find the Perfect Teacher</title>
-    <link rel="stylesheet" href="../../Public/assets/css/createClassFindTeacher.css?v=1.1">
-    <link rel="stylesheet" href="../../Public/assets/css/component/createClassHeader_institute.css?v=1.1">
+    <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/createClassFindTeacher.css">
+    <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/component/createClassHeader.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 <body>
-    <?php include __DIR__ . '/Component/createClassHeader_institute.view.php';?>
+    <?php include __DIR__ . '/Component/createClassHeader.php';?>
 
     <main class="container">
         <section class="hero-section">
@@ -51,7 +51,6 @@
                 </div>
                 <div class="teacher-details">
                     <p class="detail-item">🎓 Bsc.Hons.Engineering</p>
-                    <p class="detail-item">📚 15 years experience • 1250 students</p>
                 </div>
                 <div class="specializations">
                     <p class="spec-label">Specializations:</p>
@@ -62,48 +61,10 @@
                     </div>
                 </div>
                 <div class="card-actions">
-                    <button class="btn-outline">View Profile</button>
                     <button class="btn-primary">Request</button>
-                </div>
-                <div class="card-actions">
                     <button class="btn-cancel">Cancel</button>
-                    <button class="btn-assign">Assign</button>
                 </div>
             </div>
-
-            <div class="teacher-card">
-                <div class="teacher-header">
-                    <div class="teacher-avatar avatar-4">👨‍💻</div>
-                    <div class="teacher-info">
-                        <h3 class="teacher-name">Mr. James Wilson</h3>
-                        <div class="teacher-subject">
-                            <span>ICT</span>
-                            <span class="rating">⭐ 4.9</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="teacher-details">
-                    <p class="detail-item">🎓 PhD in Computer Science</p>
-                    <p class="detail-item">📚 10 years experience • 1500 students</p>
-                </div>
-                <div class="specializations">
-                    <p class="spec-label">Specializations:</p>
-                    <div class="spec-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">Data Science</span>
-                    </div>
-                </div>
-                <div class="card-actions">
-                    <button class="btn-outline">View Profile</button>
-                    <button class="btn-primary">Request</button>
-                </div>
-                <div class="card-actions">
-                    <button class="btn-cancel">Cancel</button>
-                    <button class="btn-assign">Assign</button>
-                </div>
-            </div>
-
         </section>
         <!-- Action Button Section -->
         <section class="actionBtn-section">
@@ -111,6 +72,6 @@
             <button type="submit" class="btnCreateClass" id="create-class-btn"> Create Class</button>
         </section>
     </main>
-    <script src="../../Public/assets/js/createClassFindTeacher.view.js"></script>
+    <script src="<?php  echo ROOT ?>/assets/js/createClassFindTeacher.js"></script>
 </body>
 </html>

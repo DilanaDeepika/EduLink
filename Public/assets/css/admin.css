@@ -2,12 +2,13 @@ body {
   font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
-  display: flex;
-  min-height: 100vh;
   background-color: #f7f8fc;
 }
+.admin-layout {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
 
-/* Sidebar Container (Color: #1E2A5E) */
 .sidebar {
   width: 250px;
   background-color: #1e2a5e;
@@ -19,7 +20,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Sidebar Header/Branding */
 .sidebar-header {
   padding: 0 20px 20px 20px;
   font-size: 1.5rem;
@@ -372,4 +372,132 @@ body {
 
 .schedule-group .form-group {
   flex: 1;
+}
+.content-section .content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.content-section .content-header h1 {
+  color: var(--color-primary);
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.content-section .content-search-bar {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.content-section .community-search-bar .fa-search {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #aaa;
+}
+.content-section .community-search-bar input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  font-size: 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.content-section .community-search-bar input:focus {
+  border-color: var(--color-primary);
+}
+
+.content-section .community-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.content-section .community-card {
+  display: grid;
+  grid-template-columns: 3fr 1fr max-content;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background-color: var(--card-background);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color 0.3s ease;
+  margin: 0.5rem 0;
+}
+
+.content-section .community-card {
+  background-color: #ffffff;
+}
+
+.content-section .community-card:hover {
+  background-color: #f0f8ff;
+}
+
+.content-section .community-card:last-child {
+  border-bottom: none;
+}
+
+.content-section .community-info h3 {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.content-section .community-meta {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  color: var(--text-color-light, #6c757d);
+  font-size: 0.95rem;
+  padding-left: 20px;
+}
+
+.content-section .community-meta span i {
+  margin-right: 0.5rem;
+  color: var(--color-primary);
+}
+
+.content-section .community-card .btn-secondary {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.content-section .community-card .btn-secondary:hover {
+  background-color: #e5b84c;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.content-section .community-card .btn-secondary {
+  justify-self: end;
+}
+
+.content-section .btn-primary {
+  background-color: var(--color-primary);
+  color: var(--text-white, #ffffff);
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.content-section .btn-primary:hover {
+  background-color: #1a234b;
 }

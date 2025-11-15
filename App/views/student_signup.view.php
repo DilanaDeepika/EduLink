@@ -15,33 +15,30 @@
   </head>
   <body>
     <?php include __DIR__.'/Component/nav.view.php'; ?>
-    <!-- Main Form Section -->
     <main>
       <div class="std-reg-form-container">
-        <div class="std-reg-form-left">
+        <form class="std-reg-form-left" method="POST" action="<?php echo ROOT ?>/signup/save_student_details">
           <h2>Student Account Setup</h2>
 
           <div class="input-row">
-            <input type="text" placeholder="First Name" />
-            <input type="text" placeholder="Last Name" />
+            <input type="text" name="first_name" placeholder="First Name" required />
+            <input type="text" name="last_name" placeholder="Last Name" required />
           </div>
 
-          <input type="text" placeholder="School" />
-          <input type="text" placeholder="Address" />
+          <input type="text" name="school" placeholder="School" />
+          <input type="text" name="address" placeholder="Address" />
 
           <div class="dropdown-group">
-            <select>
-              <option>Stream</option>
-              <option>Science</option>
-              <option>Commerce</option>
-              <option>Arts</option>
+            <select name="stream" required>
+              <option value="" disabled selected>Stream</option>
+              <option value="Science">Science</option>
+              <option value="Commerce">Commerce</option>
+              <option value="Arts">Arts</option>
             </select>
           </div>
 
-          <button class="submit-btn">Submit</button>
-        </div>
-
-        <div class="std-reg-form-right">
+          <button type="submit" class="submit-btn">Submit</button>
+        </form> <div class="std-reg-form-right">
           <div class="image-placeholder">
             <img src="<?php  echo ROOT ?>/assets/images/student_signup.png" alt="student_signup" />
           </div>

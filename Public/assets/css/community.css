@@ -1,0 +1,147 @@
+/* --- Scoped Styles for Community Chat --- */
+.community-chat-page {
+  /* Variables are now scoped to this parent class */
+  --primary-accent: #1e2a5e;
+  --secondary-accent: #fed352;
+  --primary-bg: #f4f6f9;
+  --container-bg: #ffffff;
+  --chat-bg: #eef2f8;
+  --sent-bubble-bg: #fef7e0;
+  --received-bubble-bg: #ffffff;
+  --text-primary: #111b21;
+  --text-secondary: #667781;
+  --border-color: #e9edef;
+
+  /* Styles moved from 'body' to the parent container */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--text-primary);
+  /* These properties ensure it can still fill a given area */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh; /* Adjust height as needed in your project */
+  box-sizing: border-box;
+}
+
+/* --- Main Chat Container --- */
+.community-chat-page .chat-container {
+  width: 100%;
+  max-width: 1400px;
+  height: 90vh;
+  max-height: 900px;
+  background-color: var(--container-bg);
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- Header --- */
+.community-chat-page .chat-header {
+  background-color: var(--primary-accent);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 1rem 1rem 0 0;
+}
+
+/* --- Messages Area --- */
+.community-chat-page .messages-area {
+  flex-grow: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background-color: var(--chat-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Individual Message Bubble --- */
+.community-chat-page .message {
+  display: flex;
+  margin-bottom: 1rem;
+  max-width: 70%;
+  align-self: flex-start;
+}
+
+.community-chat-page .message .bubble {
+  padding: 0.75rem 1rem;
+  border-radius: 1.25rem;
+  line-height: 1.4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.community-chat-page .message .author {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--primary-accent);
+}
+
+.community-chat-page .message.received .bubble {
+  background-color: var(--received-bubble-bg);
+  border-top-left-radius: 0.5rem;
+}
+
+.community-chat-page .message.received .author {
+  color: #615ef0;
+}
+
+/* --- Sent Message Styles --- */
+.community-chat-page .message.sent {
+  align-self: flex-end;
+}
+
+.community-chat-page .message.sent .bubble {
+  background-color: var(--sent-bubble-bg);
+  border-top-right-radius: 0.5rem;
+}
+
+.community-chat-page .message.sent .author {
+  display: none;
+}
+
+/* --- Typing Bar --- */
+.community-chat-page .typing-bar {
+  display: flex;
+  padding: 1rem;
+  background-color: var(--primary-bg);
+  border-top: 1px solid var(--border-color);
+}
+
+.community-chat-page #message-input {
+  flex-grow: 1;
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1rem;
+  border-radius: 1.5rem;
+  font-size: 1rem;
+  background-color: var(--container-bg);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.community-chat-page #message-input:focus {
+  border-color: var(--primary-accent);
+}
+
+.community-chat-page #send-button {
+  margin-left: 1rem;
+  border: none;
+  background-color: var(--primary-accent);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.community-chat-page #send-button:hover {
+  background-color: #16204a;
+}

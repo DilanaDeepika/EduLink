@@ -4,13 +4,25 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EduLink - Institute Dashboard</title>
-    <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/profile.css" />
+        <link href="<?php  echo ROOT ?>/assets/css/component/nav.css" rel="stylesheet" />
+    <link  href="<?php  echo ROOT ?>/assets/css/profile.css" rel="stylesheet"/>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+                    <link
+      href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css"
+      rel="stylesheet"
+    />
+                <link
+      rel="stylesheet"
+      href="<?php  echo ROOT ?>/assets/css/component/calander.css"
+    />
   </head>
   <body>
+    <header>
+        <?php include __DIR__.'/Component/nav.view.php'; ?>
+    </header>
     <div class="dashboard-layout">
       <aside class="sidebar">
         <nav class="sidebar-nav">
@@ -31,11 +43,14 @@
             <i class="fa-solid fa-chart-line"></i>
             <span>Profit</span>
           </a>
-          <a href="#" class="sidebar-item" data-target="calendar">
+          <a href="#" class="sidebar-item" data-target="community">
+            <i class="fa-solid fa-users"></i>
+            <span>Community</span>
+        </a>
+          <a href="#" class="sidebar-item" data-target="my-calendar">
             <i class="fa-regular fa-calendar"></i>
             <span>Calendar</span>
           </a>
-        </nav>
       </aside>
 
       <!-- Main Content Area -->
@@ -45,9 +60,7 @@
         <!-- ======================================== -->
         <section id="settings" class="content-section active">
           <div class="profile-card">
-            <div class="profile-avatar">
-              <i class="fa-solid fa-school"></i>
-            </div>
+            <div class="profile-avatar"></div>
             <div class="profile-info">
               <h2>EduLink Institute</h2>
               <button class="btn btn-secondary">Edit Profile</button>
@@ -72,7 +85,7 @@
             </div>
             <div class="stat-card">
               <p>Monthly Revenue</p>
-              <span>$12,500</span>
+              <span>Rs12,500</span>
               <i class="fa-solid fa-dollar-sign icon-yellow"></i>
             </div>
           </div>
@@ -115,6 +128,14 @@
                     type="text"
                     id="inst_location"
                     value="123 Main Street, Colombo"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="inst_email">Email</label>
+                  <input
+                    type="text"
+                    id="inst_email"
+                    value="gayani@gmail.com"
                   />
                 </div>
                 <div class="form-row">
@@ -197,19 +218,62 @@
             <p>This section is under construction.</p>
           </div>
         </section>
+        <!-- ======================================== -->
+        <!-- 5. My Community Section     -->
+        <!-- ======================================== -->
+        <section id="community" class="content-section">
+          <div class="content-header">
+            <h1><i class="fa-solid fa-users"></i> My Communities</h1>
+            <button class="btn btn-primary">
+              <i class="fa-solid fa-plus"></i> Create New Community
+            </button>
+          </div>
 
+          <div class="community-search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="search" placeholder="Search your communities by name..." />
+          </div>
+
+          <div class="community-list">
+            <div class="community-card">
+              <div class="community-info">
+                <h3>Physics A-Level Study Group</h3>
+                <div class="community-meta">
+                  <span><i class="fa-solid fa-users"></i> 125 Members</span>
+                </div>
+              </div>
+              <button class="btn btn-secondary">Manage</button>
+            </div>
+
+            <div class="community-card">
+              <div class="community-info">
+                <h3>Combined Maths 2025 Batch</h3>
+                <div class="community-meta">
+                  <span><i class="fa-solid fa-users"></i> 82 Members</span>
+                </div>
+              </div>
+              <button class="btn btn-secondary">Manage</button>
+            </div>
+          </div>
+        </section>   
         <!-- ======================================== -->
         <!-- 5. Calendar Section (Placeholder)        -->
         <!-- ======================================== -->
-        <section id="calendar" class="content-section">
+          <section id="my-calendar" class="content-section">
           <div class="content-header">
             <h1><i class="fa-regular fa-calendar"></i> Institute Calendar</h1>
-            <p>This section is under construction.</p>
+          </div>
+          <div class="calendar-placeholder">
+            <?php include __DIR__.'/Component/calander.php'; ?>
           </div>
         </section>
       </main>
     </div>
-    <?php include __DIR__.'/Component/footer.view.php'; ?>
-    <script src="../../Public/assets/js/profile.js"></script>
+      <?php include __DIR__.'/Component/footer.view.php'; ?>
+  <script src="<?php  echo ROOT ?>/assets/js/calander.js"></script>
+  <script src="<?php  echo ROOT ?>/assets/js/event.js"></script>
+    <script src="<?php  echo ROOT ?>/assets/js/profile.js"></script>
   </body>
 </html>
+
+
