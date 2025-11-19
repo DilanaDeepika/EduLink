@@ -354,15 +354,15 @@
                 </thead>
                 <tbody>
                   <?php
-                    // --- DUMMY DATA ---
-                    // In your real application, you'll fetch this array from your database.
-                    // It's sorted to show the most recent papers first.
+            // It's sorted to show the most recent papers first.
                     $papers = [
                       ['id' => 'ICT003', 'name' => 'Final Term Paper', 'year' => 2025, 'is_marks_released' => false],
                       ['id' => 'ICT002', 'name' => 'Mid Term Paper', 'year' => 2025, 'is_marks_released' => true],
                       ['id' => 'ICT001', 'name' => 'First Term Paper', 'year' => 2025, 'is_marks_released' => true],
                       ['id' => 'PAP004', 'name' => 'End of Year Paper', 'year' => 2024, 'is_marks_released' => true],
-                    ];
+                    ];             // --- DUMMY DATA ---
+                    // In your real application, you'll fetch this array from your database.
+               
 
                     if (!empty($papers)):
                       foreach ($papers as $paper):
@@ -400,6 +400,7 @@
         </div>
       </div>
     </div>
+  </div>
     <?php include __DIR__.'/Component/footer.view.php'; ?>
     <script>
         const ROOT_URL = "<?php echo ROOT ?>";

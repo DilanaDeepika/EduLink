@@ -15,8 +15,15 @@ class CreateClass extends Controller
             $classModel      = new ClassModel();
             $objectiveModel  = new ClassObjectiveModel();
             $scheduleModel   = new ClassScheduleModel();
-;
 
+
+
+            $uploadedThumbnail = handleFileUploads('image', 'thumbnail');
+            $thumbnailPaths = !empty($uploadedThumbnail) ? implode(',', $uploadedThumbnail) : '';
+
+            $uploadedTrailer = handleFileUploads('video', 'trailer');
+            $TrailerPaths = !empty($uploadedTrailer) ? implode(',', $uploadedTrailer) : '';
+            
 
             // === 1. Prepare Classes table data ===
             $classData = [
@@ -27,6 +34,8 @@ class CreateClass extends Controller
                 'grade_level_name' => $_POST['grade_level_name'] ?? '',
                 'category_name'    => $_POST['category_name'] ?? '',
                 'language_name'    => $_POST['language_name'] ?? '',
+                'thumbnail_path'   => $thumbnailPaths,
+                'trailer_path'     => $TrailerPaths,
                 'max_students'     => $_POST['max_students'] ?? 0,
                 'monthly_fee'      => $_POST['monthly_fee'] ?? 0,
                 'target_audience'  => $_POST['target_audience'] ?? '',

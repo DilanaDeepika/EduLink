@@ -8,8 +8,45 @@ class Model extends Database
     protected $rules = []; 
     public $validation_errors = [];
 
-    
-    public function where($data, $data_not = [])
+ public function search($columns, $keywords, $sort = 'newest')
+{
+    $conditions = [];
+    $params = [];
+
+    foreach ($keywords as $i => $word) {
+        $likeParts = [];
+        foreach ($columns as $col) {
+            $paramKey = "{$col}_$i";
+            $likeParts[] = "$col LIKE :$paramKey";
+            $params[$paramKey] = "%" . $word . "%";
+        }
+        $conditions[] = '(' . implode(' OR ', $likeParts) . ')';
+    }
+
+    $query = "SELECT * FROM $this->table";
+    if (!empty($conditions)) {
+        $query .= " WHERE " . implode(' OR ', $conditions);
+    }
+            switch ($sort) {
+            // case 'highest-rated':
+            //     $query .= " ORDER BY rating DESC"; 
+            //     break;
+            // case 'most-reviewed':
+            //     $query .= " ORDER BY review_count DESC"; 
+            //     break;
+            // case 'most-relevant':
+            //     $query .= " ORDER BY relevance_score DESC"; 
+            //     break;
+            case 'newest':
+            default:
+                $query .= " ORDER BY created_at DESC";
+                break;
+    }
+
+    return $this->query($query, $params);
+}
+
+    public function where($data, $data_not = [], $orderBy = null)
     {
         $conditions = [];
         $params = [];
@@ -32,7 +69,21 @@ class Model extends Database
         if (!empty($conditions)) {
             $query .= " WHERE " . implode(' AND ', $conditions);
         }
-        
+
+        if (!empty($orderBy)) {
+            if (!is_array($orderBy)) {
+                throw new Exception("orderBy must be an associative array.");
+            }
+
+            $orderParts = [];
+            foreach ($orderBy as $col => $dir) {
+                $direction = strtoupper($dir) === "DESC" ? "DESC" : "ASC";
+                $orderParts[] = "$col $direction";
+            }
+
+            $query .= " ORDER BY " . implode(", ", $orderParts);
+        }
+
         // Add limit/offset if set
         if ($this->limit !== null) {
             $query .= " LIMIT $this->limit";
@@ -83,10 +134,8 @@ class Model extends Database
         return false;
 
     }
-    public function insert($data)
-{
+public function insert($data){
     if (empty($data) || !is_array($data)) {
-        error_log("Insert Error: Invalid data provided.");
         return false;
     }
 
@@ -95,28 +144,27 @@ class Model extends Database
     $placeholders = implode(',', array_map(fn($key) => ":$key", $keys));
 
     $query = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+
     try {
         $con = $this->connect();
-        if (!$con) {
-            error_log("Insert Error: Failed to connect to database.");
-            return false;
-        }
-
         $stm = $con->prepare($query);
         $success = $stm->execute($data);
 
         if (!$success) {
-            error_log("Database Insert Error: " . print_r($stm->errorInfo(), true));
             return false;
         }
 
-        return true; 
+        return $con->lastInsertId();
 
     } catch (PDOException $e) {
-        error_log("PDO Exception during insert: " . $e->getMessage());
         return false;
     }
 }
+
+public function insertAndGetId($data) {
+    return $this->insert($data);
+}
+
 public function update($id, $data, $id_column = 'id')
     {
         if (empty($data) || !is_array($data)) {

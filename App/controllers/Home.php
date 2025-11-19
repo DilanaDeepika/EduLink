@@ -6,18 +6,12 @@ class Home extends Controller
     {
         $data = [];
         
-        // Check if the user is logged in by looking at the session
         if (isset($_SESSION['user_id'])) {
             
             $user_id = $_SESSION['user_id'];
             
-            // --- THIS IS THE FIX ---
-            // Changed 'user_type' to 'user_role' to match your session
             $user_type = $_SESSION['user_role'];
-            // -----------------------
             
-            
-            // Now, get the user's *full* details
             $specific_model = null;
 
             if ($user_type === 'student') {

@@ -44,7 +44,6 @@
               required
             />
           </div>
-          <input type="email" name="contact_email" placeholder="Contact Email" required />
           <input type="tel" name="phone" placeholder="Phone Number" required />
           <select name="subject" required>
             <option value="" disabled selected>Select Subject</option>

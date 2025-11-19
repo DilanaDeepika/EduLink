@@ -62,21 +62,23 @@ body {
 
 .navbar-search-container {
   position: relative;
-  flex-grow: 1;
-  max-width: 400px;
+  flex-grow: 4;
+  max-width: 2000px;
 }
 
 .navbar-search-icon {
   position: absolute;
   top: 50%;
-  left: 15px;
+  left: 1634px;
   transform: translateY(-50%);
   color: #aaa;
-  stroke: #aaa;
-  fill: none;
-  width: 20px;
-  height: 20px;
+  background-color: var(--color-primary);
+  width: 50px;
+  height: 40px;
   pointer-events: none;
+  border: none;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .navbar-search-bar {

@@ -23,6 +23,11 @@ public function index()
                     'email'      => $user->email,
                     'role'       => $user->account_type,
                 ];
+                $logModel = new LoginLog();
+                $logModel->insert([
+                    'user_id' => $user->account_id,
+                    'login_time' => date('Y-m-d H:i:s')
+                ]);
 
                 $role = $_SESSION['USER']['role'];
 

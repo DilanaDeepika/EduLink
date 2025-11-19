@@ -7,10 +7,7 @@
     <link href="<?php  echo ROOT ?>/assets/css/style.css" rel="stylesheet" />
     <link href="<?php  echo ROOT ?>/assets/css/component/nav.css" rel="stylesheet" />
     <link href="<?php  echo ROOT ?>/assets/css/component/card.css" rel="stylesheet" />   
-        <link
-      href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css"
-      rel="stylesheet"
-    />
+    <link href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   </head>
   <body>
@@ -30,7 +27,7 @@
       
       <div class="courses-container">
         <?php  foreach (range(1, 5) as $i): ?>
-        <a href="<?php  echo ROOT ?>/ClassPage" class="card-link-wrapper">
+        <a href="<?php echo ROOT ?>/ClassPage?class_id=<?php echo 1 ?>"class="card-link-wrapper">
         <?php include __DIR__.'/Component/card.view.php'; ?>
         </a>
         <?php endforeach; ?>

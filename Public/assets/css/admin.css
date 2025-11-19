@@ -213,7 +213,8 @@ body {
   font-weight: 600;
 }
 
-.btn-review {
+.btn-review,
+.btn-review-ad {
   background-color: #fed352;
   color: #1e2a5e;
   border: none;
@@ -224,7 +225,8 @@ body {
   transition: background-color 0.3s;
 }
 
-.btn-review:hover {
+.btn-review:hover,
+.btn-review-ad:hover {
   background-color: #eab308;
 }
 
@@ -306,6 +308,10 @@ body {
   padding-top: 20px;
   border-top: 1px solid #e0e0e0;
 }
+.form-group textarea {
+  resize: none;
+  height: 80px;
+}
 
 .btn {
   padding: 10px 20px;
@@ -321,11 +327,29 @@ body {
 }
 
 .btn-approve {
-  background-color: #28a745;
+  background: #1e2a5e;
+  color: #fed352;
 }
 .btn-reject {
-  background-color: #dc3545;
+  background: #f1f1f1;
+  color: #1e2a5e;
 }
+
+.btn-cancel {
+  background: #f1f1f1;
+  color: #1e2a5e;
+}
+.btn-create {
+  background: #1e2a5e;
+  color: #fed352;
+}
+.btn-create:hover {
+  background: #16204c;
+}
+.btn-cancel:hover {
+  background: #aaa;
+}
+
 /* --- STYLES FOR ADVERTISEMENT MODAL --- */
 
 .form-group {
@@ -469,7 +493,6 @@ body {
 
 .content-section .community-card .btn-secondary {
   background-color: var(--color-accent);
-  color: var(--color-primary);
   font-weight: 700;
   padding: 8px 18px;
   border-radius: 6px;
@@ -477,7 +500,10 @@ body {
   cursor: pointer;
   transition: background-color 0.2s, box-shadow 0.2s;
 }
-
+.content-section .community-card .btn-secondary a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
 .content-section .community-card .btn-secondary:hover {
   background-color: #e5b84c;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -500,4 +526,29 @@ body {
 
 .content-section .btn-primary:hover {
   background-color: #1a234b;
+}
+
+.content-section {
+  display: none;
+}
+
+.content-section.active {
+  display: block;
+}
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #1e2a5e;
+}
+.form-group input,
+.form-group textarea {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
 }

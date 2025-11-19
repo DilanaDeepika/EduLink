@@ -1,9 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // --- 1. VIEW SWITCHING LOGIC (Analytics vs. Acception, etc.) ---
+  // --- 1. VIEW SWITCHING LOGIC ---
   const navLinks = document.querySelectorAll(".sidebar .nav-item a");
   const contentSections = document.querySelectorAll(".content-section");
   const navItems = document.querySelectorAll(".sidebar .nav-item");
 
+  console.log(contentSections);
   navLinks.forEach((link) => {
     link.addEventListener("click", function (event) {
       event.preventDefault();
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // --- 2. TAB SWITCHING LOGIC (within Acception page) ---
+  // --- 2. TAB SWITCHING LOGIC ---
   const tabLinks = document.querySelectorAll(".tab-link");
   const tabContents = document.querySelectorAll(".tab-content");
 
@@ -34,49 +35,82 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // --- 3. ORIGINAL MODAL CONTROL (for Acception page) ---
-  const reviewModal = document.getElementById("reviewModal");
-  const reviewButtons = document.querySelectorAll(
+  // --- 3. MODAL FUNCTION HELPER ---
+  function setupModal(modalId, openButtonsSelector) {
+    const modal = document.getElementById(modalId);
+    const openButtons = document.querySelectorAll(openButtonsSelector);
+    const closeButton = modal.querySelector(".close-button");
+    const cancelButton = modal.querySelector(".btn-cancel");
+
+    openButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        modal.style.display = "flex";
+      });
+    });
+
+    if (closeButton)
+      closeButton.addEventListener(
+        "click",
+        () => (modal.style.display = "none")
+      );
+    if (cancelButton)
+      cancelButton.addEventListener(
+        "click",
+        () => (modal.style.display = "none")
+      );
+
+    // Close modal by clicking outside
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) modal.style.display = "none";
+    });
+
+    return modal;
+  }
+
+  // --- 4. SETUP EXISTING MODALS ---
+  const reviewModal = setupModal(
+    "reviewModal",
     ".btn-review:not(.btn-review-ad)"
   );
-  const reviewCloseButton = reviewModal.querySelector(".close-button");
+  const adModal = setupModal("adReviewModal", ".btn-review-ad");
+  const adminCreateModal = setupModal(
+    "adminCreateCommunityModal",
+    ".btn-open-admin-create"
+  );
 
-  reviewButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      reviewModal.style.display = "flex";
+  // --- 5. OPEN AD MODAL WITH DATA ---
+  window.openAdModal = function (adRequest, communities) {
+    document.getElementById("advertiserName").textContent =
+      adRequest.advertiser_name;
+    document.getElementById("accountType").textContent = adRequest.account_type;
+    document.getElementById("paymentAmount").textContent =
+      adRequest.payment_amount;
+    document.getElementById("placementOption").textContent =
+      adRequest.placement_option_label;
+
+    const docList = document.getElementById("documentList");
+    docList.innerHTML = "";
+    adRequest.documents.forEach((doc) => {
+      const li = document.createElement("li");
+      li.innerHTML = `<a href="${doc.path}" download>${doc.name} &darr;</a>`;
+      docList.appendChild(li);
     });
-  });
 
-  if (reviewCloseButton) {
-    reviewCloseButton.addEventListener("click", () => {
-      reviewModal.style.display = "none";
-    });
-  }
-
-  // --- 4. NEW MODAL CONTROL (for Advertisement page) ---
-  const adModal = document.getElementById("adReviewModal");
-  const adReviewButtons = document.querySelectorAll(".btn-review-ad");
-  const adCloseButton = adModal.querySelector(".close-button");
-
-  adReviewButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      adModal.style.display = "flex";
-    });
-  });
-
-  if (adCloseButton) {
-    adCloseButton.addEventListener("click", () => {
-      adModal.style.display = "none";
-    });
-  }
-
-  // --- 5. Close either modal when clicking the background overlay ---
-  window.addEventListener("click", (event) => {
-    if (event.target == reviewModal) {
-      reviewModal.style.display = "none";
+    const communityWrapper = document.getElementById("communitySelectWrapper");
+    if (adRequest.placement_option === "community_poster") {
+      communityWrapper.style.display = "block";
+      const communitySelect = document.getElementById("community-select");
+      communitySelect.innerHTML = "";
+      communities.forEach((c) => {
+        const option = document.createElement("option");
+        option.value = c.id;
+        option.textContent = c.name;
+        communitySelect.appendChild(option);
+      });
+    } else {
+      communityWrapper.style.display = "none";
     }
-    if (event.target == adModal) {
-      adModal.style.display = "none";
-    }
-  });
+
+    adModal.style.display = "flex";
+  };
 });
