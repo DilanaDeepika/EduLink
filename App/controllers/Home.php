@@ -33,8 +33,71 @@ class Home extends Controller
                 $data['user'] = $specific_model->first(['account_id' => $user_id]);
             }
         }
+
+        //Hero Adveritising
+        $ad= new AdvertisementRequest();
+        $approvedAds = $ad->findAdsWithPriority();
+        $data['approved_ads']=$approvedAds;
         
-        // Pass the $data array (with or without user info) to the view
+
+        $classModel   = new ClassModel();
+        $teachers= new Teacher();
+
+        //Priority Classes
+        $priority= new ClassPriority();
+        $priorityItems=$priority->query("SELECT * FROM classes_priority ORDER BY priority_order  ASC");
+
+        $priorityClasses=[];
+        foreach($priorityItems as $priority_item){
+            $classobj=$classModel->first(['class_id'=>$priority_item->class_id]);
+
+            if($classobj){
+                $teacher = $teachers->first(['teacher_id' => $classobj->teacher_id]);
+
+                $classobj->teacher_name = $teacher
+                    ? $teacher->first_name . ' ' . $teacher->last_name
+                    : 'Unknown';
+
+                $priorityClasses[] = $classobj;
+
+            }
+        }
+        $data['priority_classes'] = $priorityClasses;
+
+        //Classes Filtering
+        $subject=$_GET['subject'] ?? null;
+
+        if ($subject) {
+            $subject = str_replace('_', ' ', $subject);
+        }
+
+        $items = $classModel->getClasses($subject);
+        
+
+        foreach($items as $class){
+            
+            $teacher=$teachers->first(['teacher_id'=>$class->teacher_id]);
+            $class->teacher_name = $teacher ? $teacher->first_name.' '.$teacher->last_name: 'Unknown';
+        }
+
+        $data['subject_classes']=$items;
+
+        //Priority institutes
+        $instituteModel = new Institute();
+        $priorityInstitutes = $instituteModel->getPriorityInstitutes(5); // method in model
+        $data['priorityInstitutes'] = $priorityInstitutes;
+
+
+        
+
+
         $this->view('home', $data);
+    
     }
+    
+    
+    
+
+    
+
 }

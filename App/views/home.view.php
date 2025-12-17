@@ -18,7 +18,13 @@
         <?php include __DIR__.'/Component/nav.view.php'; ?>
     </section>
     <section class="home-section home-hero-container">
-      <img src="<?php  echo ROOT ?>/assets/images/hero_3.jpg">
+      <div class="hero-ad-slider" id="heroAdSlider">
+        <?php foreach ($approved_ads as $ad): ?>
+            <div class="hero-ad-slide">
+                <img src="<?= ROOT ?>/uploads/ads/<?= basename($ad->poster_path) ?>" alt="Ad">
+            </div>
+        <?php endforeach; ?>
+    </div>
     </section>
     <section class="home-section home-famous-class-container">
       <h3>Level Up Your Learning with Expert-Led Classes</h3>
@@ -29,54 +35,81 @@
 
       
       <div class="courses-container">
-        <?php  foreach (range(1, 5) as $i): ?>
-        <a href="<?php  echo ROOT ?>/ClassPage" class="card-link-wrapper">
-        <?php include __DIR__.'/Component/card.view.php'; ?>
-        </a>
-        <?php endforeach; ?>
+        <?php if (!empty($data['priority_classes'])): ?>
+          <?php foreach ($data['priority_classes'] as $item): ?>
+            <a href="<?php echo ROOT ?>/ClassPage?class_id=<?php echo $item->class_id; ?>" class="card-link-wrapper">
+              <?php $class = $item; include __DIR__.'/Component/card.view.php'; ?>
+            </a>
+          <?php endforeach; ?>
+
+        <?php else: ?>
+          <p>No featured classes available right now.</p>
+        <?php endif; ?>
       </div>
         
     </section>
 
-    <section class="home-section home-catergary-container">
+    <section class="home-section home-catergary-container" id="home-section home-catergary-container">
       <h3>Your A/L Journey Starts Here</h3>
       <p>
         Browse A/L classes by subject and stream. Get ready with trusted Sri
         Lankan educators.
       </p>
-      <div class="home-subject-buttons">
-        <button class="home-subject-btn" data-subject="Physics">Physics</button>
+      <div class="home-subject-buttons" id="home-subject-buttons">
+        <button class="home-subject-btn" data-subject="Physics">
+          Physics
+        </button>
         <button class="home-subject-btn" data-subject="Chemistry">
           Chemistry
         </button>
         <button class="home-subject-btn" data-subject="Biology">Biology</button>
-        <button class="home-subject-btn" data-subject="Mathematics">
-          Mathematics
+        <button class="home-subject-btn" data-subject="CombinedMathematics">
+          Combined Mathematics
         </button>
-        <button class="home-subject-btn" data-subject="ICT">ICT</button>
+        <button class="home-subject-btn" data-subject="ICT">
+          ICT
+        </button>
         <button class="home-subject-btn" data-subject="Accounting">
           Accounting
         </button>
         <button class="home-subject-btn" data-subject="Economics">
           Economics
         </button>
-        <button class="home-subject-btn" data-subject="Business_Studies">
+        <button class="home-subject-btn" data-subject="BusinessStudies">
           Business Studies
         </button>
-        <button class="home-subject-btn" data-subject="Media">Media</button>
-        <button class="home-subject-btn" data-subject="Political_Science">
+        <button class="home-subject-btn" data-subject="Media">
+          Media
+        </button>
+        <button class="home-subject-btn" data-subject="PoliticalScience">
           Political Science
         </button>
+        <button class="home-subject-btn" data-subject="GeneralEnglish">
+          General English
+        </button>
+        <button class="home-subject-btn" data-subject="Logic">
+          Logic
+        </button>
+        <button class="home-subject-btn" data-subject="Sinhala">
+          Sinhala
+        </button>
+        <button class="home-subject-btn" data-subject="Agriculture">
+          Agriculture
+        </button>
       </div>
-      <div class="home-subject-result">
+      <div class="home-subject-result" id="home-subject-result">
           <button class="home-scroll-btn-left" id="scrollLeft">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 297.4C188.9 309.9 188.9 330.2 201.4 342.7L361.4 502.7C373.9 515.2 394.2 515.2 406.7 502.7C419.2 490.2 419.2 469.9 406.7 457.4L269.3 320L406.6 182.6C419.1 170.1 419.1 149.8 406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3L201.3 297.3z"/></svg>
+              <i class="fa fa-chevron-left"></i>          
           </button>
-          <?php  foreach (range(1, 4) as $i): ?>
-          <?php include __DIR__.'/Component/card.view.php'; ?>
-          <?php endforeach; ?>
-          <button class="home-scroll-btn-left" id="scrollLeft">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M439.1 297.4C451.6 309.9 451.6 330.2 439.1 342.7L279.1 502.7C266.6 515.2 246.3 515.2 233.8 502.7C221.3 490.2 221.3 469.9 233.8 457.4L371.2 320L233.9 182.6C221.4 170.1 221.4 149.8 233.9 137.3C246.4 124.8 266.7 124.8 279.2 137.3L439.2 297.3z"/></svg>
+          <div class="cards-wrapper">
+            <?php foreach($data['subject_classes']as $item): ?>
+              <a href="<?php echo ROOT ?>/ClassPage?class_id=<?php echo $item->class_id; ?>" class="card-link-wrapper">
+                <?php include __DIR__.'/Component/card.view.php'; ?>
+              </a>
+            <?php endforeach; ?>
+          </div>
+          <button class="home-scroll-btn-right" id="scrollRight">
+              <i class="fa fa-chevron-right"></i>
           </button>
       </div>
 
@@ -110,6 +143,7 @@
           <h4>John Doe</h4>
         </div>
       </div>
+      
     </section>
 
     <section class="home-section home-cta-section">
@@ -117,13 +151,20 @@
         Browse A/L classes by subject and stream. Get ready with trusted Sri
         Lankan educators.
       </p>
-        <div class="home-institute ">
-        <?php  foreach (range(1, 5) as $i): ?>
-        <div class="ellipse"><img  src="<?php  echo ROOT ?>/assets/images/insitute_logo.png" /> </div>
+        <div class="home-institute">
+        <?php foreach ($priorityInstitutes as $institute): ?>
+        <div class="ellipse">
+            <?php if (!empty($institute->logo_path)): ?>
+                <img src="<?= ROOT . '/' . $institute->logo_path ?>" alt="<?= htmlspecialchars($institute->name) ?>" />
+            <?php else: ?>
+                <img src="<?= ROOT ?>/assets/images/default_logo.png" alt="No logo" />
+            <?php endif; ?>
+        </div>
         <?php endforeach; ?>
-      </div>
+        </div>
 
     </section>
     <?php include __DIR__.'/Component/footer.view.php'; ?>
+    <script src="<?php  echo ROOT ?>/assets/js/home.view.js"></script>
   </body>
 </html>
