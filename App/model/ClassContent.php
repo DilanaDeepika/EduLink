@@ -2,7 +2,7 @@
 
 class ClassContent extends Model
 {
-    protected $table = 'Class_Content';
+    protected $table = 'class_content';
     
     // Validation rules
     protected $rules = [

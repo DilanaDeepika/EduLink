@@ -35,29 +35,41 @@ public function index()
                     case 'student':
                         $studentModel = new Student();
                         $student = $studentModel->first(['account_id' => $user->account_id]);
+                        
+                        
                         if ($student) {
                             $_SESSION['USER']['student_id'] = $student->student_id;
-                        }                
-                        redirect('Home');
+                            redirect('Home'); 
+                        } else {
+                            unset($_SESSION['USER']);
+                            $data['error'] = "Student profile not found.";
+                        }
                         break;
 
                     case 'teacher':
                         $teacherModel = new Teacher();
                         $teacher = $teacherModel->first(['account_id' => $user->account_id]);
-                        if ($teacher) {
+
+                        if ($teacher && ($teacher->approval_status == 'Poster Approval' || $teacher->approval_status == 'approved')) {
                             $_SESSION['USER']['teacher_id'] = $teacher->teacher_id;
+                            redirect('Home'); 
+                        } else {
+                            unset($_SESSION['USER']); 
+                            $data['error'] = "Your teacher account is pending approval.";
                         }
-                      
-                        redirect('Home');
                         break;
 
                     case 'institute':
                         $instituteModel = new Institute();
                         $institute = $instituteModel->first(['account_id' => $user->account_id]);
-                        if ($institute) {
+
+                        if ($institute && ($institute->approval_status == 'Poster Approval' || $institute->approval_status == 'approved')) {
                             $_SESSION['USER']['institute_id'] = $institute->institute_id;
+                            redirect('Home'); 
+                        } else {
+                            unset($_SESSION['USER']);
+                            $data['error'] = "Your institute account is pending approval.";
                         }
-                        redirect('Home');
                         break;
 
                     case 'admin':
@@ -65,12 +77,13 @@ public function index()
                         $admin = $adminModel->first(['account_id' => $user->account_id]);
                         if ($admin) {
                             $_SESSION['USER']['admin_id'] = $admin->admin_id;
+                            redirect('Home');
                         }
-                        redirect('Home');
                         break;
 
                     default:
-                        redirect('Home');
+                        unset($_SESSION['USER']);
+                        $data['error'] = "Invalid account role.";
                         break;
                 }
 

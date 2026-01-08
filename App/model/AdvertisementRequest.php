@@ -10,9 +10,11 @@ class AdvertisementRequest extends Model
         'placement_option' => 'required',
         'start_datetime'   => 'required|datetime',
         'end_datetime'     => 'required|datetime',
+
     ];
 
     protected $allowedColumns = [
+        'id',
         'account_id',
         'advertiser_name',
         'advertiser_contact',
@@ -22,21 +24,10 @@ class AdvertisementRequest extends Model
         'poster_path',
         'status',
         'is_paid',
-        'admin_message'
+        'admin_message',
+        'price',
+        'community_id',
+        'class_id',
+        'description'
     ];
-    public function checkConflict($placement, $start, $end)
-    {
-        $sql = "SELECT * FROM $this->table 
-                WHERE placement_option = :placement
-                AND status = 'Active'
-                AND start_datetime < :end
-                AND end_datetime > :start";
-
-        return $this->query($sql, [
-            'placement' => $placement,
-            'start' => $start,
-            'end' => $end
-        ]);
-    }
-
 }

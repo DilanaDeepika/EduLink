@@ -68,27 +68,41 @@ body {
 
 .navbar-search-icon {
   position: absolute;
-  top: 50%;
-  left: 1634px;
-  transform: translateY(-50%);
-  color: #aaa;
+  top: 0;
+  right: 0;
+  height: 100%;
+
+  color: #fff;
   background-color: var(--color-primary);
-  width: 50px;
-  height: 40px;
-  pointer-events: none;
   border: none;
+
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+
+  width: auto;
+  padding: 0 25px;
+  min-width: 80px;
+
+  cursor: pointer;
+  pointer-events: auto;
+  font-weight: 500;
+}
+
+.navbar-search-icon:hover {
+  background-color: #1a234b;
 }
 
 .navbar-search-bar {
   width: 100%;
-  padding: 10px 20px 10px 40px;
+  padding: 10px 100px 10px 20px;
   border: 1px solid #ddd;
   border-radius: 20px;
   font-size: 0.95rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
+  height: 45px;
 }
 
 .navbar-search-bar:focus {

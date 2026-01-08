@@ -62,7 +62,7 @@ public function save_teacher_details()
             'last_name'              => $_POST['last_name'],
             'phone'                  => $_POST['phone'],
             'subjects_taught'        => $_POST['subject'],
-            'approval_status'        => 'approved',
+            'approval_status'        => 'pending',
             'approval_document_path' => $filePaths,
             'approved_by_admin_id'   => null
         ];
@@ -105,7 +105,7 @@ public function save_teacher_details()
             'institute_name'         => $_POST['institute_name'],
             'location'               => $_POST['address'], 
             'contact_phone'          => $_POST['phone'],
-            'approval_status'        => 'approved',
+            'approval_status'        => 'pending',
             'approval_document_path' => $filePaths,
             'approved_by_admin_id'   => null
         ];

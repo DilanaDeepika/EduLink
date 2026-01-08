@@ -9,7 +9,7 @@ class ContentVle extends Controller
     }
     public function uploadDocument()
     {
-                echo "<pre>";
+            echo "<pre>";
             print_r("error");
             die();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -8,6 +8,10 @@ class Model extends Database
     protected $rules = []; 
     public $validation_errors = [];
 
+ public function setLimit($value){
+    $this->limit = $value;
+ }   
+
  public function search($columns, $keywords, $sort = 'newest')
 {
     $conditions = [];
@@ -145,6 +149,9 @@ public function insert($data){
 
     $query = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
 
+            // print_r( $query);
+            // die();
+
     try {
         $con = $this->connect();
         $stm = $con->prepare($query);
@@ -184,6 +191,8 @@ public function update($id, $data, $id_column = 'id')
 
         $query = "UPDATE `{$this->table}` SET " . implode(', ', $setClauses) . " WHERE `$id_column` = :$id_column";
         
+        // print_r( $query);
+        // die();
         return $this->query($query, $params);
     }
 

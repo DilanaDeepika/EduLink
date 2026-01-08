@@ -98,26 +98,25 @@
           <table class="request-table">
             <thead>
               <tr>
+                <th>Applicant ID</th>
                 <th>Applicant Name</th>
-                <th>Email Address</th>
+                <th>Subject</th>
                 <th>Date Submitted</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Dr. Aruni Silva</td>
-                <td>aruni.s@email.com</td>
-                <td>Oct 15, 2025</td>
-                <td><button class="btn-review">Review</button></td>
-              </tr>
-              <tr>
-                <td>Kasun Perera</td>
-                <td>kasun.p@email.com</td>
-                <td>Oct 14, 2025</td>
-                <td><button class="btn-review">Review</button></td>
-              </tr>
-            </tbody>
+                    <tbody>
+           
+                      <?php foreach($data["teacher_pending_req"] as $req): ?>
+                        <tr>
+                          <td><?= htmlspecialchars($req->teacher_id ) ?></td>
+                            <td><?= htmlspecialchars($req->	first_name)?> - <?=htmlspecialchars($req->last_name)?></td>
+                            <td><?= htmlspecialchars($req-> subjects_taught) ?></td>
+                            <td><?= htmlspecialchars($req->account_info->created_at) ?></td>
+                            <td><button class="btn-review" onclick='openAcceptModel(<?= json_encode($req) ?>)'>Review</button></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
           </table>
         </div>
 
@@ -126,20 +125,27 @@
           <table class="request-table">
             <thead>
               <tr>
+                <th>Institute Id</th>
                 <th>Institute Name</th>
-                <th>Contact Person</th>
+                <th>location</th>
                 <th>Date Submitted</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Bright Future Academy</td>
-                <td>Mr. Saman Kumara</td>
-                <td>Oct 12, 2025</td>
-                <td><button class="btn-review">Review</button></td>
-              </tr>
-            </tbody>
+                    <tbody>
+           
+                      <?php foreach($data["institute_pending_req"] as $req): ?>
+                        <tr>
+                          <td><?= htmlspecialchars($req->institute_id ) ?></td>
+                            <td><?= htmlspecialchars($req->institute_name)?> </td>
+                            <td><?= htmlspecialchars($req->location) ?></td>
+                            <td><?= htmlspecialchars($req->account_info->created_at) ?></td>
+
+                            
+                            <td><button class="btn-review" onclick='openAcceptModel(<?= json_encode($req) ?>)'>Review</button></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
           </table>
         </div>
       </div>
@@ -154,29 +160,41 @@
           <h4>Applicant Details</h4>
           <p>
             <strong>Name:</strong>
-            <span id="applicantName">Dr. Aruni Silva</span>
+            <span id="applicantName"></span>
           </p>
           <p>
             <strong>Email:</strong>
-            <span id="applicantEmail">aruni.s@email.com</span>
+            <span id="applicantEmail"></span>
           </p>
           <h4>Submitted Documents</h4>
-          <ul class="document-list">
-            <li>
-              <a href="#" download>University_Degree.pdf <span>&darr;</span></a>
-            </li>
-            <li>
-              <a href="#" download>National_ID_Copy.pdf <span>&darr;</span></a>
-            </li>
-          </ul>
-          <h4>Response Message (Optional)</h4>
-          <textarea
-            placeholder="Enter a reason for rejection or a welcome message..."
-          ></textarea>
+            <div id= "acceptModalDownloadContainer"></div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-reject">Reject Request</button>
-          <button class="btn btn-approve">Approve</button>
+                        <form action="<?php echo ROOT ?>/Admin/aprovelSend" method="POST" id="pendingReviewForm">
+                          <strong>Actions: </strong><br>
+
+                          <input type="hidden" name="user_id" id="user_id">
+                          <input type="hidden" name="user_email" id="user_email">
+
+                          <label>
+                            <input type="radio" name="status" value="approved" required> 
+                            Approve The User
+                          </label>
+                          <br>
+                          <label>
+                              <input type="radio" name="status" value="rejected"> 
+                              Reject The User
+                          </label>
+
+                          <br><br>
+                          <div class="hidden" id="message_container" style="display:none;"> 
+                              <label for="admin_message">Admin Message:</label><br>
+                              <textarea id="admin_message" name="admin_message" rows="4" cols="50"></textarea>
+                          </div>
+
+                          <br><br>
+                          <button type="submit">Submit Update</button>
+                      </form>
         </div>
       </div>
     </div>
@@ -267,15 +285,38 @@
                             <th>Start datetime</th>
                             <th>End datetime</th>
                             <th>Actions</th>
+                            <th>Left Hours</th>
                         </tr>
                     </thead>
                     <tbody>
+           
                       <?php foreach($data['home_request_details'] as $req): ?>
+                        <?php  
+                            $createdDate = new DateTime($req->created_at);
+                            $expiryDate  = clone $createdDate;
+                            $expiryDate->modify('+5 days'); 
+
+                            $now = new DateTime();
+
+                            $interval = $now->diff($expiryDate);
+                          
+                            $isUrgent =  ($interval->days < 1);
+
+                            if($isUrgent) {
+                                $timeStyle = 'color: red; font-weight: bold;';
+                                $leftTime = $interval->format('%h hrs %i mins left');
+                            } else {
+                                $timeStyle = 'color: green; font-weight: bold;';
+                                $leftTime = $interval->format('%a days left');
+                            }
+                          
+                          ?>
                         <tr>
                             <td><?= htmlspecialchars($req->advertiser_name) ?></td>
                             <td><?= htmlspecialchars($req-> start_datetime) ?></td>
                             <td><?= htmlspecialchars($req-> end_datetime) ?></td>
-                            <td><button class="btn-review-ad" onclick='openAdModal(<?= json_encode($req) ?>, <?= json_encode($data["communities"]) ?>)'>Review</button></td>
+                            <td><button class="btn-review-ad" onclick='openAdModal(<?= json_encode($req) ?>)'>Review</button></td>
+                            <td style="<?= $timeStyle ?>"> <?= htmlspecialchars($leftTime) ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -289,18 +330,40 @@
                     <thead>
                         <tr>
                             <th>Advertiser Name</th>
-                            <th>Start datetime</th>
-                            <th>End datetime</th>
+                            <th>Start Datetime</th>
+                            <th>End Datetime</th>
                             <th>Actions</th>
+                            <th>Left Hours</th>
                         </tr>
                     </thead>
                     <tbody>
                       <?php foreach($data['comm_request_details'] as $req): ?>
-                        <tr>
+                        <?php  
+                            $createdDate = new DateTime($req->created_at);
+                            $expiryDate  = clone $createdDate;
+                            $expiryDate->modify('+5 days'); 
+
+                            $now = new DateTime();
+
+                            $interval = $now->diff($expiryDate);
+
+                            $isUrgent =  ($interval->days < 1);
+
+                            if($isUrgent) {
+                                $timeStyle = 'color: red; font-weight: bold;';
+                                $leftTime = $interval->format('%h hrs %i mins left');
+                            } else {
+                                $timeStyle = 'color: green; font-weight: bold;';
+                                $leftTime = $interval->format('%a days left');
+                            }
+                          
+                          ?>
+                        <tr >
                             <td><?= htmlspecialchars($req->advertiser_name) ?></td>
                             <td><?= htmlspecialchars($req-> start_datetime) ?></td>
                             <td><?= htmlspecialchars($req-> end_datetime) ?></td>
-                            <td><button class="btn-review-ad" onclick='openAdModal(<?= json_encode($req) ?>, <?= json_encode($data["communities"]) ?>)'>Review</button></td>
+                            <td><button class="btn-review-ad" onclick='openAdModal(<?= json_encode($req) ?>, <?= json_encode($data["community_details"]?? []) ?>)'>Review</button></td>
+                            <td style="<?= $timeStyle ?>"> <?= htmlspecialchars($leftTime) ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -308,7 +371,7 @@
             </div>
         </section>
 
-        <div id="adReviewModal" class="modal-overlay">
+      <div id="adReviewModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Review Advertisement Request</h3>
@@ -317,38 +380,70 @@
             <div class="modal-body">
                 <!-- Advertiser Info -->
                 <h4>Advertiser Details</h4>
-                <p><strong>Name:</strong> </span></p>
-                <p><strong>Account Type:</strong> </span></p>
-                <p><strong>Payment Amount:</strong> $<span id="paymentAmount"></span></p>
+                <p><strong>Name:</strong><span id="modalAdvertiserName"></span></p>
+                <p><strong>Hours For Ad:</strong><span id="modalAdDate"> </span></p>
 
-                <!-- Placement Info -->
-                <p><strong>Placement:</strong> <span id="placementOption"></span></p>
-
+                
                 <!-- Document Downloads -->
                 <h4>Submitted Documents</h4>
-                <ul id="documentList" class="document-list">
-                    <!-- Documents dynamically filled here -->
-                </ul>
+                    <div id= "modalDownloadContainer"></div>
 
                 <!-- Community Selection (only if placement is community) -->
-                <div class="form-group" id="communitySelectWrapper" style="display:none;">
-                    <label for="community-select">Select Community</label>
-                    <select id="community-select">
-                        <!-- Options dynamically filled here -->
-                    </select>
+                <div class="form-group hidden" id="communitySelectWrapper" >
+                    <label for="community-select">Selected Community</label>
+                    <span id="community-select">
+                        <!--  dynamically filled here -->
+                      </span>
                 </div>
             </div>
+            
 
             <div class="modal-footer">
-                <button class="btn btn-reject">Reject</button>
-                <button class="btn btn-approve">Approve & Place Ad</button>
-            </div>
+
+              <form action="<?php  echo ROOT ?>/Admin/reviewSend" method="POST" id="reviewForm">
+                  <strong>Actions:</strong><br>
+
+                  <input type="hidden" id="adRequestId" name="ad_id" value="">
+
+                  <label>
+                      <input type="radio" name="status" value="Poster Approval" required> 
+                      Approve Poster
+                  </label>
+                  <br>
+                  <label>
+                      <input type="radio" name="status" value="Rejected"> 
+                      Reject Poster
+                  </label>
+
+                  <br><br>
+
+                  <label>Hourly Rate (Rs):</label><br>
+                  <input type="number" id="hourlyRate" name="hourly_rate" step="0.01" min="0" placeholder="Enter rate per hour">
+                  
+                  <br><br>
+
+                  <label>Total Calculated Cost (Rs):</label><br>
+                  <input type="text" id="totalCost" name="total_cost" readonly value="0.00">
+
+                  <br><br>
+
+                  <label for="admin_message">Admin Message:</label><br>
+                  <textarea id="admin_message" name="admin_message" rows="4" cols="50"></textarea>
+
+
+                  <br><br>
+
+                  <button type="submit">Submit Update</button>
+              </form>
         </div>
-    </div>
+      </div>
 
       
   </div>
+  
   </div>
+  </div>
+  
   <script>
     const weeklyData = <?php echo json_encode($weekly_logins); ?>;
   </script>
@@ -356,6 +451,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="<?php  echo ROOT ?>/assets/js/admin.js"></script>
     <script src="<?php  echo ROOT ?>/assets/js/admin_chart.js"></script>
-
+    <?php include __DIR__.'/Component/footer.view.php'; ?>
   </body>
 </html>

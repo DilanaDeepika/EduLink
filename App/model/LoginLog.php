@@ -6,14 +6,13 @@ class LoginLog extends Model
 
     public function getWeeklyLoginCounts()
     {
-        $sql = "
-            SELECT 
-                DAYNAME(login_time) AS day,
-                COUNT(*) AS count
-            FROM login_logs
-            GROUP BY DAYOFWEEK(login_time)
-            ORDER BY DAYOFWEEK(login_time)
-        ";
+    $sql = "SELECT 
+                    DATE(login_time) as login_date, 
+                    COUNT(*) as login_count 
+                FROM login_logs 
+                WHERE login_time >= DATE_SUB(NOW(), INTERVAL 7 DAY) 
+                GROUP BY DATE(login_time) 
+                ORDER BY login_date ASC";
 
         return $this->query($sql);
     }

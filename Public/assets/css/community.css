@@ -35,24 +35,34 @@
   overflow: hidden;
   align-self: center;
   flex-grow: 1;
+  transition: margin-right 0.3s ease-in-out;
+  width: 100%;
 }
 
-/* --- Header --- */
 .community-chat-page .chat-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  transition: width 0.3s ease-in-out;
   background-color: var(--primary-accent);
   color: white;
   padding: 1rem;
-  text-align: center;
   border-bottom: 1px solid var(--border-color);
   font-weight: 600;
   letter-spacing: 0.5px;
-  display: flex;
-  justify-content: start;
-  gap: 25rem;
   border-radius: 1rem 1rem 0 0;
 }
 
-/* --- Messages Area --- */
+.community-chat-page .chat-header h2 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  white-space: nowrap;
+  font-size: 1.5rem;
+}
+
 .community-chat-page .messages-area {
   flex-grow: 1;
   padding: 1.5rem;
@@ -145,31 +155,108 @@
 .community-chat-page #send-button:hover {
   background-color: #16204a;
 }
-#messagesArea {
+/* 1. The Main Chat Area Background */
+.messages-area {
+  background-color: #e5e5f7; /* Light mesh/pattern background color */
+  /* Optional: Add a subtle pattern if you want */
+  background-image: radial-gradient(#1e2a5e 0.5px, transparent 0.5px),
+    radial-gradient(#1e2a5e 0.5px, #e5e5f7 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  opacity: 1;
+
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px; /* Space between messages */
+  overflow-y: auto;
+  height: 600px; /* Adjust based on your layout */
 }
 
-.message {
-  max-width: 70%;
-  padding: 8px 12px;
-  background: #e6e6e6;
-  border-radius: 10px;
-  width: fit-content;
+/* 2. The Container Wrapper (Holds the bubble) */
+.message-container {
+  display: flex;
+  width: 100%;
 }
 
+/* Alignment Logic */
 .my-message {
-  background: #4c9cff;
-  color: white;
-  margin-left: auto; /* moves to right */
+  justify-content: flex-end; /* Pushes your messages to the RIGHT */
 }
 
-.pending-messages {
-  background-color: #1e2a5e;
-  height: 100vh;
-  /* This rule is just for the demo to show it on the page */
-  width: 250px;
+.other-message {
+  justify-content: flex-start; /* Pushes others to the LEFT */
+}
+
+/* 3. The Bubble Design (The colored box) */
+.message-bubble {
+  max-width: 60%; /* Don't let messages stretch full width */
+  padding: 12px 16px;
+  border-radius: 18px;
+  position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  word-wrap: break-word;
+}
+
+/* --- Styles for MY Messages --- */
+.my-message .message-bubble {
+  background-color: #1e2a5e; /* EduLink Blue */
+  color: white;
+  border-bottom-right-radius: 4px; /* Makes it look like a speech bubble */
+}
+
+.my-message .msg-header {
+  color: #fed352; /* EduLink Yellow for your name */
+  font-size: 0.8rem;
+  margin-bottom: 4px;
+}
+
+.my-message .msg-time {
+  color: rgba(255, 255, 255, 0.7); /* Light white for time */
+}
+
+/* --- Styles for OTHER Messages --- */
+.other-message .message-bubble {
+  background-color: #ffffff; /* White background */
+  color: #333; /* Dark text */
+  border-bottom-left-radius: 4px;
+}
+
+.other-message .msg-header {
+  color: #1e2a5e; /* Blue name for others */
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.other-message .msg-time {
+  color: #888; /* Gray time */
+}
+
+/* 4. Text Styling inside the bubble */
+.msg-body {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.msg-time {
+  font-size: 0.7rem;
+  text-align: right;
+  margin-top: 5px;
+  display: block;
+}
+
+/* 5. Post Specific Styles (Images/Files) */
+.chat-post-img {
+  border-radius: 8px;
+  margin-top: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.chat-post-img:hover {
+  transform: scale(1.02);
 }
 .sidebar {
   width: 275px;
@@ -283,23 +370,26 @@
   font-weight: bold;
 }
 
-/* post button and create popup window */
-
 .open-post-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background-color: #1e2a5e;
   color: white;
-  padding: 10px 18px;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  transition: 0.2s ease;
-}
-.open-post-btn:hover {
-  background-color: #2e438f;
+
+  font-size: 24px;
+  font-weight: bold;
 }
 
-* {
-  box-sizing: border-box;
+.open-post-btn:hover {
+  background-color: rgb(19, 27, 58);
 }
 
 /* Modal Background */
@@ -440,22 +530,348 @@ input[type="file"] {
     transform: translateY(0);
   }
 }
-.post-details {
-  background-color: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  border: 1px solid #eee;
+/* Modal Card Container */
+.post-card {
+  background-color: #fff;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.3s;
+}
+.comment-list {
+  height: auto;
+  overflow: visible;
+  margin-bottom: 12px;
+}
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  color: #333; /* FIX: Dark text color */
 }
 
-.post-details p {
-  margin: 8px 0;
+/* Avatar Circle (Generated from CSS) */
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #1e2a5e; /* Theme Blue */
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+  flex-shrink: 0;
+  text-transform: uppercase;
+}
+
+/* The Comment Bubble (Text area) */
+.comment-content {
+  background-color: #ffffff;
+  padding: 8px 12px;
+  border-radius: 0px 12px 12px 12px; /* Pointing to avatar */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  line-height: 1.4;
+  width: 100%;
+}
+
+.comment-username {
+  display: block;
+  color: #1e2a5e; /* Theme Blue */
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+}
+
+.comment-text {
+  color: #444; /* Dark Grey for readability */
+}
+/* User Header Row */
+.user-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.user-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  background-color: #1e2a5e; /* EduLink Blue */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.user-meta h4 {
+  margin: 0;
+  font-size: 16px;
   color: #333;
+}
+.post-time {
+  font-size: 12px;
+  color: #777;
+}
+
+/* Description Body */
+.post-body {
+  padding: 15px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* Attachments Area */
+.attachment-preview {
+  background-color: #f9f9f9;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+/* Images inside attachment area */
+.attachment-preview img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain; /* Keeps image ratio correct */
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Footer Actions */
+.action-footer {
+  padding: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.action-btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
   font-size: 14px;
 }
 
-.post-details strong {
-  color: #1e2a5e; 
-  display: inline-block;
-  width: 120px;
+.btn-approve {
+  background-color: #1e2a5e; /* EduLink Primary */
+  color: white;
+}
+.btn-approve:hover {
+  background-color: #162047;
+}
+
+.btn-decline {
+  background-color: #e0e0e0;
+  color: #333;
+}
+.btn-decline:hover {
+  background-color: #ccc;
+}
+
+/* Modal Card Container */
+.post-card {
+  background-color: #fff;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: fadeIn 0.3s;
+}
+
+.user-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.user-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  background-color: #1e2a5e;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.user-meta h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+.post-time {
+  font-size: 12px;
+  color: #777;
+}
+
+.post-body {
+  padding: 15px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.attachment-preview {
+  background-color: #f9f9f9;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.attachment-preview img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.action-footer {
+  padding: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.action-btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-approve {
+  background-color: #1e2a5e;
+  color: white;
+}
+.btn-approve:hover {
+  background-color: #162047;
+}
+
+.btn-decline {
+  background-color: #e0e0e0;
+  color: #333;
+}
+.btn-decline:hover {
+  background-color: #ccc;
+}
+
+.toggle-sidebar-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  z-index: 10;
+}
+
+.toggle-sidebar-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.chat-container.with-sidebar {
+  margin-right: 350px;
+}
+
+.right-sidebar {
+  position: absolute;
+  top: 70px;
+  right: -350px;
+  width: 300px;
+  height: 100vh;
+  background-color: #ffffff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease-in-out; /* Smooth slide effect */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Class to slide it in */
+.right-sidebar.open {
+  right: 0;
+}
+
+/* --- Sidebar Internal Styles --- */
+.sidebar-header {
+  background-color: #1e2a5e; /* Theme Blue */
+  color: white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#closeSidebarBtn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.sidebar-stats {
+  padding: 15px;
+  background-color: #f4f6f9;
+  border-bottom: 1px solid #ddd;
+  font-weight: bold;
+  color: #1e2a5e;
+}
+
+.member-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex: 1; /* Takes remaining height */
+}
+
+.member-item {
+  padding: 12px 15px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.member-avatar {
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #fff;
+  font-weight: bold;
 }
