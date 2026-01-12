@@ -74,13 +74,12 @@ class Calendar extends Controller
 }
 
 
-    public function update_event()
+   public function update_event()
 {
     if (session_status() === PHP_SESSION_NONE) session_start();
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        $_SESSION['error'] = "Invalid request";
-        redirect($this->getDashboardPath());
+        echo "error: invalid request";
         exit;
     }
 
@@ -88,74 +87,39 @@ class Calendar extends Controller
     $eventId   = $_POST['event_id'] ?? null;
 
     if (!$accountId || !$eventId) {
-        $_SESSION['error'] = "Missing data";
-        redirect($this->getDashboardPath());
+        echo "error: missing data";
         exit;
     }
 
     $eventModel = new Event();
 
-    // 🔐 Ownership check
+    // Ownership check
     $event = $eventModel->first([
         'id'         => $eventId,
         'account_id' => $accountId
     ]);
 
     if (!$event) {
-        $_SESSION['error'] = "Permission denied";
-        redirect($this->getDashboardPath());
+        echo "error: permission denied";
         exit;
     }
 
-    // Prepare update data with defaults
     $data = [
         'event_title'       => $_POST['event_title'] ?? $event['event_title'],
         'event_date'        => $_POST['event_date'] ?? $event['event_date'],
-        'event_time'        => empty($_POST['event_time']) ? null : $_POST['event_time'],
+        'event_time'        => $_POST['event_time'] ?? null,
         'event_description' => $_POST['event_description'] ?? $event['event_description'],
     ];
 
     if ($eventModel->update($eventId, $data) !== false) {
-        $_SESSION['success'] = "Event updated successfully.";
+        echo "success";
     } else {
-        $_SESSION['error'] = "Failed to update event.";
+        echo "error: update failed";
     }
 
-    redirect($this->getDashboardPath());
+    exit;
 }
 
-
-    public function get_events()
-{
-    if (session_status() === PHP_SESSION_NONE) session_start();
-
-    $accountId = $_SESSION['USER']['account_id'] ?? null;
-    if (!$accountId) {
-        echo json_encode([]);
-        return;
-    }
-
-    $eventModel = new Event();
-    $events = $eventModel->where(['account_id' => $accountId]);
-
-    // Format for JS calendar
-    $formatted = [];
-    foreach ($events as $event) {
-        $start = $event['event_date'];
-        if (!empty($event['event_time'])) {
-            $start .= 'T' . $event['event_time'];
-        }
-
-        $formatted[] = [
-            'id'          => $event['id'],
-            'title'       => $event['event_title'],
-            'start'       => $start,
-            'description' => $event['event_description'] ?? '',
-        ];
-    }
-
-    echo json_encode($formatted);
-}
 
 public function delete_event()
 {

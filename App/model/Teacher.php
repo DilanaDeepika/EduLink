@@ -3,6 +3,7 @@
 class Teacher extends Model
 {
     protected $table = 'teachers';
+
     
     // Rules for the text fields
     protected $rules = [
@@ -24,7 +25,8 @@ class Teacher extends Model
         'subjects_taught',
         'approval_status',
         'approval_document_path',
-        'approved_by_admin_id'
+        'approved_by_admin_id',
+        'profile_photo'
     ];
         public function getAllowedColumns()
     {
@@ -52,4 +54,49 @@ class Teacher extends Model
 
         return empty($this->validation_errors);
     }
+
+    public function validateUpdate($data)
+    {
+    // Only validate the fields the user can update
+    $rules = [
+        'first_name' => 'required|max:255',
+        'last_name'  => 'max:255',
+        'email'      => 'required|email|max:255',
+        'phone'   => 'required|max:20',
+    ];
+
+    $this->validation_errors = [];
+
+    foreach ($rules as $field => $rule) {
+        $value = $data[$field] ?? '';
+
+        // Check required
+        if (strpos($rule, 'required') !== false && empty($value)) {
+            $this->validation_errors[$field] = "$field is required";
+        }
+
+        // Check max length
+        if (preg_match('/max:(\d+)/', $rule, $matches)) {
+            $max = $matches[1];
+            if (strlen($value) > $max) {
+                $this->validation_errors[$field] = "$field must be at most $max characters";
+            }
+        }
+
+        // Check email format
+        if (strpos($rule, 'email') !== false && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            $this->validation_errors[$field] = "Invalid email format";
+        }
+    }
+
+    return empty($this->validation_errors);
+   }
+
+
+    public function updateByTeacherId($teacher_id, $data)
+    {
+        // Call the generic update function in Model.php
+        return $this->update($teacher_id, $data, 'teacher_id');
+    }
+
 }
