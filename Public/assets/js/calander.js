@@ -54,7 +54,44 @@ function openModal(dateStr, event = null) {
   } else {
     eventModal.querySelector("h3").textContent = "Add Event";
     saveBtn.textContent = "Save";
-    saveBtn.onclick = null;
+    //saveBtn.onclick = null;
+    saveBtn.onclick = (e) => {
+    e.preventDefault();
+
+    const eventForm = document.getElementById("event-form");
+    const formData = new FormData(eventForm);
+
+    fetch(`${appRoot}/Calendar/save_event`, {
+      method: "POST",
+      body: formData,
+    })
+    .then((res) => res.text())
+      .then((response) => {
+        if (response.includes("success")) {
+          alert("Event saved successfully!");
+          closeModal();
+
+          // Push the new event into accountEvents
+          const newEvent = {
+            id: Date.now(), // temporary ID, ideally get real ID from server
+            event_title: formData.get("event_title"),
+            event_description: formData.get("event_description"),
+            event_time: formData.get("event_time"),
+            event_date: formData.get("event_date"),
+          };
+          accountEvents.push(newEvent);
+
+          renderCalendar();
+        } else {
+          console.error("Save failed:", response);
+          alert("Something went wrong saving the event.");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error saving event.");
+      });
+    };
     cancelBtn.textContent = "Cancel";
     cancelBtn.onclick = closeModal;
   }
@@ -63,7 +100,7 @@ function openModal(dateStr, event = null) {
 }
 
 function deleteEvent(eventId) {
-  fetch(`${appRoot}/StudentProfile/delete_event`, {
+  fetch(`${appRoot}/Calendar/delete_event`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
@@ -95,7 +132,7 @@ function updateEvent(eventId) {
   const eventForm = document.getElementById("event-form");
   const formData = new FormData(eventForm);
 
-  fetch(`${appRoot}/StudentProfile/update_event`, {
+  fetch(`${appRoot}/Calendar/update_event`, {
     method: "POST",
     body: formData,
   })
@@ -107,13 +144,13 @@ function updateEvent(eventId) {
         closeModal();
 
         // --- Update calendar without reload ---
-        const index = studentEvents.findIndex((e) => e.id == eventId);
+        const index = accountEvents.findIndex((e) => e.id == eventId);
 
         if (index > -1) {
-          studentEvents[index].event_title = formData.get("event_title");
-          studentEvents[index].event_date = formData.get("event_date");
-          studentEvents[index].event_time = formData.get("event_time");
-          studentEvents[index].event_description =
+          accountEvents[index].event_title = formData.get("event_title");
+          accountEvents[index].event_date = formData.get("event_date");
+          accountEvents[index].event_time = formData.get("event_time");
+          accountEvents[index].event_description =
             formData.get("event_description");
         }
 
@@ -192,9 +229,10 @@ function renderCalendar() {
     ).padStart(2, "0")}`;
 
     // Filter events for this day
-    const eventsForDay = studentEvents.filter(
+    const eventsForDay = accountEvents.filter(
       (ev) => ev.event_date === dateStr
     );
+    
 
     // Add event pills
     eventsForDay.forEach((event) => {
