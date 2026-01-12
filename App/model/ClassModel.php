@@ -53,4 +53,6 @@ class ClassModel extends Model
         return $this->allowedColumns;
     }
 
+
+
 }
