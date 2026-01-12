@@ -84,7 +84,7 @@ class Model extends Database
 
     }
     public function insert($data)
-{
+    {
     if (empty($data) || !is_array($data)) {
         error_log("Insert Error: Invalid data provided.");
         return false;
@@ -224,4 +224,31 @@ public function update($id, $data, $id_column = 'id')
         
         return empty($this->validation_errors);
     }
+
+    public function count($conditions = []){
+
+        $query = "SELECT COUNT(*) AS count FROM $this->table";
+
+        if(!empty($conditions)){
+            $query .= " WHERE ";
+            $clauses = [];
+
+            foreach ($conditions as $key => $value) {
+                $clauses[] = "$key = :$key";
+            }
+            $query .= implode(" AND ", $clauses);
+        }
+
+        
+
+        $result = $this->query($query, $conditions);
+
+        if ($result && isset($result[0]->count)) {
+            return $result[0]->count;
+        }
+        return 0;
+
     }
+
+    
+}
