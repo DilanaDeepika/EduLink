@@ -18,7 +18,7 @@ class TeacherRegister extends Controller
                     'account_type'  => $_POST['role']
 
                 ];
-
+                    
                 $account_id = $accountModel->insert($data); 
 
                 if($account_id) {

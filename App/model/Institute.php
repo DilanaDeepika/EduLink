@@ -2,7 +2,7 @@
 
 class Institute extends Model
 {
-    protected $table = 'Institutes';
+    protected $table = 'institutes';
     
     // Validation rules
     protected $rules = [

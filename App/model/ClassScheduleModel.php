@@ -2,7 +2,7 @@
 
 class ClassScheduleModel extends Model
 {
-    protected $table = 'Class_Schedules';
+    protected $table = 'class_schedules';
 
     protected $rules = [
         'class_id'   => 'required|numeric',

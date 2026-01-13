@@ -30,7 +30,10 @@ switch ($role) {
   </div>
 
   <div class="navbar-right-section">
-    <input type="search" placeholder="Search here..." class="navbar-search-bar">
+    <form action="<?= ROOT ?>/ClassList" method="GET" class="navbar-search-container">
+      <input type="search" name="query" placeholder="Search here..." class="navbar-search-bar">
+      <button type="submit" class="navbar-search-icon ">Search</button>
+    </form>
     
     <div class="navbar-links">
       <?php if (!empty($role)): ?>
