@@ -51,7 +51,7 @@
                 </div>
             </nav>
 
-            <div class="sidebar-footer">
+            <div class="sidebar-footer"></div>
         </aside>
 
         <form class="main-content " method="POST" action="<?php echo ROOT ?>/CreateClass/save_class_details" enctype="multipart/form-data">

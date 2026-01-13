@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   background-color: var(--background-color);
   color: var(--text-color);
   margin: 0;
@@ -97,10 +97,12 @@ body {
   background-color: var(--primary-color);
   color: white;
 }
+
 .controls-container .new-class-btn a {
   color: white;
   text-decoration: none;
 }
+
 .class-card {
   display: flex;
   width: 50%;
@@ -214,6 +216,7 @@ body {
 .indicator-1 {
   left: 30%;
 }
+
 .indicator-2 {
   right: 0;
 }
@@ -271,24 +274,25 @@ body {
 }
 
 .add-ad-button {
-  display: inline-flex; /* Changed to inline-flex to not take full width */
+  display: inline-flex;
   align-items: center;
   font-size: 16px;
   font-weight: bold;
   padding: 10px 20px;
-  border: 2px solid var(--border-color);
-  color: var(--text-color);
+  border: none;
+  color: white;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: var(--primary-color);
   cursor: pointer;
   margin-bottom: 25px;
   transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .add-ad-button:hover {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
 }
 
 .add-ad-button .plus-icon {
@@ -355,214 +359,477 @@ body {
   color: var(--primary-color);
 }
 
-body {
-  font-family: "Inter", Arial, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  margin: 0;
+/* =========================================
+   1. GLOBAL VARIABLES & RESET
+   ========================================= */
+:root {
+  --primary: #1e2a5e; /* Deep Blue */
+  --secondary: #fed352; /* Brand Yellow */
+  --success: #27ae60; /* Green for Start Date */
+  --danger: #c0392b; /* Red for End Date */
+  --range-bg: #e8f5e9; /* Light Green for In-Between dates */
+  --text-main: #333;
+  --text-light: #666;
+  --border: #ddd;
+  --bg-light: #f9faff;
 }
 
-/* Advertisement Modal */
+* {
+  box-sizing: border-box;
+}
+
+/* =========================================
+   2. MODAL CONTAINER
+   ========================================= */
 .adv-modal {
   display: none;
   position: fixed;
-  z-index: 9999;
+  z-index: 2000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  display: flex;
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  backdrop-filter: blur(3px);
 }
 
 .adv-modal-content {
-  background-color: var(--card-background);
-  width: 100%;
-  max-width: 520px;
-  border-radius: 12px;
-  padding: 30px 25px;
-  box-shadow: 0 12px 28px var(--shadow-color);
+  background-color: #fff;
+  width: 850px;
+  max-width: 95%;
+  max-height: 100vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  padding: 25px;
   position: relative;
-  animation: slideDown 0.3s ease-in-out;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  animation: slideDown 0.3s ease-out;
 }
 
 @keyframes slideDown {
-  0% {
-    transform: translateY(-20px);
+  from {
     opacity: 0;
+    transform: translateY(-20px);
   }
-  100% {
-    transform: translateY(0);
+  to {
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
+/* Close Button */
 .adv-close-button {
   position: absolute;
-  top: 15px;
   right: 20px;
+  top: 15px;
   font-size: 28px;
-  color: var(--text-color);
+  font-weight: bold;
+  color: #aaa;
   cursor: pointer;
   transition: color 0.2s;
 }
 .adv-close-button:hover {
-  color: var(--primary-color);
+  color: var(--danger);
 }
 
-.adv-modal-content h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--primary-color);
+/* Headings */
+h2 {
+  color: var(--primary);
+  margin-top: 0;
+  border-bottom: 2px solid var(--secondary);
+  display: inline-block;
+  padding-bottom: 8px;
   margin-bottom: 20px;
-  border-bottom: 3px solid var(--secondary-color);
-  padding-bottom: 10px;
 }
 
-/* Fieldset Styling */
+/* =========================================
+   3. FORM ELEMENTS
+   ========================================= */
 fieldset {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 20px;
   padding: 20px;
-  margin-bottom: 25px;
-  border-radius: 10px;
-  background-color: var(--light-gray);
+  background: #fff;
 }
 
 legend {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--primary-color);
+  font-weight: bold;
+  color: var(--primary);
   padding: 0 10px;
-}
-
-/* Advertiser Details */
-.adv-advertiser-details p {
   font-size: 0.95rem;
-  margin: 5px 0;
-}
-.adv-advertiser-details strong {
-  color: var(--primary-color);
 }
 
-/* Radio Buttons */
-.adv-placement-options label {
+.text-input {
+  width: 60%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   4. STATUS BAR (Start -> End)
+   ========================================= */
+.selection-status-bar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
-  font-size: 0.95rem;
-  cursor: pointer;
-}
-.adv-placement-options input[type="radio"] {
-  margin-right: 12px;
-  accent-color: var(--primary-color);
-}
-
-/* Time Inputs */
-.adv-time-selection {
+  background-color: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 20px;
   margin-bottom: 20px;
 }
-.adv-time-selection label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--primary-color);
-}
-.adv-time-selection input[type="time"] {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  background-color: #fff;
-  transition: border-color 0.2s;
-}
-.adv-time-selection input[type="time"]:focus {
-  border-color: var(--primary-color);
-  outline: none;
-}
 
-/* File Upload */
-.adv-file-upload {
+.status-item {
   display: flex;
   flex-direction: column;
+}
+
+.status-item .label {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-item .value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.arrow {
+  color: #ccc;
+  font-size: 1.2rem;
+}
+
+.reset-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+}
+.reset-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  transform: rotate(-180deg);
+}
+
+/* =========================================
+   5. SPLIT LAYOUT (Calendar | Time)
+   ========================================= */
+.schedule-split-layout {
+  display: flex;
+  gap: 25px;
+}
+/* Responsive: Stack them on mobile */
+@media (max-width: 768px) {
+  .schedule-split-layout {
+    flex-direction: column;
+  }
+}
+
+.calendar-wrapper,
+.time-wrapper {
+  flex: 1;
+}
+
+/* --- Calendar Header --- */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.calendar-header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+.calendar-header span {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+/* --- Calendar Grid --- */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+.calendar-day {
+  height: 38px;
+  width: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%; /* Circle */
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.calendar-day:hover:not(.disabled) {
+  background-color: #eee;
+}
+
+/* Day States */
+.calendar-day.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.calendar-day.full-booked {
+  color: var(--danger);
+  background-color: #ffebee;
+  font-weight: bold;
+  border: 1px solid var(--danger);
+}
+.calendar-day.selected-start {
+  background-color: var(--success) !important;
+  color: white !important;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(39, 174, 96, 0.4);
+}
+.calendar-day.selected-end {
+  background-color: var(--danger) !important;
+  color: white !important;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(192, 57, 43, 0.4);
+}
+.calendar-day.in-range {
+  background-color: var(--range-bg);
+  color: var(--primary);
+  border-radius: 0; /* Connects the circles */
+}
+/* Round the edges of the range */
+.calendar-day.in-range:first-of-type {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.calendar-day.in-range:last-of-type {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+/* --- Legend --- */
+.legend-row {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  font-size: 0.8rem;
+  margin-top: 10px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.dot.full-booked {
+  background: #ffebee;
+  border: 1px solid var(--danger);
+}
+.dot.selected-start {
+  background: var(--success);
+}
+.dot.selected-end {
+  background: var(--danger);
+}
+
+/* =========================================
+   6. TIME SLOTS
+   ========================================= */
+.time-wrapper {
+  background-color: var(--bg-light);
+  border-radius: 8px;
+  padding: 15px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+}
+
+#timeSlotHeader {
+  margin-top: 0;
+  font-size: 1rem;
+  color: var(--primary);
+}
+
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  margin-bottom: 20px;
+  overflow-y: auto;
+  max-height: 250px;
+  padding-right: 5px;
+  margin-bottom: 15px;
+  margin-top: 10px;
+}
+
+.time-btn {
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.time-btn:hover:not(.booked) {
+  border-color: var(--primary);
+  background-color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.time-btn.booked {
+  background-color: #fce4ec;
+  color: #c0392b;
+  text-decoration: line-through;
+  opacity: 0.7;
+  cursor: not-allowed;
+  border-color: transparent;
+}
+
+.time-btn.selected {
+  background-color: var(--primary);
+  color: var(--secondary);
+  border-color: var(--primary);
+  font-weight: bold;
+}
+
+.selection-feedback {
+  margin-top: auto;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: var(--primary);
+  background: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* =========================================
+   7. FILE UPLOAD & SUBMIT
+   ========================================= */
+.adv-placement-options label {
+  margin-right: 20px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.adv-upload-label {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 10px;
+}
+.adv-upload-label:hover {
+  background-color: #e0e0e0;
 }
 .adv-hidden-file-input {
   display: none;
 }
-.adv-upload-label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--primary-color);
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-.adv-upload-label:hover {
-  background-color: var(--hover-color);
-  box-shadow: 0 4px 10px var(--shadow-color);
-}
-.adv-upload-icon {
-  margin-right: 8px;
-  font-size: 1.2em;
-}
-.adv-file-name {
-  font-size: 0.9rem;
-  color: #555;
-}
 
-/* Submit Button */
 .adv-submit-button {
   width: 100%;
-  padding: 12px 15px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  background-color: var(--secondary-color);
+  padding: 14px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background-color: var(--primary);
+  color: #fff;
   border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.adv-submit-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.adv-submit-button:not(:disabled):hover {
+  background-color: #15204a;
+}
+.hidden {
+  display: none;
+}
+
+.adv-comm-select {
+  background-color: #f9f9fa;
+  padding: 20px;
   border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
-}
-.adv-submit-button:hover {
-  background-color: #f7c739;
-  transform: translateY(-1px);
-}
-.apply-marking-btn {
-  background-color: var(--secondary-color, #fed352);
-  color: var(--primary-color, #1e2a5e);
-  font-weight: 600;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 15px;
+  border-left: 5px solid #1e2a5e;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  margin-top: 15px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(30, 42, 94, 0.15);
-  display: inline-block;
-  text-align: center;
-  letter-spacing: 0.5px;
 }
 
-.apply-marking-btn:hover {
-  background-color: var(--primary-color, #1e2a5e);
-  color: var(--secondary-color, #fed352);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(30, 42, 94, 0.25);
+.adv-comm-select .form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 0.95rem;
 }
 
-.apply-marking-btn:active {
-  transform: translateY(0);
-  box-shadow: 0 3px 6px rgba(30, 42, 94, 0.2);
+.adv-comm-select .form-control {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  color: #444;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%231E2A5E%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px top 50%;
+  background-size: 12px auto;
+}
+
+.adv-comm-select .form-control:hover {
+  border-color: #1e2a5e;
+}
+
+.adv-comm-select .form-control:focus {
+  border-color: #1e2a5e;
+  box-shadow: 0 0 0 3px rgba(30, 42, 94, 0.2);
 }

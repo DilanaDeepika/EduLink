@@ -2,13 +2,13 @@
 
 class ClassModel extends Model
 {
-    protected $table = 'Classes';
+    protected $table = 'classes';
 
     // Validation rules
     protected $rules = [
         'class_name'       => 'required|max:255',
         'description'      => 'max:1000',
-        'duration_hours'   => 'required|integer',
+        'type'   => 'required|max:255',
         'subject_name'     => 'required|max:255',
         'grade_level_name' => 'required|max:100',
         'category_name'    => 'max:255',
@@ -29,7 +29,7 @@ class ClassModel extends Model
     public $allowedColumns = [
         'class_name',
         'description',
-        'duration_hours',
+        'type',
         'subject_name',
         'grade_level_name',
         'category_name',

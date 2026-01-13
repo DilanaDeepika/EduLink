@@ -2,12 +2,21 @@
 
 class Database
 {
-    protected function connect()
+protected function connect()
     {
-        $string = "mysql:host=".DBHOST.";dbname=".DBNAME;
+       
+        $string = "mysql:host=".DBHOST.";port=".DBPORT.";dbname=".DBNAME;
+        
+        
+        $options = [
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::MYSQL_ATTR_SSL_CA => DBSSL,
+            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false 
+        ];
+
         try {
-            $con = new PDO($string, DBUSER, DBPASS);
-            $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $con = new PDO($string, DBUSER, DBPASS, $options);
             return $con;
         } catch(PDOException $e) {
             die("Connection failed: " . $e->getMessage());

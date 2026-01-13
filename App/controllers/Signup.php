@@ -60,10 +60,9 @@ public function save_teacher_details()
             'account_id'             => $_SESSION['new_account_id'],
             'first_name'             => $_POST['first_name'],
             'last_name'              => $_POST['last_name'],
-            'email'                  => $_POST['contact_email'], 
             'phone'                  => $_POST['phone'],
             'subjects_taught'        => $_POST['subject'],
-            'approval_status'        => 'approved',
+            'approval_status'        => 'pending',
             'approval_document_path' => $filePaths,
             'approved_by_admin_id'   => null
         ];
@@ -105,9 +104,8 @@ public function save_teacher_details()
             'account_id'             => $_SESSION['new_account_id'],
             'institute_name'         => $_POST['institute_name'],
             'location'               => $_POST['address'], 
-            'contact_email'          => $_POST['contact_email'],
             'contact_phone'          => $_POST['phone'],
-            'approval_status'        => 'approved',
+            'approval_status'        => 'pending',
             'approval_document_path' => $filePaths,
             'approved_by_admin_id'   => null
         ];

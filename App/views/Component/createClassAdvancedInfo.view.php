@@ -17,8 +17,9 @@
                             <path d="M24 24l-4-4-6 6" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </div>
-                    <button class="upload-btn">Upload Image</button>
-                    <input type="file" id="thumbnail-input" accept=".png,.jpg,.jpeg,.svg" style="display:none;">
+                    <button type="button" class="upload-btn">Upload Image</button>
+                    <input type="file" name="image" id="thumbnail-input" accept=".png,.jpg,.jpeg,.svg" style="display:none;">
+
                     <p id="thumbnail-name" style="margin-top: 1rem; color: #374151; display: none;"></p>
 
                 </div>
@@ -34,8 +35,9 @@
                             <path d="M17 14l8 6-8 6V14z" fill="#ccc"/>
                         </svg>
                     </div>
-                    <button class="upload-btn">Upload Video</button>
-                    <input type="file" id="video-input" accept="video/*" style="display:none;">
+                    <button type="button" class="upload-btn">Upload Video</button>
+                    <input type="file" name="video" id="video-input" accept="video/*" style="display:none;">
+
                     <p id="video-name" style="margin-top: 1rem; color: #374151; display: none;"></p>
 
                 </div>
