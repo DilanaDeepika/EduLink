@@ -1,10 +1,9 @@
 <?php
-
 class Institute extends Model
 {
     protected $table = 'institutes';
     
-    // Validation rules
+    // Validation rules (optional)
     protected $rules = [
         'institute_name' => 'required|max:255',
         'location'       => 'required|max:500', 
@@ -30,6 +29,8 @@ class Institute extends Model
     {
         return $this->allowedColumns;
     }
+
+
 
     // Override validate() to add the file check
     public function validate($data)
