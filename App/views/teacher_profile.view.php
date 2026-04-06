@@ -4,29 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>EduLink - Teacher Dashboard</title>
-        <link href="<?php  echo ROOT ?>/assets/css/component/nav.css" rel="stylesheet" />
-            <link
-      href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css"
-      rel="stylesheet"/>
-        <link
-      rel="stylesheet"
-      href="<?php  echo ROOT ?>/assets/css/component/calander.css"
-    />
-    <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/profile.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link href="<?= ROOT ?>/assets/css/component/nav.css" rel="stylesheet" />
+    <link href="<?= ROOT ?>/assets/css/component/footer-styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/component/calander.css" />
+    <link rel="stylesheet" href="<?= ROOT ?>/assets/css/profile.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
   </head>
 
   <body>
-        <header>
+    <header>
         <?php include __DIR__.'/Component/nav.view.php'; ?>
     </header>
     <div class="dashboard-layout">
       <aside class="sidebar">
         <nav class="sidebar-nav">
-          <!-- Navigation links for the teacher profile -->
           <a class="sidebar-item active" data-target="settings">
             <i class="fa-solid fa-gear"></i>
             <span>Settings</span>
@@ -54,106 +46,88 @@
         </nav>
       </aside>
 
-      <!-- Main Content Area -->
       <main class="main-content">
-        <!-- ======================================== -->
-        <!-- 1. Settings / Main Dashboard Section     -->
-        <!-- ======================================== -->
         <section id="settings" class="content-section active">
           <div class="profile-card">
             <div class="profile-avatar">
-              <?php if (!empty($avatarImage)): ?>
-                  <img src="<?=  $avatarImage ?>" class="profile-setting">
-              <?php else: ?>
-                  <?=  $avatar ?>
-              <?php endif; ?>
+                <?php if (!empty($avatarImage)): ?>
+                    <img src="<?= $avatarImage ?>" class="profile-setting" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+                <?php else: ?>
+                    <?= $avatar ?>
+                <?php endif; ?>
             </div>
             <div class="profile-info">
-              <h2><?=  htmlspecialchars($teacherName) ?></h2>
-              <button class="btn btn-secondary">Edit Profile</button>
+              <h2><?= htmlspecialchars($teacherName) ?></h2>
+              <button class="btn btn-secondary" onclick="document.querySelector('[data-target=\'edit-profile\']').click()">Edit Profile</button>
             </div>
           </div>
 
           <div class="stats-grid">
             <div class="stat-card">
               <p>Total Classes</p>
-              <span>
-                <?=  $totalClasses ?>
-              </span>
+              <span><?= $totalClasses ?></span>
               <i class="fa-solid fa-chalkboard-user icon-blue"></i>
             </div>
             <div class="stat-card">
               <p>Total Students</p>
-              <span>
-                <?= $totalStudents ?>
-              </span>
+              <span><?= $totalStudents ?></span>
               <i class="fa-solid fa-users icon-yellow"></i>
             </div>
             <div class="stat-card">
               <p>Monthly Revenue</p>
-              <span>Rs <?= $monthlyRevenue ?></span>
+              <span>Rs <?= empty($totalRevenue) ? '0.00' : number_format($totalRevenue, 2) ?></span>
               <i class="fa-solid fa-dollar-sign icon-blue"></i>
             </div>
           </div>
         </section>
 
-        <!-- ======================================== -->
-        <!-- 2. Edit Profile Section                  -->
-        <!-- ======================================== -->
         <section id="edit-profile" class="content-section">
           <div class="content-header">
             <h1><i class="fa-regular fa-user"></i> Edit Profile</h1>
           </div>
 
           <div class="edit-profile-layout">
-            <!-- Avatar Section -->
             <div class="avatar-section">
               <h3>Profile Picture</h3>
               <div class="avatar-display">
                 <?php if (!empty($avatarImage)): ?>
-                  <img src="<?=  $avatarImage ?>" class="profile-img">
+                    <img src="<?= $avatarImage ?>" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
                 <?php else: ?>
-                  <?=  $avatar ?>
+                    <?= $avatar ?>
                 <?php endif; ?>
-              </div><form id="photoForm" action="<?= ROOT ?>/TeacherProfile/uploadPhoto" enctype="multipart/form-data">
-                <input type="file" method="POST" id="photoInput" name="profile_photo" accept="image/*" class="hidden-file-input" required>
-                <input type="hidden" name="logo_path" value="edit-profile">
-                <button type="submit" id="uploadBtn" class="btn btn-secondary">
-                  <i class="fa-solid fa-upload"></i> Upload Photo
-                </button>
-              </form>
+              </div>
               
+              <form class="upload-form" action="<?= ROOT ?>/TeacherProfile/uploadPhoto" method="POST" enctype="multipart/form-data">
+                  <input type="file" name="profile_photo" accept="image/*" id="file-upload" style="display:none;" onchange="this.form.submit()" />
+                  <button type="button" class="btn btn-secondary" onclick="document.getElementById('file-upload').click();">
+                    <i class="fa-solid fa-upload"></i> Upload Photo
+                  </button>
+              </form>
               <p>Image size should be at least 300×300px</p>
             </div>
 
-            <!-- Form Section -->
             <div class="form-container">
-              <form method="POST" action="<?= ROOT ?>/TeacherProfile/updateProfile" class="profile-form">
+              <form class="profile-form" method="POST" action="<?= ROOT ?>/TeacherProfile/updateProfile">
                 <h3>Personal Information</h3>
                 <div class="form-row">
                   <div class="form-group">
                     <label for="t_first_name">First Name</label>
-                    <input type="text" id="t_first_name" name="first_name" value="<?= $teacher->first_name ?>" />
+                    <input type="text" id="t_first_name" name="first_name" value="<?= htmlspecialchars($teacher->first_name) ?>" />
                   </div>
                   <div class="form-group">
                     <label for="t_last_name">Last Name</label>
-                    <input type="text" id="t_last_name" name="last_name" value="<?= $teacher->last_name ?>" />
+                    <input type="text" id="t_last_name" name="last_name" value="<?= htmlspecialchars($teacher->last_name) ?>" />
                   </div>
                 </div>
 
                 <h3>Contact Information</h3>
                 <div class="form-group">
                   <label for="t_email">Email</label>
-                  <input
-                    type="email"
-                    id="t_email"
-                    name="email" 
-                    value="<?=  $teacher->email ?>"
-                  />
+                  <input type="email" id="t_email" name="email" value="<?= htmlspecialchars($teacher->email ?? '') ?>" readonly/>
                 </div>
                 <div class="form-group">
                   <label for="t_phone_no">Phone Number</label>
-                  <input type="text" id="t_phone_no" name="phone" value="<?= $teacher->phone ?>" />
+                  <input type="text" id="t_phone_no" name="phone" value="<?= htmlspecialchars($teacher->phone) ?>" />
                 </div>
 
                 <button type="submit" class="btn btn-primary">
@@ -164,286 +138,153 @@
           </div>
         </section>
 
-        <!-- ======================================== -->
-        <!-- 3. Profit Section (Placeholder)          -->
-        <!-- ======================================== -->
         <section id="profit" class="content-section">
           <div class="content-header">
             <h1><i class="fa-solid fa-chart-line"></i> Profit</h1>
-            <p>Track your earnings, view payment history, and manage your finances.</p>
+            <p>This section is under construction.</p>
           </div>
 
-            <!-- Stats Cards Row -->
-         <div class="profit-stats-grid">
-            <div class="profit-stat-card">
-              <div class="stat-icon yellow">
-                <i class="fa-solid fa-dollar-sign"></i>
-              </div>
-              <div class="stat-details">
-                <p class="stat-label">Total Earnings</p>
-                <h2 class="stat-value">$54,800</h2>
-                <span class="stat-subtext">All time</span>
-                <span class="stat-change positive">
-                  <i class="fa-solid fa-arrow-up"></i> 16.8% vs last month
-                </span>
-              </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <p>Institute Student</p>
+              <span><?= $totalClasses ?></span>
+              <i class="fa-solid fa-chalkboard-user icon-blue"></i>
             </div>
-
-            <div class="profit-stat-card">
-              <div class="stat-icon teal">
-                <i class="fa-solid fa-wallet"></i>
-              </div>
-              <div class="stat-details">
-                <p class="stat-label">Available Balance</p>
-                <h2 class="stat-value">$8,450</h2>
-                <span class="stat-subtext">Ready to withdraw</span>
-                <button class="withdraw-btn">
-                  <i class="fa-solid fa-arrow-right"></i> Withdraw Funds
-                </button>
-              </div>
+            <div class="stat-card">
+              <p>Individual Student</p>
+              <span><?= $totalStudents ?></span>
+              <i class="fa-solid fa-users icon-yellow"></i>
             </div>
-
-            <div class="profit-stat-card">
-              <div class="stat-icon blue">
-                <i class="fa-solid fa-clock"></i>
-              </div>
-              <div class="stat-details">
-                <p class="stat-label">Pending Payments</p>
-                <h2 class="stat-value">$2,340</h2>
-                <span class="stat-subtext">Processing</span>
-                <span class="stat-change">
-                  <i class="fa-solid fa-hourglass-half"></i> 2-5 days approx
-                </span>
-              </div>
-            </div>
-
-            <div class="profit-stat-card">
-              <div class="stat-icon purple">
-                <i class="fa-solid fa-users"></i>
-              </div>
-              <div class="stat-details">
-                <p class="stat-label">Active Students</p>
-                <h2 class="stat-value">77</h2>
-                <span class="stat-subtext">Across 4 subjects</span>
-                <span class="stat-change positive">
-                  <i class="fa-solid fa-arrow-up"></i> 8.5% vs last month
-                </span>
-              </div>
+            <div class="stat-card">
+              <p>Monthly Revenue</p>
+              <span>Rs <?= empty($totalRevenue) ? '0.00' : number_format($totalRevenue, 2) ?></span>
+              <i class="fa-solid fa-dollar-sign icon-blue"></i>
             </div>
           </div>
+          <?php
+            $hasIndividualRevenue = ((float)($individualRevenue ?? 0)) > 0;
+            $hasInstituteRevenue  = ((float)($instituteRevenue ?? 0)) > 0;
+          ?>
 
-          <!-- Charts Row -->
-          <div class="profit-charts-row">
-            <!-- Earnings Overview Chart -->
-            <div class="chart-card earnings-chart">
-              <div class="chart-header">
-                <div>
-                  <h3>Earnings Overview</h3>
-                  <p class="chart-subtitle">Your revenue trend over time</p>
-                </div>
-                <div class="chart-controls">
-                  <button class="chart-btn">Month</button>
-                  <button class="chart-btn active">Year</button>
-                </div>
-                </div>
-                <div class="chart-content">
-                <!-- Placeholder for chart - you can integrate Chart.js or similar -->
-                <svg class="earnings-line-chart" viewBox="0 0 400 150">
-                  <defs>
-                    <linearGradient id="chartGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" style="stop-color:#4f46e5;stop-opacity:0.3" />
-                    <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:0" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M 0 120 L 40 110 L 80 100 L 120 95 L 160 85 L 200 90 L 240 75 L 280 70 L 320 55 L 360 45 L 400 40" 
-                    stroke="#4f46e5" stroke-width="2" fill="none"/>
-                  <path d="M 0 120 L 40 110 L 80 100 L 120 95 L 160 85 L 200 90 L 240 75 L 280 70 L 320 55 L 360 45 L 400 40 L 400 150 L 0 150 Z" 
-                    fill="url(#chartGradient)"/>
-                </svg>
-                <div class="chart-x-axis">
-                  <span>Feb</span>
-                  <span>Mar</span>
-                  <span>Apr</span>
-                  <span>May</span>
-                  <span>Jun</span>
-                  <span>Jul</span>
-                  <span>Aug</span>
-                  <span>Sep</span>
-                  <span>Oct</span>
-                  <span>Nov</span>
-                  <span>Dec</span>
-                </div>
-              </div>
-            </div>
+          <div class="profit-filter">
+          <form method="GET" class="month-form">
+            <input type="hidden" name="section" value="profit">
+
+            <label for="month" class="month-label">Select Month</label>
+
+            <input
+              type="month"
+              id="month"
+              name="month"
+              value="<?= htmlspecialchars($selectedMonth ?? date('Y-m')) ?>"
+              class="month-input"
+            />
+
+            <button type="submit" class="month-btn">Apply</button>
+          </form>
+        </div>
+
+
+          <div class="revenue-bar-wrap">
+            <div><h3>Summary Bar</h3></div>
             
-            <!-- Class Earnings Breakdown -->
-            <div class="chart-card class-earnings">
-              <div class="chart-header">
-                <div>
-                  <h3>Class Earnings</h3>
-                  <p class="chart-subtitle">By class breakdown</p>
-                </div>
-                <a href="#" class="view-all-link">View All <i class="fa-solid fa-arrow-right"></i></a>
-              </div>
-              <div class="class-earnings-list">
-                <div class="class-earning-item">
-                  <div class="class-earning-info">
-                    <span class="class-dot" style="background: #10b981;"></span>
-                    <div>
-                      <p class="class-earning-name">Advanced Mathematics</p>
-                      <span class="class-earning-meta">Gr. 12 • 25 students</span>
-                    </div>
-                  </div>
-                  <div class="class-earning-amount">
-                    <strong>$3,800</strong>
-                    <span class="earning-trend positive">+15%</span>
-                  </div>
-                  <div class="class-earning-bar">
-                    <div class="bar-fill" style="width: 85%; background: #10b981;"></div>
-                  </div>
-                </div>
+            <canvas id="progress"></canvas>
+          </div>
 
-                <div class="class-earning-item">
-                  <div class="class-earning-info">
-                    <span class="class-dot" style="background: #3b82f6;"></span>
-                    <div>
-                      <p class="class-earning-name">Physics Fundamentals</p>
-                      <span class="class-earning-meta">Gr. 11 • 18 students</span>
-                    </div>
-                  </div>
-                  <div class="class-earning-amount">
-                    <strong>$2,160</strong>
-                    <span class="earning-trend negative">-8%</span>
-                  </div>
-                  <div class="class-earning-bar">
-                    <div class="bar-fill" style="width: 65%; background: #3b82f6;"></div>
-                  </div>
-                </div>
+          <div class="donut-row">
+            <div class="donut-card">
+              <h3>Individual Classes</h3>
 
-                <div class="class-earning-item">
-                  <div class="class-earning-info">
-                    <span class="class-dot" style="background: #f59e0b;"></span>
-                    <div>
-                      <p class="class-earning-name">Chemistry Lab</p>
-                      <span class="class-earning-meta">Gr. 10 • 15 students</span>
-                    </div>
-                  </div>
-                  <div class="class-earning-amount">
-                    <strong>$1,440</strong>
-                    <span class="earning-trend positive">+22%</span>
-                  </div>
-                  <div class="class-earning-bar">
-                    <div class="bar-fill" style="width: 48%; background: #f59e0b;"></div>
-                  </div>
+              <?php if ($hasIndividualRevenue): ?>
+                <div class="donut-wrap">
+                  <canvas id="donutIndividual"></canvas>
                 </div>
+              <?php else: ?>
+                <div class="donut-empty">
+                  No individual revenue for <?= htmlspecialchars($selectedMonth ?? date('Y-m')) ?>
+                </div>
+              <?php endif; ?>
+            </div>
 
-                <div class="class-earning-item">
-                  <div class="class-earning-info">
-                    <span class="class-dot" style="background: #8b5cf6;"></span>
-                    <div>
-                      <p class="class-earning-name">Biology Basics</p>
-                      <span class="class-earning-meta">Gr. 9 • 12 students</span>
-                    </div>
-                  </div>
-                  <div class="class-earning-amount">
-                    <strong>$1,800</strong>
-                    <span class="earning-trend positive">+5%</span>
-                  </div>
-                  <div class="class-earning-bar">
-                    <div class="bar-fill" style="width: 55%; background: #8b5cf6;"></div>
-                  </div>
+            <div class="donut-card">
+              <h3>Institute Classes</h3>
+
+              <?php if ($hasInstituteRevenue): ?>
+                <div class="donut-wrap">
+                  <canvas id="donutInstitute"></canvas>
                 </div>
-              </div>
+              <?php else: ?>
+                <div class="donut-empty">
+                  No institute revenue for <?= htmlspecialchars($selectedMonth ?? date('Y-m')) ?>
+                </div>
+              <?php endif; ?>
             </div>
           </div>
-   
-          <!-- Recent Transactions -->
-          <div class="transactions-card">
-            <div class="transactions-header">
-              <div>
-                <h3>Recent Transactions</h3>
-                <p class="chart-subtitle">Your latest payment activities</p>
-              </div>
-              <div class="transactions-actions">
-                <button class="filter-btn">
-                  <i class="fa-solid fa-filter"></i> Filter
-                </button>
-                <button class="export-btn">
-                  <i class="fa-solid fa-download"></i> Export
-                </button>
-              </div>
+
+
+          <div class="unpaid-flex">
+
+            <!-- LEFT: Individual -->
+            <div class="unpaid-card unpaid-half">
+              <h3>Unpaid Students (Individual Classes)</h3>
+
+              <?php if (!empty($individualUnpaidStd)): ?>
+                <table class="unpaid-table">
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Class</th>
+                      <th>Last Paid Until</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($individualUnpaidStd as $row): ?>
+                      <tr>
+                        <td><?= htmlspecialchars($row->std_name) ?></td>
+                        <td><?= htmlspecialchars($row->class_name) ?></td>
+                        <td><?= htmlspecialchars($row->last_paid_until ?? 'Never') ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              <?php else: ?>
+                <p class="unpaid-empty">All students have paid for this month</p>
+              <?php endif; ?>
             </div>
-            <div class="transactions-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>DATE</th>
-                    <th>DESCRIPTION</th>
-                    <th>AMOUNT</th>
-                    <th>STATUS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>TXN001</td>
-                    <td>Dec 20, 2024</td>
-                    <td>Advanced Mathematics - December</td>
-                    <td class="amount-positive"><i class="fa-solid fa-arrow-up"></i> +$3,600</td>
-                    <td><span class="status-badge completed">Completed</span></td>
-                  </tr>
-                  <tr>
-                    <td>TXN002</td>
-                    <td>Dec 18, 2024</td>
-                    <td>Withdrawal to Bank Account</td>
-                    <td class="amount-negative"><i class="fa-solid fa-arrow-down"></i> -$2,500</td>
-                    <td><span class="status-badge completed">Completed</span></td>
-                  </tr>
-                  <tr>
-                    <td>TXN003</td>
-                    <td>Dec 15, 2024</td>
-                    <td>Physics Fundamentals - December</td>
-                    <td class="amount-positive"><i class="fa-solid fa-arrow-up"></i> +$2,160</td>
-                    <td><span class="status-badge completed">Completed</span></td>
-                  </tr>
-                  <tr>
-                    <td>TXN004</td>
-                    <td>Dec 12, 2024</td>
-                    <td>Chemistry Lab - December</td>
-                    <td class="amount-positive"><i class="fa-solid fa-arrow-up"></i> +$1,440</td>
-                    <td><span class="status-badge pending">Pending</span></td>
-                  </tr>
-                  <tr>
-                    <td>TXN005</td>
-                    <td>Dec 10, 2024</td>
-                    <td>Bonus - Top Teacher Award</td>
-                    <td class="amount-positive"><i class="fa-solid fa-arrow-up"></i> +$500</td>
-                    <td><span class="status-badge completed">Completed</span></td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="table-footer">
-                <span>Showing 5 of 54 transactions</span>
-                <div class="pagination">
-                  <button>Previous</button>
-                  <button class="active">Next</button>
-                </div>
-              </div>
+
+            <!-- RIGHT: Institute -->
+            <div class="unpaid-card unpaid-half">
+              <h3>Unpaid Students (Institute Classes)</h3>
+
+              <?php if (!empty($instituteUnpaidStd)): ?>
+                <table class="unpaid-table">
+                  <thead>
+                    <tr>
+                      <th>Student</th>
+                      <th>Class</th>
+                      <th>Last Paid Until</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php foreach ($instituteUnpaidStd as $row): ?>
+                      <tr>
+                        <td><?= htmlspecialchars($row->std_name) ?></td>
+                        <td><?= htmlspecialchars($row->class_name) ?></td>
+                        <td><?= htmlspecialchars($row->last_paid_until ?? 'Never') ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              <?php else: ?>
+                <p class="unpaid-empty">All students have paid for this month</p>
+              <?php endif; ?>
             </div>
+
           </div>
+
+
         </section>
 
-        <!-- ======================================== -->
-        <!-- 4. My Classes Section (UPDATED)          -->
-        <!-- ======================================== -->
-        <?php
-        $gradeMap = [
-          'yr_25' => '2025 A/L',
-          'yr_26' => '2026 A/L',
-          'yr_27' => '2027 A/L',
-          'yr_28' => '2028 A/L'
-        ];
-        ?>
         <section id="my-classes" class="content-section">
           <div class="content-header">
             <h1><i class="fa-solid fa-chalkboard-user"></i> My Classes</h1>
@@ -451,128 +292,127 @@
           </div>
 
           <div class="classes-list">
-            <?php if (!empty($teacherClasses)): ?>
-              <?php foreach ($teacherClasses as $class): ?>
-                <div class="class-card">
-                    <div class="class-info">
-                      <h3>
-                        <?=  htmlspecialchars($class->class_name) ?> - 
-                        <?= $gradeMap[$class->grade_level_name] ?? $class->grade_level_name ?>
-                      </h3>
-                      <div class="class-meta">
-                          <span class="class-type-badge <?= strtolower($class->class_type) ?>">
-                              <?php if ($class->class_type === 'institute'): ?>
+            <?php if (is_iterable($teacherClasses) && !empty($teacherClasses)): ?>
+                <?php foreach ($teacherClasses as $class): ?>
+                    <div class="class-card">
+                      <div class="class-info">
+                        <h3><?= htmlspecialchars($class->class_name ?? 'Class Name') ?></h3>
+                        <div class="class-meta">
+                          <span class="class-type-badge <?= strtolower($class->class_type ?? 'individual') ?>">
+                            <?php if (($class->class_type ?? '') === 'institute'): ?>
                                 <i class="fa-solid fa-building"></i> Institute Class
-                              <?php else: ?>
+                            <?php else: ?>
                                 <i class="fa-solid fa-user"></i> Individual Class
-                              <?php endif; ?>
+                            <?php endif; ?>
                           </span>
                           <span><i class="fa-solid fa-location-dot"></i> Colombo</span>
                           <span>
                             <i class="fa-regular fa-clock"></i> 
-                            <?= ucfirst(substr($class->day, 0, 3)) ?> 
-                            <?= date("g", strtotime($class->start_time)) ?>-
-                            <?= date("g A", strtotime($class->end_time)) ?>
+                            <?php
+                            $dayText = !empty($class->day) ? ucfirst(substr($class->day, 0, 3)) : '-';
+                            $startText = !empty($class->start_time) ? date("g A", strtotime($class->start_time)) : '-';
+                            $endText   = !empty($class->end_time) ? date("g A", strtotime($class->end_time)) : '-';
+                            ?>
+                            <?= $dayText ?> <?= $startText ?> - <?= $endText ?>
                           </span>
-                          <span>
-                            <i class="fa-solid fa-users"></i>
-                            <?=  htmlspecialchars($class->max_students) ?> Students
-                          </span>
-                          <span>
-                            <i class="fa-solid fa-dollar-sign"></i>
-                            Rs <?= number_format($class->revenue, 2) ?>
-                          </span>
+                          <span><i class="fa-solid fa-users"></i><?= (int)($class->studentCount ?? 0) ?> Students</span>
+                        </div>
                       </div>
+                      <button class="btn btn-secondary">Manage Class</button>
                     </div>
-                    <button class="btn btn-secondary">Manage Class</button>
-                </div>
-              <?php endforeach; ?>
+                <?php endforeach; ?>
             <?php else: ?>
-              <p>No Classes added yet.</p>
+                <p style="color: #666;">No classes found. (Note: Ensure backend sends an array, not a count)</p>
             <?php endif; ?>
           </div>
         </section>
-        <!-- ======================================== -->
-        <!-- 5. My Community Section     -->
-        <!-- ======================================== -->
+        
         <section id="community" class="content-section">
           <div class="content-header">
             <h1><i class="fa-solid fa-users"></i> My Communities</h1>
-            <button id="open-modal-btn" class="open-modal-btn btn btn-primary">
+            <button id="openCreateCommunityModal" class="btn btn-primary">
               <i class="fa-solid fa-plus"></i> Create New Community
             </button>
-
-            <div id="communityModal" class="community-modal">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h2>Create New Community</h2>
-                  <span class="close">&times;</span>
-                </div>
-
-                <form action="<?= ROOT ?>/TeacherProfile/createCommunity" method="POST" enctype="multipart/form-data">
-                  <label>Community Name</label>
-                  <input type="text" name="community_name" placeholder="Enter community name..." required />
-
-                  <label>Description</label>
-                  <textarea name="description" placeholder="Describe your community..." required></textarea>
-
-                  <label>Community Image</label>
-                  <div class="upload-box">
-                    <input type="file" name="image" accept="image/*" required />
-                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                    <p>Click to upload or drag and drop<br><span>PNG, JPG, JPEG up to 5MB</span></p>
-                  </div>
-
-                  <div class="buttons">
-                    <button type="button" class="cancel-btn">Cancel</button>
-                    <button type="submit" class="create-btn">Create Community</button>
-                  </div>
-
-                </form>
-              </div>
-            </div>
-            
           </div>
 
-          <form method="GET" action="<?= ROOT ?>/TeacherProfile">
-            <input type="hidden" name="section" value="community" /> 
-            <div class="community-search-bar">
-              <i class="fa-solid fa-search"></i>
-              <input type="search" name="search" placeholder="Search your communities by name..." value="<?= htmlspecialchars($_GET['search'] ?? '') ?>" />
-            </div>
-          </form>
-         
+          <div class="community-search-bar">
+            <i class="fa-solid fa-search"></i>
+            <input type="search" placeholder="Search your communities by name..." />
+          </div>
+
           <div class="community-list">
-            <?php if (!empty($communities)): ?>
-              <?php foreach ($communities as $community): ?>
-                <div class="community-card">
-                  <div class="community-info">
-                    <h3><?= htmlspecialchars($community->community_name) ?></h3>
-                    
-                    <div class="community-meta">
-                      <span>
-                        <i class="fa-solid fa-users"></i>
-                        125 Members
-                      </span>
+            <?php if (!empty($community_details)): ?>
+                <?php foreach ($community_details as $community): ?>
+                    <div class="community-card">
+                      <div class="community-info">
+                        <h3><?= htmlspecialchars($community->name) ?></h3>
+                        <div class="community-meta">
+                          <span><i class="fa-solid fa-users"></i> <?= $community->member_count ?? 0 ?> Members</span>
+                        </div>
+                      </div>
+                        <div class="action-buttons">
+                          <a class="btn btn-secondary" href="<?= ROOT ?>/community?community_id=<?= htmlspecialchars($community->id) ?>" 
+                            class="btn btn-secondary" 
+                            style="text-decoration: none; display: inline-block; line-height: normal;">
+                            Manage
+                          </a>
+
+                          <button class="btn btn-danger" 
+                                  onclick="commDelete('<?= $community->community_id ?? $community->id ?>', '<?= ROOT ?>')">
+                              <i class="fa-solid fa-trash"></i> Delete
+                          </button>
+                      </div>
                     </div>
-                  </div>
-                  <button class="btn btn-secondary">Manage</button>
-                </div>
-              <?php endforeach; ?>
+                <?php endforeach; ?>
             <?php else: ?>
-              <p>No communities found.</p>
+                <p>No communities found.</p>
             <?php endif; ?>
           </div>
-
-        </section> 
-        <!-- Create Community Modal -->
-        <!-- Modal Background -->
+        </section>
         
+        
+        <div id="CreateCommunityModal" class="modal-overlay">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Create Class Community</h3>
+            <span class="close-button">&times;</span>
+          </div>
+          <div class="modal-body">
+            <form id="adminCreateCommunityForm" method="POST" action="<?php echo ROOT ?>/TeacherProfile/communityCreate" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="communityName">Community Name</label>
+                <input type="text" id="communityName" name="communityName" placeholder="Enter community name" required>
+              </div>
 
-       
-        <!-- ======================================== -->
-        <!-- 5. My Calendar Section (Placeholder)     -->
-        <!-- ======================================== -->
+              <div class="form-group">
+                <label for="communityDesc">Description</label>
+                <textarea id="communityDesc" name="communityDesc" placeholder="Enter a description..." required></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="class_id">Select Class</label>
+                <select id="class_id" name="class_id" required>
+                  <option value="">-- Select Class --</option>
+
+                  <?php foreach ($teacherClasses as $class): ?>
+                    <option value="<?= $class->class_id ?>">
+                      <?= htmlspecialchars($class->class_name) ?>
+                    </option>
+                  <?php endforeach; ?>
+                </select>
+              </div>
+
+
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-cancel">Cancel</button>
+                <button type="submit" class="btn btn-create">Create Community</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+        
         <section id="my-calendar" class="content-section">
           <div class="content-header">
             <h1><i class="fa-regular fa-calendar"></i> My Calendar</h1>
@@ -581,9 +421,23 @@
         </section>
       </main>
     </div>
+    
     <?php include __DIR__.'/Component/footer.view.php'; ?>
-      <script src="<?php  echo ROOT ?>/assets/js/calander.js"></script>
-  <script src="<?php  echo ROOT ?>/assets/js/event.js"></script>
-    <script src="<?php  echo ROOT ?>/assets/js/teacher_profile.js"></script>
+    <script>const appRoot = "<?= ROOT ?>"; </script>
+    <script>
+      const maxRevenue = <?= json_encode((float)$maxRevenue) ?>;
+      const individualRevenue = <?= json_encode((float)$individualRevenue) ?>;
+      const instituteRevenue = <?= json_encode((float)$instituteRevenue) ?>;
+
+      const individualClassRevenues = <?= json_encode($individualClassRevenues) ?>;
+      const instituteClassRevenues  = <?= json_encode($instituteClassRevenues) ?>;
+
+      const individualUnpaidStd = <?= json_encode($individualUnpaidStd) ?>;
+      const instituteUnpaidStd  = <?= json_encode($instituteUnpaidStd) ?>;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="<?= ROOT ?>/assets/js/calander.js"></script>
+    <script src="<?= ROOT ?>/assets/js/profile.js"></script>
+    <script src="<?= ROOT ?>/assets/js/profitChart.js"></script>
   </body>
 </html>

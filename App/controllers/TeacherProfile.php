@@ -4,142 +4,288 @@ class TeacherProfile extends Controller
 {
     public function index()
     {
+        // 1️⃣ Ensure session is started
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // 2️⃣ Check login
+        if (!isset($_SESSION['USER'])) {
+            redirect('login');
+            exit();
+        }
+
         $teacher = new Teacher();
         $classes = new ClassModel();
         $students = new Student();
-        $communities = new ClassCommunity();
+        $eventModel = new Event();
+        $enrollmentModel = new EnrollmentModel();
+        $community = new CommunityModel();
+        $accountModel = new Account();
+        $paymentModel = new PaymentModel();
+        $scheduleModel   = new ClassScheduleModel();
+
 
         $teacher_id = $_SESSION['USER']['teacher_id'];
-        
-         
+        $accountId = $_SESSION['USER']['account_id'];
 
-        
-        //Fetch teacher info
+        // Fetch teacher info
         $teacherData = $teacher->first(['teacher_id' => $teacher_id]);
         $teacherName = $teacherData->first_name . ' ' . $teacherData->last_name;
         $avatar = strtoupper($teacherData->first_name[0] . $teacherData->last_name[0]);
 
-        //Fetch number of classes
-        $totalClasses =$classes->count(['teacher_id'=> $teacher_id]);
 
-        //Fetch number of students
-        $totalStudents = $students->countStudentsforTeachers($teacher_id);
-
-        //Monthly Revenue
-        $classRevenues = $classes->getClassesByTeacher($teacher_id);
-        $monthlyRevenue = 0;
-        
-        foreach ($classRevenues as $class) {
-            $monthlyRevenue += $class->revenue;
-    
+        if (!empty($teacherData->account_id)) {
+            $accountData = $accountModel->first(['account_id' => $teacherData->account_id]);
+            
+            $teacherData->email = $accountData ? $accountData->email : '';
+        } else {
+            $teacherData->email = '';
         }
 
-        //Update Profile pic
-        $avatarImage = (!empty($teacherData->profile_photo)) ? ROOT . "/uploads/teachers/" . $teacherData->profile_photo : null;
+        // Fetch number of classes (Keep this for the stats card)
+        $totalClasses = $classes->count(['teacher_id'=> $teacher_id]);
+
+        
+        
+
+        // Fetch number of students
+        $totalStudents = $enrollmentModel->countStudentsforTeachers($teacher_id);
+
+        // Update Profile pic
+        $avatarImage = (!empty($teacherData->profile_photo_path)) ? ROOT . "/" . $teacherData->profile_photo_path : null;
+
+        // communityDetails
+        $communityDetails = $community->where(['owner_id'=> $accountId]);
+
+        //teacherClasses
+        $teacherClasses = $classes->where(['teacher_id'=> $teacher_id]);
+
+        foreach ($teacherClasses as $class) {
+
+            // 1) enrolled student count (real count)
+            $enrolls = $enrollmentModel->where(['class_id' => $class->class_id]);
+            $class->studentCount = is_array($enrolls) ? count($enrolls) : 0;
+
+            // 2) schedule row for this class
+            $sch = $scheduleModel->first(['class_id' => $class->class_id]);
+
+            if ($sch) {
+                $class->day = $sch->day_of_week;      // Monday
+                $class->start_time = $sch->start_time; // 08:00:00
+                $class->end_time   = $sch->end_time;   // 12:00:00
+            } else {
+                $class->day = null;
+                $class->start_time = null;
+                $class->end_time = null;
+            }
+
+            // 3) type (optional if you already have class_type)
+            $class->class_type = empty($class->institute_id) ? 'individual' : 'institute';
+        }
 
         $section = $_GET['section'] ?? 'setting';
-
-        $validation_errors= $_SESSION['validation_errors'] ?? [];
+        $validation_errors = $_SESSION['validation_errors'] ?? [];
         unset($_SESSION['validation_errors']);
 
-        //My Classes section
-        $teacherClasses = $classes->getClassesByTeacher($teacher_id);
+        // Fetch Events
+        $events = $eventModel->where(['account_id' => $accountId]);
+        if (!$events) $events = [];
 
-        //List and search communities by teacher id
-        $section = $_GET['section'] ?? 'community';
-        
-        
-        $searchKeyword = $_GET['search'] ?? null; // FIXED: $_GET not $GET
-        $communitiesList = [];
 
-            if ($searchKeyword) {
-                // Make sure this method exists in your ClassCommunity model
-                $communitiesList = $communities->searchCommunities($teacher_id, $searchKeyword);
-            } else {
-                $communitiesList = $communities->getCommunitiesByTeacher($teacher_id);
+        // profit 
+        $SelectMonth = $_GET['month'] ?? date('Y-m');
+        $monthEnd    = date('Y-m-t', strtotime($SelectMonth . '-01'));
+
+        $maxRevenue = 0;
+
+        // split classes
+        $individualClasses = array_values(array_filter($teacherClasses, fn($c) => empty($c->institute_id)));
+        $instituteClasses  = array_values(array_filter($teacherClasses, fn($c) => !empty($c->institute_id)));
+
+        // -------------------- INDIVIDUAL --------------------
+        $individualRevenue = 0;
+        $individualClassRevenues = [];
+        $individualUnpaidStd = [];
+
+        foreach ($individualClasses as $class) {
+
+            $classTotal = 0;
+
+            $classEnrollments = $enrollmentModel->where(['class_id' => $class->class_id]);
+            $enrollCount = count($classEnrollments);
+
+            // expected (max) for this individual class
+            $maxRevenue += $enrollCount * (float)$class->monthly_fee;
+
+            foreach ($classEnrollments as $enrollment) {
+
+                $payments = $paymentModel->where([
+                    'enrollment_id' => $enrollment->enrollment_id,
+                    'status' => 'completed'
+                ]);
+
+                // collected in selected month
+                foreach ($payments as $p) {
+                    if (!empty($p->payment_date) && date('Y-m', strtotime($p->payment_date)) === $SelectMonth) {
+                        $amt = (float)$p->amount;
+                        $classTotal += $amt;
+                        $individualRevenue += $amt;
+                    }
+                }
+
+                // latest paid_until
+                $latestPaidUntil = null;
+                foreach ($payments as $p) {
+                    if (!empty($p->paid_until)) {
+                        if ($latestPaidUntil === null || $p->paid_until > $latestPaidUntil) {
+                            $latestPaidUntil = $p->paid_until;
+                        }
+                    }
+                }
+
+                // unpaid if not covered to month end
+                if ($latestPaidUntil === null || $latestPaidUntil < $monthEnd) {
+                    $studentRow = $students->first(['student_id' => $enrollment->student_id]);
+                    $stdName = $studentRow ? trim(($studentRow->first_name ?? '') . ' ' . ($studentRow->last_name ?? '')) : '';
+
+                    $individualUnpaidStd[] = (object)[
+                        'class_name'      => $class->class_name,
+                        'std_name'        => $stdName,
+                        'type'            => 'individual',
+                        'last_paid_until' => $latestPaidUntil,
+                    ];
+                }
             }
-        
-        
-        
 
-        /*Calendar: teacher-> classes in schedule
-        $calendarEvents = [];
-        foreach ($teacherClasses as $class) {
-            $calendarEvents[] = [
-                'id' => $class->class_id,
-                'event_title' => $class->class_name,
-                'event_date' => $class->start_date,
-                'event_time' => $class->start_time ?? '',
-                'url' => ROOT . "/Class/view/" . $class->class_id
+            $individualClassRevenues[] = (object)[
+                'class_id'   => $class->class_id,
+                'class_name' => $class->class_name,
+                'revenue'    => $classTotal
             ];
-        }*/
+        }
+
+        // -------------------- INSTITUTE --------------------
+        $instituteRevenue = 0;
+        $instituteClassRevenues = [];
+        $instituteUnpaidStd = [];
+
+        foreach ($instituteClasses as $class) {
+
+            $paymentsCount = 0;
+
+            $classEnrollments = $enrollmentModel->where(['class_id' => $class->class_id]);
+            $enrollCount = count($classEnrollments);
+
+           
+            $maxRevenue += $enrollCount * (float)$class->teacher_fee;
+
+            foreach ($classEnrollments as $enrollment) {
+
+                $payments = $paymentModel->where([
+                    'enrollment_id' => $enrollment->enrollment_id,
+                    'status' => 'completed'
+                ]);
+
+                // count payments in selected month (cash-in-month)
+                foreach ($payments as $p) {
+                    if (!empty($p->payment_date) && date('Y-m', strtotime($p->payment_date)) === $SelectMonth) {
+                        $paymentsCount++;
+                    }
+                }
+
+                // latest paid_until
+                $latestPaidUntil = null;
+                foreach ($payments as $p) {
+                    if (!empty($p->paid_until)) {
+                        if ($latestPaidUntil === null || $p->paid_until > $latestPaidUntil) {
+                            $latestPaidUntil = $p->paid_until;
+                        }
+                    }
+                }
+
+                // unpaid if not covered to month end
+                if ($latestPaidUntil === null || $latestPaidUntil < $monthEnd) {
+                    $studentRow = $students->first(['student_id' => $enrollment->student_id]);
+                    $stdName = $studentRow ? trim(($studentRow->first_name ?? '') . ' ' . ($studentRow->last_name ?? '')) : '';
+
+                    $instituteUnpaidStd[] = (object)[
+                        'class_name'      => $class->class_name,
+                        'std_name'        => $stdName,
+                        'type'            => 'institute',
+                        'last_paid_until' => $latestPaidUntil,
+                    ];
+                }
+            }
+
+            // collected institute revenue = paymentsCount * teacher_fee
+            $classRevenue = $paymentsCount * (float)$class->teacher_fee;
+            $instituteRevenue += $classRevenue;
+
+            $instituteClassRevenues[] = (object)[
+                'class_id'   => $class->class_id,
+                'class_name' => $class->class_name,
+                'revenue'    => $classRevenue
+            ];
+        }
+
+        $totalRevenue = $individualRevenue + $instituteRevenue;
 
 
-        
-        $this->view('teacher_profile',[
+
+        $data = [
+            'events' => $events,
             'teacher' => $teacherData,
             'teacherName' => $teacherName,
             'avatar' => $avatar,
             'totalClasses' => $totalClasses,
             'totalStudents' => $totalStudents,
-            'monthlyRevenue' => $monthlyRevenue,
             'avatarImage' => $avatarImage,
             'section' => $section,
             'validation_errors' => $validation_errors,
-            'teacherClasses' => $teacherClasses,
-            'classRevenues' => $classRevenues,
-            'communities' => $communitiesList
+            'teacherClasses' => $teacherClasses, 
+            'community_details' => $communityDetails,
+            'selectedMonth'  => $SelectMonth,
+            'individualRevenue' => $individualRevenue,
+            'instituteRevenue' => $instituteRevenue,
+            'totalRevenue' => $totalRevenue,
+            'maxRevenue' => $maxRevenue,
+            'individualClassRevenues' => $individualClassRevenues,
+            'instituteClassRevenues' => $instituteClassRevenues,
+            'individualUnpaidStd' => $individualUnpaidStd,
+            'instituteUnpaidStd' => $instituteUnpaidStd
+        ];
+        // echo "<pre>";
+        // print_r($data);
+        // echo "</pre>";
+        // die();
+        
 
-    
-            
-             
-        ]);
+        $this->view('teacher_profile', $data);
     }
-    public function uploadPhoto(){
-        
-        if(isset($_FILES['profile_photo']['name']) && !empty($_FILES['profile_photo']['name'])){
-
-            if ($_FILES['profile_photo']['error'] !== 0) {
-                echo "File upload error: " . $_FILES['profile_photo']['error'];
-                exit;
-            }
-
-            $teacher = new Teacher();
-            $teacher_id = $_SESSION['USER']['teacher_id'];
-
-            //UPload folder
-            $folder = __DIR__ . "/../../Public/uploads/teachers/";
-            if (!file_exists($folder)){
-                mkdir($folder, 0777, true);
-            }
-        
-
-            //File Name
-            $fileName = time() . "_" . $_FILES['profile_photo']['name'];
-            $targetPath = $folder . $fileName;
-        
-            //Save File
-            if (move_uploaded_file($_FILES['profile_photo']['tmp_name'], $targetPath)){
-
-                //Update database
-                $teacher->updateByTeacherId($teacher_id, ['profile_photo' => $fileName]);
-
-                redirect('InstituteProfile?section=edit-profile');
-            }else {
-                echo "Failed to move uploaded file.";
-                exit;
-            }
-        }else {
-        // File not uploaded, redirect to edit-profile
-        redirect('InstituteProfile?section=edit-profile');
-        }
-        
-        redirect('InstituteProfile?section=edit-profile');
-    
-        
+        public function uploadPhoto()
+{
+    if (!isset($_SESSION['USER']['teacher_id'])) {
+        redirect('login');
     }
 
-    public function updateProfile(){
+    $teacher_id = $_SESSION['USER']['teacher_id'];
+    $teacher = new Teacher();
+
+    $uploadedFiles = handleFileUploads('profile_photo', 'teacher'); 
+
+    if (!empty($uploadedFiles)) {
+        $newLogo = $uploadedFiles[0];
+        $data = [
+            'profile_photo_path' => $newLogo
+        ];
+        $teacher->update($teacher_id, $data, 'teacher_id');
+    }
+    redirect('TeacherProfile?section=edit-profile');
+}
+
+    public function updateProfile()
+    {
         $teacher = new Teacher();
 
         $data = [
@@ -149,61 +295,129 @@ class TeacherProfile extends Controller
             'phone' => $_POST['phone'],
         ];
 
-        if(!$teacher->validateUpdate($data)){
+        if (!$teacher->validateUpdate($data)) {
             $_SESSION['validation_errors'] = $teacher->validation_errors;
             redirect('TeacherProfile?section=edit-profile');
         }
 
-         $teacher_id = $_SESSION['USER']['teacher_id'];
-
-        $teacher->updateByTeacherId($teacher_id,$data);
+        $teacher_id = $_SESSION['USER']['teacher_id'];
+        $teacher->updateByTeacherId($teacher_id, $data);
 
         redirect('TeacherProfile?section=edit-profile');
-        
     }
 
-    public function createCommunity()
-    {
+public function communityCreate()
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($_SESSION['USER']['account_id'])) {
+        redirect('signup');
+        exit;
+    }
 
+    $community = new CommunityModel();
+    $communityMember = new CommunityMemberModel();
+    $enrollmentModel = new EnrollmentModel();
+    $classModel = new ClassModel();
 
-        $communities = new ClassCommunity();
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            
-            $imageName = null;
+    $classId = $_POST['class_id'];
 
-            if(!empty($_FILES['image']['name'])){
-                $folder = __DIR__ . "/../../Public/uploads/communities/";
-                if (!file_exists($folder)){
-                    mkdir($folder, 0777, true);
-                }
+    $class = $classModel->first([
+        'class_id' => $classId
+    ]);
 
-                $imageName = time() . "_" . $_FILES['image']['name'];
-                $targetPath = $folder . $imageName;
-                move_uploaded_file($_FILES['image']['tmp_name'], $targetPath);
-            }
+    if (!$class) {
+        redirect('TeacherProfile?error=invalid_class');
+        exit;
+    }
 
-            $data = [
-                'teacher_id' => $_SESSION['USER']['teacher_id'],
-                'community_name' => $_POST['community_name'],
-                'description'=> $_POST['description'],
-                'image'          => $imageName,
-                'created_at' => date('Y-m-d H:i:s')
-            ];
+    $commId = $community->insertAndGetId([
+        'owner_id'    => $_SESSION['USER']['account_id'],
+        'name'        => $_POST['communityName'],
+        'description' => $_POST['communityDesc'],
+        'type'        => 'institute_class',
+        'class_id'    => $classId
+    ]);
 
-            if(!$communities->validate($data)){
-                $_SESSION['validation_errors'] = $communities->validation_errors;
-                redirect('TeacherProfile?section=community');
-            }
+    // Add teacher as owner
+    $communityMember->insert([
+        'community_id' => $commId,
+        'user_id'      => $_SESSION['USER']['account_id'],
+        'role'         => 'owner'
+    ]);
 
-            $communities->insert($data);
+    // Add students
+    $classMembers = $enrollmentModel->where(['class_id' => $classId]);
 
-        
-
-            redirect('TeacherProfile?section=community');
+    if ($classMembers) {
+        foreach ($classMembers as $member) {
+            $communityMember->insert([
+                'community_id' => $commId,
+                'user_id'      => $member->student_account_id,
+                'role'         => 'member'
+            ]);
         }
     }
 
+    redirect('TeacherProfile?section=community');
+    exit;
+}
 
+public function deleteCommunity()
+{
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // 1️⃣ Validate input
+    $community_id = $_GET['id'] ?? null;
+    if (!$community_id || empty($_SESSION['USER']['account_id'])) {
+        redirect('TeacherProfile?section=community');
+        exit;
+    }
+
+    // 2️⃣ Initialize models
+    $communityModel = new CommunityModel();
+    $memberModel    = new CommunityMemberModel();
+    $postModel      = new CommunityPostModel();
+    $replyModel     = new CommunityPostReplyModel();
+    $messageModel   = new CommunityMessageModel();
+
+    // 3️⃣ Ownership check (VERY IMPORTANT)
+    $community = $communityModel->first([
+        'id' => $community_id,
+        'owner_id' => $_SESSION['USER']['account_id']
+    ]);
+
+    if (!$community) {
+        redirect('TeacherProfile?error=unauthorized');
+        exit;
+    }
+
+    // 4️⃣ Delete replies → posts
+    $posts = $postModel->where(['community_id' => $community_id]);
+    if ($posts) {
+        foreach ($posts as $post) {
+            $replyModel->delete(['post_id' => $post->id]);
+        }
+    }
+
+    // 5️⃣ Delete posts
+    $postModel->delete(['community_id' => $community_id]);
+
+    // 6️⃣ Delete messages
+    $messageModel->delete(['community_id' => $community_id]);
+
+    // 7️⃣ Delete members
+    $memberModel->delete(['community_id' => $community_id]);
+
+    // 8️⃣ Delete community
+    $communityModel->delete(['id' => $community_id]);
+
+    redirect('TeacherProfile?section=community');
+    exit;
+}
 
 }
