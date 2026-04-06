@@ -24,7 +24,9 @@ body {
   font-family: "Poppins", sans-serif;
   color: var(--text-color-dark);
 }
-
+a {
+  text-decoration: none;
+}
 /* Main Layout */
 .dashboard-layout {
   display: flex;
@@ -44,7 +46,7 @@ body {
   width: calc(100% - var(--sidebar-width));
   background-color: var(--background-color);
   padding: 2rem;
-  padding-bottom: 13rem;
+  padding-bottom: 15rem;
 }
 
 /* Sidebar Navigation */
@@ -60,7 +62,9 @@ body {
   text-decoration: none;
   color: var(--text-color-light);
   font-weight: 500;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 .sidebar-item i {
@@ -105,7 +109,9 @@ body {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .btn:hover {
@@ -149,6 +155,14 @@ body {
   font-size: 1.5rem;
   font-weight: 600;
   margin-right: 1rem;
+  overflow: hidden;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .profile-info h2 {
@@ -393,6 +407,14 @@ body {
   font-size: 3rem;
   font-weight: 600;
   margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.avatar-display img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .avatar-section p {
@@ -498,7 +520,11 @@ body {
   border-radius: 12px;
   border: 1px solid var(--border-color);
 }
-
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 .community-info h3 {
   margin: 0 0 0.5rem 0;
   color: var(--primary-color);
@@ -553,4 +579,683 @@ body {
 .community-finder p,
 .my-communities-section h3 {
   padding-bottom: 20px;
+}
+/* =========================================
+   Modal Overlay (Background)
+   ========================================= */
+#CreateCommunityModal.modal-overlay {
+  display: none; /* Hidden by default, JS toggles this to 'flex' */
+  position: fixed;
+  z-index: 1000; /* Sit on top of everything */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px); /* Optional: blurs the background slightly */
+}
+
+/* =========================================
+   Modal Box (The white card)
+   ========================================= */
+#CreateCommunityModal .modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px; /* Prevents it from getting too wide on desktop */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Simple animation to make it slide down */
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* =========================================
+   Modal Header
+   ========================================= */
+#CreateCommunityModal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+#CreateCommunityModal .modal-header h3 {
+  margin: 0;
+  color: #1e2a5e; /* Primary Blue */
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+#CreateCommunityModal .close-button {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+#CreateCommunityModal .close-button:hover,
+#CreateCommunityModal .close-button:focus {
+  color: #1e2a5e;
+  text-decoration: none;
+}
+
+/* =========================================
+   Form Elements
+   ========================================= */
+#CreateCommunityModal .form-group {
+  margin-bottom: 1.2rem;
+}
+
+#CreateCommunityModal label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+#CreateCommunityModal input[type="text"],
+#CreateCommunityModal textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+#CreateCommunityModal textarea {
+  resize: vertical; /* Allows user to resize height only */
+  min-height: 100px;
+}
+
+#CreateCommunityModal input:focus,
+#CreateCommunityModal textarea:focus {
+  border-color: #1e2a5e;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 42, 94, 0.1);
+}
+
+/* =========================================
+   Modal Footer (Buttons)
+   ========================================= */
+#CreateCommunityModal .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 1.5rem;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+#CreateCommunityModal .btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+#CreateCommunityModal .btn-cancel {
+  background-color: #f1f3f5;
+  color: #495057;
+}
+
+#CreateCommunityModal .btn-cancel:hover {
+  background-color: #e9ecef;
+}
+
+#CreateCommunityModal .btn-create {
+  background-color: #1e2a5e;
+  color: #ffffff;
+}
+
+#CreateCommunityModal .btn-create:hover {
+  background-color: #2d3b75;
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  margin-left: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+.revenue-bar-wrap {
+  width: 100%;
+  height: 100px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.revenue-bar-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+.donut-row {
+  margin-top: 2rem;
+  padding: 14px 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.donut-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.donut-card h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #111827;
+}
+
+.donut-wrap {
+  height: 260px;
+  width: 100%;
+}
+
+.donut-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.unpaid-flex {
+  display: flex;
+  gap: 16px;
+  margin-top: 20px;
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.unpaid-half {
+  flex: 1; /* both cards take equal width */
+  min-width: 0; /* prevents overflow when table is wide */
+}
+
+.unpaid-empty {
+  color: var(--text-color-light);
+  margin-top: 8px;
+}
+
+.unpaid-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.unpaid-table th,
+.unpaid-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.unpaid-table th {
+  font-weight: 600;
+  color: #111827;
+}
+.profit-filter {
+  display: flex;
+  justify-content: flex-end;
+  margin: 12px 0 18px;
+}
+
+.month-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 10px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.month-label {
+  font-size: 14px;
+  color: var(--text-color-dark);
+  font-weight: 600;
+}
+
+.month-input {
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: var(--text-color-dark);
+  outline: none;
+}
+
+.month-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(30, 42, 94, 0.15);
+}
+
+.month-btn {
+  border: none;
+  background: var(--primary-color);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.month-btn:hover {
+  opacity: 0.92;
+}
+
+.month-btn:active {
+  transform: translateY(1px);
+}
+/* inistitute profit */
+
+/* =========================================================
+   PROFIT ANALYSIS – FULL CSS (matches your variables)
+   Uses: --primary-color, --secondary-color, --card-background,
+         --border-color, --text-color-dark, --text-color-light, --shadow
+   ========================================================= */
+
+/* Header row (title + month filter) */
+.profit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.profit-header h1 {
+  margin: 0;
+  color: var(--text-color-dark);
+}
+
+.profit-header p {
+  margin: 6px 0 0;
+  color: var(--text-color-light);
+  font-size: 13px;
+}
+
+/* =========================
+   Filter
+   ========================= */
+.profit-filter {
+  display: flex;
+  justify-content: flex-end;
+  margin: 6px 0 14px;
+}
+
+.month-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow);
+}
+
+.month-label {
+  font-weight: 600;
+  color: var(--text-color-dark);
+  font-size: 14px;
+}
+
+.month-input {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 8px 10px;
+  background: #fff;
+  outline: none;
+}
+
+.month-btn {
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  padding: 9px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.15s;
+}
+
+.month-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+/* =========================
+   Section Card Wrapper (white blocks)
+   ========================= */
+.profit-section {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 18px;
+  box-shadow: var(--shadow);
+}
+
+.section-head {
+  margin-bottom: 10px;
+}
+
+.section-title {
+  margin: 0 0 6px 0;
+  color: var(--text-color-dark);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.section-sub {
+  margin: 0;
+  color: var(--text-color-light);
+  font-size: 13px;
+}
+
+/* =========================
+   Summary cards (flex)
+   ========================= */
+.profit-summary-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin: 10px 0 0;
+}
+
+.profit-summary-card {
+  flex: 1;
+  min-width: 220px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.profit-summary-card p {
+  margin: 0 0 6px;
+  color: var(--text-color-light);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.profit-summary-card h2 {
+  margin: 0 0 6px;
+  color: var(--text-color-dark);
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.profit-summary-card small {
+  color: var(--text-color-light);
+  font-size: 12px;
+}
+
+/* highlight (optional) */
+.profit-summary-card.highlight {
+  border-color: rgba(254, 211, 82, 0.95);
+  box-shadow: 0 6px 16px rgba(254, 211, 82, 0.25);
+}
+
+.revenue-bar-wrap {
+  height: 90px;
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.revenue-bar-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.donut-empty,
+.chart-empty {
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+  border-radius: 12px;
+  color: var(--text-color-light);
+  font-size: 14px;
+  border: 1px dashed var(--border-color);
+}
+
+.chart-card {
+  margin-top: 12px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.chart-card h3 {
+  margin: 0 0 10px;
+  color: var(--text-color-dark);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.chart-wrap {
+  height: 320px;
+}
+
+.chart-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.donut-row {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.donut-card {
+  flex: 1;
+  min-width: 320px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.donut-card h3 {
+  margin: 0 0 10px;
+  color: var(--text-color-dark);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.donut-wrap {
+  height: 280px;
+}
+
+.donut-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.profit-table-card {
+  margin-top: 12px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.table-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.table-head h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-color-dark);
+  font-weight: 800;
+}
+
+.table-hint {
+  font-size: 12px;
+  color: var(--text-color-light);
+}
+
+.table-scroll {
+  overflow: auto;
+}
+
+.profit-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.profit-table th,
+.profit-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.profit-table th {
+  font-weight: 800;
+  color: var(--text-color-dark);
+  background: #fafafa;
+}
+
+.empty-note {
+  color: var(--text-color-light);
+  padding: 8px 2px;
+}
+
+/* profit coloring */
+.pos {
+  color: #16a34a;
+  font-weight: 800;
+}
+.neg {
+  color: #dc2626;
+  font-weight: 800;
+}
+
+.profit-flex {
+  display: flex;
+  gap: 14px;
+  align-items: stretch;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.profit-table-card.half {
+  flex: 1;
+  min-width: 320px;
+}
+
+.unpaid-flex {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.unpaid-card {
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.unpaid-half {
+  flex: 1;
+  min-width: 320px;
+}
+
+.unpaid-card h3 {
+  margin: 0 0 10px;
+  color: var(--text-color-dark);
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.unpaid-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.unpaid-table th,
+.unpaid-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.unpaid-table th {
+  font-weight: 800;
+  color: var(--text-color-dark);
+  background: #fafafa;
+}
+
+.unpaid-empty {
+  color: var(--text-color-light);
+  margin: 4px 0 0;
+  font-size: 13px;
 }
