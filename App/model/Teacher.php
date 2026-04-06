@@ -24,7 +24,8 @@ class Teacher extends Model
         'subjects_taught',
         'approval_status',
         'approval_document_path',
-        'approved_by_admin_id'
+        'approved_by_admin_id',
+        'profile_photo_path'
     ];
         public function getAllowedColumns()
     {

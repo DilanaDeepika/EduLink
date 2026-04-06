@@ -32,12 +32,18 @@
                 <?php $current_grade = $class_data->grade_level_name ?? ''; ?>
                 <option value="yr_25" <?= $current_grade === 'yr_25' ? 'selected' : '' ?>>2025 A/L</option>
                 <option value="yr_26" <?= $current_grade === 'yr_26' ? 'selected' : '' ?>>2026 A/L</option>
+                <option value="yr_27" <?= $current_grade === 'yr_27' ? 'selected' : '' ?>>2027 A/L</option>
+                <option value="yr_28" <?= $current_grade === 'yr_28' ? 'selected' : '' ?>>2028 A/L</option>
                 </select>
         </div>
         <div class="form-group">
-            <label for="duration">Duration (hours)</label>
-            <input type="number" id="duration" name="duration_hours" placeholder="60" min="1" max="300" 
-                   value="<?= htmlspecialchars($class_data->duration_hours ?? '') ?>">
+            <label for="type">Class Type</label>
+            <?php $currentType = $class->type ?? ""; ?>
+            <select id="class-type" name="type_name">
+                <option value="Online" <?= $currentType === 'Online' ? 'selected' : '' ?>>Online</option>
+                <option value="Physical" <?= $currentType === 'Physical' ? 'selected' : '' ?>>Physical</option>
+                <option value="Hybrid" <?= $currentType === 'Hybrid' ? 'selected' : '' ?>>Hybrid</option>
+            </select>
         </div>
     </div>
 

@@ -17,17 +17,28 @@ class ClassManager extends Controller
         $role = $_SESSION['USER']['role'] ?? null; 
         $classModel = new ClassModel();
         $adModel = new AdvertisementRequest(); 
+        $community = new CommunityModel();
         $classes = [];
         $ads = [];
         $enrolls =[];
         $data =[]; 
 
+
+
         if ($role === 'teacher' && isset($_SESSION['USER']['teacher_id'])) {
             $teacherId = $_SESSION['USER']['teacher_id'];
             $classes = $classModel->where(['teacher_id' => $teacherId]);
             $ads = $adModel->where(['account_id' => $_SESSION['USER']['account_id']]);
+            $communityDetails = $community->where(['owner_id'=> 65]);
+            $data["community_details"] = $communityDetails;
             $data['classes'] = $classes;
             $data['ads'] = $ads;
+
+            // echo "<pre>";
+            // print_r( $data);
+            // echo "</pre>";
+            // die();
+
             $this->view('teacher_class_dashboard', $data);
 
         } elseif ($role === 'institute' && isset($_SESSION['USER']['institute_id'])) {
@@ -97,9 +108,10 @@ class ClassManager extends Controller
         redirect("classManager");
     }
 
-    public function save_advertisement_request()
+    public function saveReq()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             
             if (session_status() === PHP_SESSION_NONE) session_start();
             $adModel = new AdvertisementRequest();
@@ -108,20 +120,39 @@ class ClassManager extends Controller
             $uploadedFiles = handleFileUploads('ad_poster', 'ads');
             $posterPath = !empty($uploadedFiles) ? $uploadedFiles[0] : null;
 
+
+            $startDate = $_POST['start_date'] ?? '';
+            $startTime = $_POST['start_time'] ?? '';
+            $endDate   = $_POST['end_date'] ?? '';
+            $endTime   = $_POST['end_time'] ?? '';
+            $comId     = $_POST['community_id'] ?? null;
+            $classId     = $_POST['class_id'] ?? null;
+
+            $fullStartDatetime = ($startDate && $startTime) ? "$startDate $startTime:00" : null;
+            $fullEndDatetime   = ($endDate && $endTime)     ? "$endDate $endTime:00"     : null;
             // Prepare data from POST inputs
             $data = [
-                'account_id'        => $_SESSION['USER']['account_id'],
-                'advertiser_contact' => $_POST['advertiser_contact'] ?? '',
-                'placement_option'   => $_POST['placement'] ?? '',
-                'start_time'         => $_POST['start_time'] ?? '',
-                'end_time'           => $_POST['end_time'] ?? '',
-                'poster_path'        => $posterPath,
-                'status'             => 'Pending'
+                'account_id'      => $_SESSION['USER']['account_id'],
+                'advertiser_name' => $_POST['advertiser_name'] ?? '', 
+                'placement_option'=> $_POST['placement'] ?? '',
+                'start_datetime'  => $fullStartDatetime,
+                'end_datetime'    => $fullEndDatetime,
+                'poster_path'     => $posterPath,
+                'community_id'   => $comId,
+                'class_id'       => $classId,
+                'status'          => 'Pending',
+                'description' => $_POST['description'] ?? null
             ];
+            // echo "<pre>";
+            // print_r($data);
+            // echo "</pre>";
+            // die();
 
-        if (empty($data['advertiser_contact']) || empty($data['placement_option'])) {
+
+
+        if (empty($data['advertiser_name']) || empty($data['placement_option'])) {
             $_SESSION['error'] = "Please fill in all required fields.";
-            redirect('ClassManager/index');
+            redirect('ClassManager');
             exit;
         }
 
@@ -130,9 +161,11 @@ class ClassManager extends Controller
 
             $_SESSION['success'] = "Advertisement request submitted successfully.";
 
-            redirect('ClassManager/index');
+
+            
+            redirect('ClassManager');
         } else {
-            redirect('ClassManager/index');
+            redirect('ClassManager');
         }
     }
 
@@ -152,7 +185,7 @@ class ClassManager extends Controller
 
         if (!$accountId) {
             $_SESSION['error'] = "Unauthorized action.";
-            redirect('ClassManager/index');
+            redirect('ClassManager');
             exit();
         }
 
@@ -167,7 +200,7 @@ class ClassManager extends Controller
 
         $deleted = $adModel->delete($conditions);
 
-        redirect('ClassManager/index');
+        redirect('ClassManager');
     }
 
     //
@@ -205,65 +238,53 @@ class ClassManager extends Controller
         exit;
     }
 
-    //
-    // --- THIS IS THE CORRECTED, SECURE UPDATE FUNCTION ---
-    //
-    public function update_advertisement_request($ad_id = null)
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+ public function getBookedSlots()
+{
+    $adModel = new AdvertisementRequest();
+    
+    $placement = $_GET['placement'] ?? 'homepage_poster'; 
+    $community_id = $_GET['community_id'] ?? null;
 
-            if (session_status() === PHP_SESSION_NONE) session_start();
+    $conditions = [
+        'placement_option' => $placement,
+        'status' => 'Pending' 
+    ];
 
-            // 1. Get User ID and Ad ID
-            $accountId = $_SESSION['USER']['account_id'] ?? null;
-            if (!$ad_id || !$accountId) {
-                $_SESSION['error'] = "Invalid request.";
-                redirect('ClassManager/index');
-                exit;
+
+    if ($placement === 'community_poster') {
+        if (!$community_id) {
+            echo json_encode([]); 
+            exit;
+        }
+        $conditions['community_id'] = $community_id;
+    }
+
+    $bookings = $adModel->where($conditions);
+
+    $bookedDB = [];
+
+    if ($bookings) {
+        foreach ($bookings as $booking) {
+            $start = new DateTime($booking->start_datetime);
+            $end   = new DateTime($booking->end_datetime);
+
+            while ($start < $end) {
+                $dateKey = $start->format('Y-m-d');
+                $timeVal = $start->format('H:i');
+
+                if (!isset($bookedDB[$dateKey])) $bookedDB[$dateKey] = [];
+                if (!isset($bookedDB[$dateKey][$timeVal])) $bookedDB[$dateKey][$timeVal] = 0;
+
+                // Increment the count for this hour
+                $bookedDB[$dateKey][$timeVal]++;
+
+                $start->modify('+1 hour');
             }
-
-            $adModel = new AdvertisementRequest();
-
-            // 2. SECURITY CHECK: Verify the user owns this ad
-            $ad = $adModel->first([
-                'id' => $ad_id,
-                'account_id' => $accountId
-            ]);
-
-            if (!$ad) {
-                $_SESSION['error'] = "Permission denied.";
-                redirect('ClassManager/index');
-                exit;
-            }
-
-            // 3. Handle file upload (if a new file is provided)
-            $posterPath = null;
-            if (!empty($_FILES['ad_poster']['name'])) {
-                $uploadedFiles = handleFileUploads('ad_poster', 'ads');
-                $posterPath = !empty($uploadedFiles) ? $uploadedFiles[0] : null;
-            }
-
-            // 4. Prepare data for update
-            $data = [
-                'placement_option' => $_POST['placement'] ?? '',
-                'start_time'       => $_POST['start_time'] ?? '',
-                'end_time'         => $_POST['end_time'] ?? '',
-                'status'           => 'Pending' // Reset status on edit
-            ];
-
-            // Only add poster path to data if a new one was uploaded
-            if ($posterPath) {
-                $data['poster_path'] = $posterPath;
-            }
-
-            // 5. Update ad by ID using the correct function signature
-            $adModel->update($ad_id, $data, 'id'); 
-
-            $_SESSION['success'] = "Advertisement updated successfully.";
-            redirect('ClassManager/index');
-        } else {
-            redirect('ClassManager/index');
         }
     }
 
+    header('Content-Type: application/json');
+    echo json_encode($bookedDB);
+    exit;
+}
 }

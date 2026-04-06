@@ -1,6 +1,108 @@
+/* =========================================
+   GLOBAL FUNCTIONS (Accessible everywhere)
+   ========================================= */
+
+// 1. Toggle Place Field (Online vs Physical)
+function togglePlaceField() {
+  const typeSelect = document.getElementById("class-type");
+  const placeGroup = document.getElementById("place-group");
+  const placeInput = document.getElementById("place");
+
+  if (!typeSelect || !placeGroup || !placeInput) return;
+
+  if (typeSelect.value === "Online") {
+    placeGroup.style.display = "none";
+    placeInput.required = false;
+    placeInput.value = "";
+  } else {
+    placeGroup.style.display = "block";
+    placeInput.required = true;
+  }
+}
+
+// 2. Open Popup for CREATING (Reset Form)
+function openSchedulePopup() {
+  const popup = document.getElementById("schedulePopup");
+  const form = document.getElementById("schedule-form");
+  const title = document.getElementById("popup-title");
+  const btn = document.getElementById("submit-btn");
+
+  if (!popup || !form) return;
+
+  // Reset Form & UI
+  form.reset();
+  document.getElementById("edit_session_id").value = "";
+  title.innerText = "Create Class Schedule";
+  btn.innerText = "Add Schedule";
+
+  // Reset Action URL to Create
+  if (form.action.includes("updateSession")) {
+    form.action = form.action.replace("updateSession", "scheduleLiveSession");
+  }
+
+  // Reset Dropdown Logic
+  document.getElementById("place-group").style.display = "block";
+
+  popup.style.display = "block";
+}
+
+// 3. Open Popup for EDITING (Fill Data)
+function openEditPopup(session) {
+  const popup = document.getElementById("schedulePopup");
+  const form = document.getElementById("schedule-form");
+  const title = document.getElementById("popup-title");
+  const btn = document.getElementById("submit-btn");
+
+  // Fill Fields
+  document.getElementById("edit_session_id").value = session.session_id;
+  document.getElementById("topic").value = session.title;
+
+  // Parse Date/Time
+  const startDate = session.start_time.split(" ")[0];
+  document.getElementById("date").value = startDate;
+  document.getElementById("start_time").value = session.start_time
+    .split(" ")[1]
+    .substring(0, 5);
+  document.getElementById("end_time").value = session.end_time
+    .split(" ")[1]
+    .substring(0, 5);
+
+  // Set Class Type
+  const typeSelect = document.getElementById("class-type");
+  typeSelect.value = session.session_type || "Physical";
+  document.getElementById("place").value = session.place;
+
+  // Set UI for Edit
+  title.innerText = "Edit Schedule";
+  btn.innerText = "Update Schedule";
+
+  // Change Action URL to Update
+  if (form.action.includes("scheduleLiveSession")) {
+    form.action = form.action.replace("scheduleLiveSession", "updateSession");
+  }
+
+  // Trigger toggle logic manually (Now this works because function is global)
+  togglePlaceField();
+
+  popup.style.display = "block";
+}
+
+// 4. Close Schedule Popup
+function closeSchedulePopup() {
+  document.getElementById("schedulePopup").style.display = "none";
+}
+
+// 5. Close All Popups
+window.closeAllPopups = function () {
+  const popups = document.querySelectorAll(".popup");
+  popups.forEach((p) => (p.style.display = "none"));
+};
+
+/* =========================================
+   DOM LOADED LISTENERS (Run on Page Load)
+   ========================================= */
 document.addEventListener("DOMContentLoaded", function () {
-  // --- PART 1: Handles switching the main panels (Schedule, Content, etc.) ---
-  // (This is your original code - no changes)
+  // --- 1. TAB SWITCHING ---
   const tabs = document.querySelectorAll(".vle-tab");
   const panels = document.querySelectorAll(".vle-panel");
 
@@ -13,187 +115,122 @@ document.addEventListener("DOMContentLoaded", function () {
       panels.forEach((p) => p.classList.remove("active"));
 
       tab.classList.add("active");
-      if (targetPanel) {
-        targetPanel.classList.add("active");
-      }
+      if (targetPanel) targetPanel.classList.add("active");
     });
   });
 
-  // --- PART 2: Handles all the popups for content generation ---
-  // (Modified to use global 'window' functions)
-
-  const mainPopup = document.getElementById("popupWindow");
-  const documentPopup = document.getElementById("documentPopup");
-  const uploadCreatePopup = document.getElementById("UploadPopup");
-  const quizCreatePopup = document.getElementById("quizPopup");
-  const addContentBtn = document.querySelector(".add-content-btn");
-
-  // Made global so HTML onclick can find it
-  window.openMainPopup = function () {
-    if (mainPopup) mainPopup.style.display = "flex";
-  };
-
-  // Made global so HTML onclick can find it
-  window.closeAllPopups = function () {
-    if (mainPopup) mainPopup.style.display = "none";
-    if (documentPopup) documentPopup.style.display = "none";
-    if (uploadCreatePopup) uploadCreatePopup.style.display = "none";
-    if (quizCreatePopup) quizCreatePopup.style.display = "none";
-  };
-
-  // Made global so HTML onclick can find it
-  window.openCreatePopup = function (popupId) {
-    closeAllPopups();
-    const popupToOpen = document.getElementById(popupId);
-    if (popupToOpen) {
-      popupToOpen.style.display = "flex";
-    }
-  };
-
-  if (addContentBtn) {
-    addContentBtn.addEventListener("click", window.openMainPopup);
+  // --- 2. DROPDOWN LISTENER ---
+  const typeSelect = document.getElementById("class-type");
+  if (typeSelect) {
+    // Attach the global function here
+    typeSelect.addEventListener("change", togglePlaceField);
+    // Run once on load
+    togglePlaceField();
   }
 
-  // Close buttons in all popups
-  const closeButtons = document.querySelectorAll(".popup .close");
-  closeButtons.forEach((button) => {
-    button.addEventListener("click", window.closeAllPopups);
-  });
+  // --- 3. OTHER POPUP FUNCTIONS ---
 
-  // Cancel buttons in forms
-  const cancelButtons = document.querySelectorAll(
-    '.popup-buttons button[type="button"]'
-  );
-  cancelButtons.forEach((button) => {
-    button.addEventListener("click", window.closeAllPopups);
-  });
-
-  // Note: Your old 'contentChoiceButtons' listener is removed.
-  // The 'onclick' attributes in the HTML now call the global functions
-  // (e.g., window.openCreateForm) directly, which is more reliable.
-
-  // --- PART 3: Handles collapsible content sections ---
-  // (This is your original code - no changes)
-  const sectionHeaders = document.querySelectorAll(".section-header-button");
-
-  sectionHeaders.forEach((header) => {
-    header.addEventListener("click", () => {
-      const sectionBody = header
-        .closest(".content-section")
-        .querySelector(".section-body");
-
-      if (sectionBody) {
-        sectionBody.classList.toggle("hidden");
-      }
-      header.classList.toggle("open");
-    });
-  });
-
-  // --- NEW: PART 4: UPDATE AND DELETE LOGIC ---
-  // We attach these to 'window' so the inline 'onclick'
-  // attributes in your HTML (e.g., onclick="openUpdateForm(this)") can find them.
-
-  /**
-   * Prepares the document popup for CREATING a new item.
-   */
-  window.openCreateForm = function () {
-    // 1. Get form elements using the IDs from content_gen.view.php
-    const form = document.getElementById("classContentForm");
-    const title = document.querySelector("#documentPopup .popup-content h2");
-    const submitBtn = document.querySelector(
-      "#classContentForm button[type='submit']"
-    );
-    const fileInput = document.getElementById("docUpload");
-    const contentIdInput = document.getElementById("content_id_input");
-    const documentPopup = document.getElementById("documentPopup");
-
-    if (
-      !form ||
-      !title ||
-      !submitBtn ||
-      !fileInput ||
-      !contentIdInput ||
-      !documentPopup
-    ) {
-      console.error(
-        "Missing required elements for documentPopup! Check your HTML IDs."
-      );
-      return;
-    }
-
-    // 2. Change form action to the 'upload' function
-    form.action = ROOT_URL + "/TeacherVle/uploadDocument";
-
-    // 3. Reset title and button text
-    title.innerText = "Create Document";
-    submitBtn.innerText = "Upload";
-
-    // 4. Clear all form fields
-    form.reset();
-    contentIdInput.value = ""; // Ensure content_id is empty
-    fileInput.required = true; // Make file REQUIRED for new uploads
-
-    // 5. Open the popup
-    window.closeAllPopups(); // Close main popup
-    documentPopup.style.display = "flex"; // Open doc popup
+  window.openMainPopup = function () {
+    const main = document.getElementById("popupWindow");
+    if (main) main.style.display = "flex";
   };
 
+  window.chooseContent = function (popupId) {
+    window.closeAllPopups();
+    const popup = document.getElementById(popupId);
+
+    if (popup) {
+      const form = popup.querySelector("form");
+      if (form) {
+        form.reset();
+
+        if (popupId === "UploadPopup") {
+          form.action = ROOT_URL + "/TeacherVle/uploadLink";
+          const title = popup.querySelector("h2");
+          const btn = form.querySelector('button[type="submit"]');
+          if (title) title.innerText = "Create Student Submission Link";
+          if (btn) btn.innerText = "Create Assignment";
+          const typeInput = form.querySelector('input[name="linkType"]');
+          if (typeInput) typeInput.value = "assignment";
+        } else if (popupId === "quizPopup") {
+          form.action = ROOT_URL + "/TeacherVle/createQuiz";
+        } else {
+          form.action = ROOT_URL + "/TeacherVle/uploadDocument";
+        }
+
+        const idInput = form.querySelector('input[name="content_id"]');
+        if (idInput) idInput.value = "";
+      }
+      popup.style.display = "flex";
+    }
+  };
+
+  // Wrapper for legacy calls
+  window.openCreateForm = function () {
+    window.chooseContent("documentPopup");
+  };
+
+  // Update Form Logic
   window.openUpdateForm = function (button) {
+    window.closeAllPopups();
     const id = button.dataset.id;
     const title = button.dataset.title;
     const desc = button.dataset.desc;
     const type = button.dataset.type;
 
-    const form = document.getElementById("classContentForm");
-    const fileInput = document.getElementById("docUpload");
-    const contentIdInput = document.getElementById("content_id_input");
-    const popupTitleElement = document.querySelector(
-      "#documentPopup .popup-content h2"
-    );
-    const submitButtonElement = form.querySelector('button[type="submit"]');
-
-    if (
-      !form ||
-      !popupTitleElement ||
-      !submitButtonElement ||
-      !fileInput ||
-      !contentIdInput
-    ) {
-      console.error(
-        "Missing required elements inside documentPopup for update!"
-      );
-      return;
+    let targetPopupId = "documentPopup";
+    if (type === "external_link" || type === "assignment") {
+      targetPopupId = "UploadPopup";
+    } else if (type === "quiz") {
+      targetPopupId = "quizPopup";
     }
 
+    const popup = document.getElementById(targetPopupId);
+    if (!popup) return;
+
+    // Populate Fields
+    if (targetPopupId === "documentPopup") {
+      if (document.getElementById("docName"))
+        document.getElementById("docName").value = title;
+      if (document.getElementById("docDescription"))
+        document.getElementById("docDescription").value = desc;
+      if (document.getElementById("docContentType"))
+        document.getElementById("docContentType").value = type;
+    } else if (targetPopupId === "UploadPopup") {
+      if (document.getElementById("assignName"))
+        document.getElementById("assignName").value = title;
+      if (document.getElementById("assignDescription"))
+        document.getElementById("assignDescription").value = desc;
+    } else if (targetPopupId === "quizPopup") {
+      if (document.getElementById("quizName"))
+        document.getElementById("quizName").value = title;
+      if (document.getElementById("quizDescription"))
+        document.getElementById("quizDescription").value = desc;
+    }
+
+    // Set Update Action
+    const form = popup.querySelector("form");
     form.action = ROOT_URL + "/TeacherVle/updateDocument";
+    const idInput = form.querySelector('input[name="content_id"]');
+    if (idInput) idInput.value = id;
 
-    popupTitleElement.innerText = "Update Document";
-    submitButtonElement.innerText = "Update";
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.innerText = "Update";
 
-    contentIdInput.value = id;
-    document.getElementById("docName").value = title;
-    document.getElementById("docDescription").value = desc;
-    document.getElementById("docContentType").value = type;
-    fileInput.value = null;
-    fileInput.required = false;
+    const headerTitle = popup.querySelector("h2");
+    if (headerTitle) headerTitle.innerText = "Edit Content";
 
-    window.closeAllPopups();
-    const documentPopup = document.getElementById("documentPopup");
-    if (documentPopup) documentPopup.style.display = "flex";
+    popup.style.display = "flex";
   };
 
+  // Delete Logic
   window.handleDelete = function (content_id, class_id) {
-    if (!confirm("Are you sure you want to delete this item?")) {
-      return;
-    }
-    console.log("Class ID:", class_id);
-    // 1. Create a new, hidden form
+    if (!confirm("Are you sure you want to delete this item?")) return;
     const form = document.createElement("form");
     form.method = "POST";
     form.action = ROOT_URL + "/TeacherVle/deleteDocument";
-    form.style.display = "none"; // Hide it
+    form.style.display = "none";
 
-    // 2. Add data as hidden inputs
     const idInput = document.createElement("input");
     idInput.type = "hidden";
     idInput.name = "content_id";
@@ -205,11 +242,66 @@ document.addEventListener("DOMContentLoaded", function () {
     classInput.name = "class_id";
     classInput.value = class_id;
     form.appendChild(classInput);
-    console.log("Submitting delete form to:", form.action);
-    console.log("Submitting content_id:", content_id);
-    console.log("Submitting class_id:", class_id);
-    // 3. Add form to page and submit it
+
     document.body.appendChild(form);
     form.submit();
+  };
+
+  // Event Listeners for UI
+  const addContentBtn = document.querySelector(".add-content-btn");
+  if (addContentBtn) {
+    addContentBtn.addEventListener("click", window.openMainPopup);
+  }
+
+  const sectionHeaders = document.querySelectorAll(".section-header-button");
+  sectionHeaders.forEach((header) => {
+    header.addEventListener("click", () => {
+      const sectionBody = header
+        .closest(".content-section")
+        .querySelector(".section-body");
+      if (sectionBody) sectionBody.classList.toggle("hidden");
+      header.classList.toggle("open");
+    });
+  });
+
+  // Close Popups on Outside Click
+  window.onclick = function (event) {
+    if (event.target.classList.contains("popup")) {
+      event.target.style.display = "none";
+    }
+    // Specific ID checks
+    const addPaperPopup = document.getElementById("addPaperPopup");
+    const importMarksPopup = document.getElementById("importMarksPopup");
+    if (event.target == addPaperPopup) addPaperPopup.style.display = "none";
+    if (event.target == importMarksPopup)
+      importMarksPopup.style.display = "none";
+  };
+
+  // Import/Paper Popup Logic
+  window.openImportPopup = function (paperId, paperTitle) {
+    const popup = document.getElementById("importMarksPopup");
+    document.getElementById("popupPaperTitle").innerText =
+      "Paper: " + paperTitle;
+    document.getElementById("popupPaperId").value = paperId;
+    const classIdInput = document.querySelector('input[name="class_id"]');
+    const classId = classIdInput ? classIdInput.value : "";
+    const downloadUrl = `${ROOT_URL}/TeacherVle/downloadGradeTemplate/${classId}/${paperId}`;
+    document.getElementById("templateDownloadLink").href = downloadUrl;
+    if (popup) popup.style.display = "flex";
+  };
+
+  window.closeImportPopup = () => {
+    const popup = document.getElementById("importMarksPopup");
+    if (popup) popup.style.display = "none";
+  };
+
+  window.openAddPaperPopup = () => {
+    const popup = document.getElementById("addPaperPopup");
+    if (popup) popup.style.display = "block";
+  };
+
+  window.closeAddPaperPopup = () => {
+    const popup = document.getElementById("addPaperPopup");
+    if (popup) popup.style.display = "none";
   };
 });

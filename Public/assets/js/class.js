@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Handle the form submission when the user clicks "Submit Application"
     applicationForm.addEventListener("submit", (event) => {
-      event.preventDefault(); // Stop the page from reloading
+      // event.preventDefault(); // Stop the page from reloading
 
       const formData = new FormData(applicationForm);
       const file = formData.get("proof_document");
@@ -70,3 +70,56 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const registerBtn = document.getElementById('registerInstituteBtn');
+    const institutePopup = document.getElementById('institute-popup');
+    const closeInstituteBtn = document.getElementById('closeInstitutePopup');
+
+    if (registerBtn && institutePopup && closeInstituteBtn) {
+registerBtn.addEventListener('click', () => {
+    institutePopup.style.display = 'flex';
+});
+
+closeInstituteBtn.addEventListener('click', () => {
+    institutePopup.style.display = 'none';
+});
+    } else {
+        console.error('Register button or popup elements missing!');
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const payBtn = document.getElementById("payNowBtn");
+    const paymentModal = document.getElementById("paymentModal");
+    const cancelBtn = paymentModal?.querySelector("button[type='button']");
+
+    if (!payBtn || !paymentModal) {
+        console.error("Pay Now button or modal missing!");
+        return;
+    }
+
+    // Show modal
+    payBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        paymentModal.classList.add("active");
+    });
+
+    // Close modal with cancel button
+    cancelBtn?.addEventListener("click", () => {
+        paymentModal.classList.remove("active");
+    });
+
+    // Close modal when clicking outside modal-content
+    paymentModal.addEventListener("click", (e) => {
+        if (e.target === paymentModal) {
+            paymentModal.classList.remove("active");
+        }
+    });
+});
+
+
+
+
+
+
