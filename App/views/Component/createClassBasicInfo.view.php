@@ -39,8 +39,13 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="duration">Duration (hours)</label>
-            <input type="number" id="duration" name="duration_hours" placeholder="60" min="1" max="300">
+            <label for="type">Class Type</label>
+            <select id="class-type" name="type_name">
+                <option value="">Select...</option>
+                <option value="Online">Online</option>
+                <option value="Physical">Physical</option>
+                <option value="Hybrid">Hybrid</option>
+            </select>
         </div>
     </div>
 

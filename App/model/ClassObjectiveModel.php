@@ -2,7 +2,7 @@
 
 class ClassObjectiveModel extends Model
 {
-    protected $table = 'Class_Objectives';
+    protected $table = 'class_objectives';
 
     protected $rules = [
         'class_id'      => 'required|numeric',

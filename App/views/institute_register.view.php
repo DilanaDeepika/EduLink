@@ -27,7 +27,6 @@
           
           <input type="text" name="institute_name" placeholder="Institute Name" required />
           <input type="text" name="address" placeholder="Institute Address" required />
-          <input type="email" name="contact_email" placeholder="Email" required />
           <input type="tel" name="phone" placeholder="Phone number" required />
 
           <input type="file" name="files[]" id="file-upload-input" multiple hidden />

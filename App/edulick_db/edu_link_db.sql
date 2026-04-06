@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2025 at 12:26 PM
+-- Generation Time: Nov 05, 2025 at 10:10 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,7 +31,7 @@ CREATE TABLE `accounts` (
   `account_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password_hash` varchar(255) NOT NULL,
-  `account_type` enum('student','teacher','institute') NOT NULL,
+  `account_type` enum('student','teacher','institute','admin') NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,39 +40,14 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`account_id`, `email`, `password_hash`, `account_type`, `created_at`) VALUES
-(1, 'ranthilugayani@gmail.com', '$2y$10$StSpQLcmGhtaUv7RVUFIPe15x2FUlOU1ulPE6kACNGwmuPr/0vdhS', 'student', '2025-10-21 16:37:23'),
-(2, 'ddn@gmail.com', '$2y$10$vOh5stQiDZDJf/aSagXa0OPU5SDODOO3Deg8J7hkgzk/kg7rg8fPC', 'student', '2025-10-21 16:41:40'),
-(3, 'ghgj@gmail.com', '$2y$10$lxS0lpbiSohAwNr9s46Peem7tGhreT/Vz5XPmtpfVWpnEQPzY5VlS', 'student', '2025-10-21 16:46:33'),
-(4, 'dilana@gmail.com', '$2y$10$7IZ8SOwKCykBmzOcEFMpsOzY8/KCdmxBzN70GUnjjOabVo4ypmWn.', 'student', '2025-10-21 16:50:55'),
-(5, 'ranyani@gmail.com', '$2y$10$bq2fTqVkRqoF.SCGTrxi6OGMjg7780dQHLhpzoSiZ9nTXYIVZKYWy', 'student', '2025-10-21 16:52:37'),
-(6, 'ranthilugani@gmail.com', '$2y$10$ifuRFQriwcFgqLqe56VteONmLuA7TKT90Af9BgGD05QDWK7kRcRcm', 'student', '2025-10-21 16:55:09'),
-(7, 'ranthilugyani@gmail.com', '$2y$10$k1ysAwDWDQx76Gcioe0xi.GJEmIfIfkGa1hmGoQMOMUWMfKQboP9O', 'student', '2025-10-21 16:57:14'),
-(8, 'anthilugyani@gmail.com', '$2y$10$SJpEefpIq.ZOBl31KAO/j.F74AIsKBhda1ClJPNdaCqJBBiZsyFLC', 'student', '2025-10-21 16:58:20'),
-(9, 'anthiluayni@gmail.com', '$2y$10$W3i4J7Dg3Y0rbI2gc/YiCu2MwwsLRyf8z9P.fuWdW2RJOriqok4J.', 'student', '2025-10-21 16:58:51'),
-(10, 'sddi@gmail.com', '$2y$10$KMSB0ri7Ifo0nBV/3Eh8ru4R6Vd60CQnOegO1GvEyUl2ATKArSooS', 'student', '2025-10-21 17:01:12'),
-(11, 'rabnmni@gmail.com', '$2y$10$GUR16m2dG2ZtAnQq8/kAT.pYXIeaxQN79wWltmXD8HJuMCZPJkInO', 'student', '2025-10-21 17:07:01'),
-(12, 'dfdgfgyani@gmail.com', '$2y$10$D/UxclNNSGyxBQuQt2x4Le.Zn5pV6vz1apfnMFhr0qq9jr29fAyUy', 'student', '2025-10-21 17:13:04'),
-(13, 'gffghjhlugacdfdgyani@gmail.com', '$2y$10$necgA.RhAZSSmHImNRCHTu33f97d3/1WpG64URjb5/0fmS/WpM8Lm', 'student', '2025-10-21 17:23:10'),
-(14, 'gfggfhghgacfgddfdfdgyani@gmail.com', '$2y$10$t8jjG/5PWLRMQ8INy/T1YOnKZLib1QXXa5e6nV9j2HtWo8KBFDz9q', 'student', '2025-10-21 17:27:00'),
-(15, 'dgfhgyani@gmail.com', '$2y$10$bIpf2ITxFFxiFPZJDuweiet6tgy/J5F3mawHa064gVX3v4Rb2Cz2m', 'student', '2025-10-21 17:30:30'),
-(16, 'fgtgghyani@gmail.com', '$2y$10$93U18SD3q1.RSiBfRYY6UeZ1K9bHl0wPANWDH8NVSmaldURJSwiQa', 'student', '2025-10-21 17:35:28'),
-(17, 'gsdfdyani@gmail.com', '$2y$10$rsspWoyJc7YS.aZE0IhsrO5aUunb1DpMYq8.wwQZPo4MBEZ7wVJYq', 'student', '2025-10-21 17:50:24'),
-(18, 'dgfgani@gmail.com', '$2y$10$vHfHjAiJ.jssMLT5jrKmJ.v7XKFi1oAkV6..wwvfzW3RQE35J16Ze', 'student', '2025-10-21 17:52:31'),
-(19, 'xvcvfcvcdfdgyani@gmail.com', '$2y$10$TEyU8MvSGJ2dQZ30zsbVxuzuhK.sTngpG5cAmh3Ya4zjQnw2H3.qu', 'student', '2025-10-21 17:58:11'),
-(20, 'cvcccccccccccccccci@gmail.com', '$2y$10$YLaqBL8SevMFIBKQZp4si.ojoefWRU0S0gH7Amp0kctDprIfLeq9W', 'student', '2025-10-21 18:01:49'),
-(21, 'fhghgfggggggni@gmail.com', '$2y$10$7uwqw282DkQXVq9YlYC.wOoAUTS/wTKxRf7D80cb/T2v9s8C5o8Nm', 'student', '2025-10-21 18:06:56'),
-(22, 'dfdssssssssssssni@gmail.com', '$2y$10$WFM.M0cB/8KiIwJCGuFvKOr9y0H6/JSuycxjYF4QzAR1TKzHy7H7u', 'student', '2025-10-21 18:07:45'),
-(23, 'radgfni@gmail.com', '$2y$10$fn3QyHR8z9knpJ1REWywFOOmoSE6v1UfH1cHcrIBSk9duEzLmLmBG', 'teacher', '2025-10-21 18:30:07'),
-(24, 'sfdfayani@gmail.com', '$2y$10$qHBYrhXkXlnHU5hAWcHdNuDKxZnk5kxG/4bUPDJNLNR2.sXlB3vqu', 'teacher', '2025-10-21 18:39:12'),
-(25, 'fddddddddddddgyani@gmail.com', '$2y$10$j2jYymSNMq3dRTZFyCY2oe3q1CRU2m2/XX8Rlrv/7GdflHKEZ/RrW', 'institute', '2025-10-21 18:54:18'),
-(26, 'dgghgfjgyani@gmail.com', '$2y$10$hCONsAdr483p4cANha15Z.Cb051gjNtmTRhEf6Bj9ulScGtsvUY.6', 'institute', '2025-10-21 18:55:37'),
-(27, 'dgdfhtghani@gmail.com', '$2y$10$8zFfqLQ0dd290JedA9gWweeJ.i43XlCjqtqWmtbgz6nUw/HsTRzWm', 'institute', '2025-10-21 18:58:12'),
-(28, 'sfdgfbfhfgjni@gmail.com', '$2y$10$MVuzLuFEXfb8SRafuAuZRuHQIav4Emh7VCga5VbLemhVZJ7QacI.e', 'student', '2025-10-21 23:11:41'),
-(29, 'sfksdjjkngjhfjkgkgyani@gmail.com', '$2y$10$yLFjdyNU2KMwREpDrU/1TOE01O6HUwBqsgsAeCYh.8F0zDG1Veg0W', 'teacher', '2025-10-21 23:13:32'),
-(30, 'gayaniego@gmail.com', '$2y$10$c/1jPZAX.cAo5hrozwh6g.Nmear2HUI7YGIAZ4uapZlFat/iJwaWO', 'teacher', '2025-10-21 23:34:41'),
-(31, '2003@gmail.com', '$2y$10$RQjQMh2OWjWSqQglMx5GUOhRNw2fZTg1eUHVgSeX510yeUuaHkD1e', 'teacher', '2025-10-21 23:38:31'),
-(32, 'gg@gmail.com', '$2y$10$84kfbrkgF3OelcJf41L1vutY3AvsQTtUt5a8Aq30pJDnfOR4dH2VS', 'student', '2025-10-22 08:44:36'),
-(33, 'gghh@gmai.com', '$2y$10$FfVGl1mGHRJrL0JMx8gJiuMSfz2lforTqdE6myD0T0z8O81/iI8wi', 'student', '2025-10-22 08:46:21');
+(65, 'admin123@gmail.com', '$2b$12$jq0H0C2e0iDmXe3OQdQxTO5F7ccVbwIRs/WQjwCMOlkgSj0YpyAVm', 'admin', '2025-10-23 16:39:36'),
+(108, 'student@gmail.com', '$2y$10$TdEMgo6R0a4cP4unkF0MpeNpznGbAvQ5F17MHMbs8jcLkAUMQYIAy', 'student', '2025-10-23 22:37:09'),
+(109, 'teacher@gmail.com', '$2y$10$2sE0CsW6NVLLwYjK0qlIpOAwbIYxQzEY7MrNqA1ZHiHD363wTLWIm', 'teacher', '2025-10-23 22:48:12'),
+(110, 'institiute@gmail.com', '$2y$10$MHf8hAv0S8wlAsNzMdAdieXid2dap3hUQU0KNo72sNkULbboFh9ry', 'institute', '2025-10-24 02:55:46'),
+(111, 'teache1@gmail.com', '$2y$10$s7YenY/7J.v7QJ1Jqjfij.GheoJ10PJeTfJrMloSYwzzBLqWRfpGW', 'teacher', '2025-10-24 03:45:41'),
+(112, 'institute2@gmail.com', '$2y$10$KCw/usTe4JDM6KLOwFB6TOrRgR56BlyZu7uen06d/eeMPDFtC2mJS', 'institute', '2025-10-24 05:16:59'),
+(113, 'teacher12345@gmail.com', '$2y$10$mP5hTOklMp0G/NKUnZzDX.3Ew811NNaP8AvUJL65KPVoGRsi88MyS', 'teacher', '2025-10-24 05:28:32'),
+(114, 'teacher1234567@gmail.com', '$2y$10$/0X1qHj29k7kMMPUHXSNg.En/ovyoM4FpGtWB5FiAfh7qdSGzDKUK', 'teacher', '2025-10-24 05:32:11');
 
 -- --------------------------------------------------------
 
@@ -95,8 +70,7 @@ CREATE TABLE `account_events` (
 --
 
 INSERT INTO `account_events` (`id`, `account_id`, `event_date`, `event_title`, `event_time`, `event_description`, `created_at`) VALUES
-(1, 27, '2025-10-07', 'fd', '04:35:00', 'egffg', '2025-10-21 22:38:27'),
-(2, 27, '2025-10-07', 'vfb', '04:43:00', 'sfdfdg', '2025-10-21 22:38:38');
+(1, 108, '2025-10-07', 'ICT class', '16:30:00', 'start at 4.30 end at 6.30pm', '2025-10-24 02:48:38');
 
 -- --------------------------------------------------------
 
@@ -110,6 +84,13 @@ CREATE TABLE `admins` (
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`admin_id`, `account_id`, `first_name`, `last_name`) VALUES
+(1, 65, 'Super', 'Admin');
 
 -- --------------------------------------------------------
 
@@ -128,14 +109,6 @@ CREATE TABLE `advertisement_requests` (
   `status` enum('Pending','Submitted','Approved','Rejected') DEFAULT 'Pending',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `advertisement_requests`
---
-
-INSERT INTO `advertisement_requests` (`id`, `account_id`, `advertiser_contact`, `placement_option`, `start_time`, `end_time`, `poster_path`, `status`, `created_at`) VALUES
-(1, 31, 'contact@techzone.com', 'homepage_class_section', '03:02:00', '04:02:00', NULL, 'Pending', '2025-10-22 07:18:35'),
-(2, 31, 'contact@techzone.com', 'homepage_class_section', '03:04:00', '04:02:00', NULL, 'Pending', '2025-10-22 07:18:47');
 
 -- --------------------------------------------------------
 
@@ -199,11 +172,10 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`class_id`, `class_name`, `description`, `duration_hours`, `subject_name`, `grade_level_name`, `category_name`, `language_name`, `thumbnail_path`, `trailer_path`, `max_students`, `monthly_fee`, `target_audience`, `prerequisites`, `welcome_message`, `congrats_message`, `teacher_id`, `institute_id`, `created_at`) VALUES
-(1, 'fghgf', 'fgfhg', 45, 'Combined Mathematics', 'yr_25', 'revision', 'tamil', NULL, NULL, 50, 500.00, 'ghgjfbgfh', 'fhfh', 'gnbmn', 'bmnnbm', 1, NULL, '2025-10-21 20:10:14'),
-(2, 'gaming', 'dfgf', 23, 'Chemistry', 'yr_26', 'revision', 'sinhala', NULL, NULL, 50, 500.00, 'vxfnnbknkvjn', 'vdmcjcbjkcvjk', '', '', 1, NULL, '2025-10-21 23:50:29'),
-(3, 'ict', 'frdfffffffffffffffffffffffffff', 23, 'Chemistry', 'yr_26', 'revision', 'english', NULL, NULL, 50, 500.00, 'ddvfb', 'ffffbfb', 'vffb', 'ffb', 1, NULL, '2025-10-21 23:54:32'),
-(4, 'dv', 'dfdgd', 32, 'Combined Mathematics', 'yr_25', 'revision', 'english', NULL, NULL, 70, 6000.00, 'vf', 'vc', 'svdv', 'cvd', 1, NULL, '2025-10-21 23:59:18'),
-(5, 'last', 'dffg', 45, 'Combined Mathematics', 'yr_26', 'revision', 'sinhala', NULL, NULL, 50, 5000.00, 'dfdg', 'gdg', 'dfd', 'dg', 4, NULL, '2025-10-22 00:17:57');
+(10, 'Physics for A/L', 'none', 2, 'Physics', 'yr_25', 'theory', 'sinhala', NULL, NULL, 50, 5000.00, 'al', 'none', 'none', 'none', 18, NULL, '2025-10-23 22:51:11'),
+(11, 'Before AL physics', 'none', 2, 'Physics', 'yr_25', 'theory', 'sinhala', NULL, NULL, 50, 5000.00, 'al', 'none', 'none', 'none', 18, NULL, '2025-10-23 22:53:58'),
+(15, 'english-tt', 'hi', 60, 'Chemistry', 'yr_25', 'revision', 'english', NULL, NULL, 49, 3000.00, 'hi', 'hi', 'hi', 'hi', 18, NULL, '2025-10-24 04:34:02'),
+(16, 'maths-english-hfd', 'hi', 60, 'Physics', 'yr_26', 'revision', 'english', NULL, NULL, 50, 3000.00, 'hi', 'hi', 'hi', 'hi', 18, NULL, '2025-10-24 05:22:09');
 
 -- --------------------------------------------------------
 
@@ -247,24 +219,6 @@ CREATE TABLE `class_objectives` (
   `objective_text` varchar(512) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `class_objectives`
---
-
-INSERT INTO `class_objectives` (`objective_id`, `class_id`, `objective_text`) VALUES
-(1, 1, 'gjhjg'),
-(2, 1, 'vcdfggh'),
-(3, 2, 'vcvdcv'),
-(4, 2, 'cbcb'),
-(5, 2, 'xvcv'),
-(6, 3, 'ddd'),
-(7, 4, 'd'),
-(8, 4, 'f'),
-(9, 4, 'f'),
-(10, 5, 'vfdf'),
-(11, 5, 'dfdf'),
-(12, 5, 'dgdg');
-
 -- --------------------------------------------------------
 
 --
@@ -278,17 +232,6 @@ CREATE TABLE `class_schedules` (
   `start_time` time DEFAULT NULL,
   `end_time` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `class_schedules`
---
-
-INSERT INTO `class_schedules` (`schedule_id`, `class_id`, `day_of_week`, `start_time`, `end_time`) VALUES
-(1, 1, '', '09:00:00', '17:00:00'),
-(2, 2, '', '09:00:00', '17:00:00'),
-(3, 3, '', '09:00:00', '17:00:00'),
-(4, 4, '', '09:00:00', '17:00:00'),
-(5, 5, '', '09:00:00', '17:00:00');
 
 -- --------------------------------------------------------
 
@@ -343,7 +286,7 @@ CREATE TABLE `institutes` (
 --
 
 INSERT INTO `institutes` (`institute_id`, `account_id`, `institute_name`, `location`, `contact_email`, `contact_phone`, `open_time`, `close_time`, `approval_status`, `approval_document_path`, `approved_by_admin_id`) VALUES
-(1, 27, 'fbfgn', 'df.nbjfdnk', 'dhh@gmail.xcd', '3445', NULL, NULL, 'pending', NULL, NULL);
+(22, 110, 'Edulink', 'colombo', 'Institute@gmail.com', '0777072610', NULL, NULL, 'approved', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -492,10 +435,7 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`student_id`, `account_id`, `first_name`, `last_name`, `age`, `school_name`, `address`, `stream`, `parent_name`, `parent_phone_number`, `payment_status`) VALUES
-(1, 22, 'dsfn', 'sabhj', NULL, 'bjhbfjbd', 'gfggh', '', NULL, NULL, 'paid'),
-(2, 28, 'vcdvfdv', 'xvvxv', NULL, 'xvv', 'bdcxv', 'Commerce', NULL, NULL, 'paid'),
-(3, 32, 'dknfdkn', 'vnfjfsknkfl', NULL, 'fvjnvfnkvnkfv', 'vjvfjdfjofj', '', NULL, NULL, 'paid'),
-(4, 33, 'dilana', 'deepika', NULL, 'dkkf', 'nnfnk', 'Commerce', NULL, NULL, 'paid');
+(20, 108, 'Fname', 'Lname', NULL, 'UCSC', 'Colombo', '', NULL, NULL, 'paid');
 
 -- --------------------------------------------------------
 
@@ -521,10 +461,9 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`teacher_id`, `account_id`, `first_name`, `last_name`, `email`, `phone`, `subjects_taught`, `approval_status`, `approval_document_path`, `approved_by_admin_id`) VALUES
-(1, 24, 'dfghgj', 'vbcvnbnh', 'bfbd@gmail.com', '343545', 'Combined Mathematics', 'pending', '', NULL),
-(2, 29, 'cbnbdbm', 'ddmnm', 'dsvb@gmail.com', '2546', 'ICT', 'pending', '', NULL),
-(3, 30, 'gayani', 'weerarathna', 'dilana@gmail.com', '24545', 'Biology', 'pending', '', NULL),
-(4, 31, 'gayani', 'xvcxv', 'cbcb@gmail.com', '3546', 'Combined Mathematics', 'pending', '', NULL);
+(18, 109, 'Fname', 'Lname', 'name@gmail.com', '0716217860', 'Physics', 'approved', '', NULL),
+(19, 111, 'john', 'Henry', 'teacher1@gmail.com', '077544444', 'Chemistry', 'approved', 'public/uploads/teachers/1761277632_0_NIC.png', NULL),
+(20, 114, 'dilana', 'deepika', 'gsdghj@gmail.com', '1234567', 'Biology', 'approved', 'public/uploads/teachers/1761284016_0_NIC.png', NULL);
 
 --
 -- Indexes for dumped tables
@@ -722,25 +661,25 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `account_events`
 --
 ALTER TABLE `account_events`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `admins`
 --
 ALTER TABLE `admins`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `advertisement_requests`
 --
 ALTER TABLE `advertisement_requests`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `assignments`
@@ -758,7 +697,7 @@ ALTER TABLE `assignment_submissions`
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `class_attendance`
@@ -770,25 +709,25 @@ ALTER TABLE `class_attendance`
 -- AUTO_INCREMENT for table `class_content`
 --
 ALTER TABLE `class_content`
-  MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `content_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `class_objectives`
 --
 ALTER TABLE `class_objectives`
-  MODIFY `objective_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `objective_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `class_schedules`
 --
 ALTER TABLE `class_schedules`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `enrollment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `free_card_applications`
@@ -800,7 +739,7 @@ ALTER TABLE `free_card_applications`
 -- AUTO_INCREMENT for table `institutes`
 --
 ALTER TABLE `institutes`
-  MODIFY `institute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `institute_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `live_sessions`
@@ -848,13 +787,13 @@ ALTER TABLE `quiz_student_answers`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables

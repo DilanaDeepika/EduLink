@@ -1,0 +1,106 @@
+:root {
+  --primary-color: #1e2a5e;
+  --secondary-color: #fed352;
+  --text-color: #333;
+  --light-bg: #f9f9f9;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.marks-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  flex: 1;
+  width: 90%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+}
+
+.page-header h2 {
+  color: var(--primary-color);
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.badge-count {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Table Styling */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.marks-table th,
+.marks-table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.marks-table th {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.marks-table th:first-child {
+  border-top-left-radius: 8px;
+}
+.marks-table th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.marks-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+.score {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.score.high {
+  color: #2ecc71;
+}
+.score.low {
+  color: #e74c3c;
+}
+
+.no-data {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+}

@@ -151,8 +151,7 @@ body {
 }
 .popup-content {
   background-color: #fff;
-  width: 320px;
-  max-height: 80vh;
+  max-height: 100vh;
   overflow-y: auto;
   padding: 20px;
   border-radius: 8px;
@@ -261,6 +260,10 @@ body {
 .vle-grid-two-col > div {
   flex: 1 1 45%;
   min-width: 300px;
+}
+
+.popup-content h2 {
+  margin-bottom: 1rem;
 }
 /* =================================== */
 /* Marks Management Panel Styles */
@@ -409,4 +412,128 @@ body {
 }
 .vle-text-button.delete-btn:hover {
   background-color: #fff0f1; /* Light red */
+}
+
+/* =================================== */
+/* Class shedule popupwidnow    */
+/* =================================== */
+.schedule-popup-content {
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 25px;
+  border-radius: 10px;
+  width: 400px; /* Specific width for form */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+.vle-form .form-group {
+  margin-bottom: 15px;
+}
+.vle-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+.vle-form input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+.vle-form .form-row {
+  display: flex;
+  gap: 10px;
+}
+.vle-form .half {
+  flex: 1;
+}
+
+.vle-form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.vle-form input:focus,
+.vle-form select:focus {
+  border-color: #1e2a5e;
+  outline: none;
+  box-shadow: 0 0 5px rgba(30, 42, 94, 0.2);
+}
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #1d2a64;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.submit-btn:hover {
+  background-color: #2a3a8a;
+}
+/*  delete button of the schedule time table  */
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.action-buttons form {
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+.btn-common {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+
+.btn-delete {
+  background-color: transparent;
+  border-color: #dc3545;
+  color: #dc3545;
+}
+.btn-delete:hover {
+  background-color: #dc3545;
+  color: white;
+}
+.btn-join {
+  background-color: transparent;
+  color: white;
+}
+.btn-join:hover {
+  text-decoration: none;
+}
+.vle-table .empty-cell {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+.vle-table .status-soon {
+  color: gray;
+  font-size: 0.9em;
+  font-style: italic;
 }
