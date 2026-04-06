@@ -1,4 +1,4 @@
-// --- Global DOM elements ---
+// ---------------- GLOBAL ELEMENTS ----------------
 const calendarGrid = document.getElementById("calendar-grid");
 const currentMonthYear = document.getElementById("current-month-year");
 const eventModal = document.getElementById("event-modal");
@@ -9,48 +9,39 @@ const eventDateInput = document.getElementById("event-date");
 const eventTitleInput = document.getElementById("event-title");
 const eventDescriptionInput = document.getElementById("event-description");
 const eventTimeInput = document.getElementById("event-time");
+const eventIdInput = document.getElementById("event-id");
 
-// Tooltip
 const tooltip = document.getElementById("event-tooltip");
 
-// Current month/year tracking
 let currentDate = new Date();
 
-// --- Modal functions ---
+// ---------------- MODAL ----------------
 function openModal(dateStr, event = null) {
-  const eventModal = document.getElementById("event-modal");
-  const eventIdInput = document.getElementById("event-id");
-  const eventTitleInput = document.getElementById("event-title");
-  const eventDescriptionInput = document.getElementById("event-description");
-  const eventTimeInput = document.getElementById("event-time");
-  const eventDateInput = document.getElementById("event-date");
   const saveBtn = eventModal.querySelector('button[type="submit"]');
-  const cancelBtn = document.getElementById("cancel-btn");
 
-  // Reset all fields
+  // Reset
   eventTitleInput.value = "";
   eventDescriptionInput.value = "";
   eventTimeInput.value = "";
   eventDateInput.value = dateStr;
-  if (eventIdInput) eventIdInput.value = "";
+  eventIdInput.value = "";
 
   if (event) {
     eventTitleInput.value = event.event_title || "";
     eventDescriptionInput.value = event.event_description || "";
     eventTimeInput.value = event.event_time || "";
-    if (eventIdInput) eventIdInput.value = event.id || "";
+    eventIdInput.value = event.event_id;
 
     eventModal.querySelector("h3").textContent = "Edit Event";
 
-    // Change buttons
     saveBtn.textContent = "Update";
     saveBtn.onclick = (e) => {
       e.preventDefault();
-      updateEvent(event.id);
+      updateEvent(event.event_id);
     };
 
     cancelBtn.textContent = "Delete";
-    cancelBtn.onclick = () => deleteEvent(event.id);
+    cancelBtn.onclick = () => deleteEvent(event.event_id);
   } else {
     eventModal.querySelector("h3").textContent = "Add Event";
     saveBtn.textContent = "Save";
@@ -62,86 +53,73 @@ function openModal(dateStr, event = null) {
   eventModal.style.display = "block";
 }
 
+function closeModal() {
+  eventModal.style.display = "none";
+}
+
+closeBtn.onclick = closeModal;
+cancelBtn.onclick = closeModal;
+
+window.onclick = (e) => {
+  if (e.target === eventModal) closeModal();
+};
+
+// ---------------- DELETE ----------------
 function deleteEvent(eventId) {
   fetch(`${appRoot}/StudentProfile/delete_event`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: `event_id=${eventId}`,
   })
-    .then((response) => response.text())
-    .then((data) => {
-      if (data.includes("success")) {
-        alert("Event deleted successfully.");
+    .then((res) => res.text())
+    .then((res) => {
+      if (res.includes("success")) {
+        studentEvents = studentEvents.filter(
+          (e) => e.event_id != eventId
+        );
         closeModal();
-
-        studentEvents = studentEvents.filter((event) => {
-          return event.id != eventId;
-        });
-
         renderCalendar();
       } else {
-        console.error("Delete response:", data);
-        alert("Something went wrong while deleting the event.");
+        alert("Delete failed");
       }
-    })
-    .catch((err) => {
-      console.error(err);
-      alert("Something went wrong while deleting the event.");
     });
 }
+
+// ---------------- UPDATE ----------------
 function updateEvent(eventId) {
-  const eventForm = document.getElementById("event-form");
-  const formData = new FormData(eventForm);
+  const formData = new FormData(document.getElementById("event-form"));
 
   fetch(`${appRoot}/StudentProfile/update_event`, {
     method: "POST",
     body: formData,
   })
     .then((res) => res.text())
-    .then((response) => {
-      // Use .includes() for safety
-      if (response.includes("success")) {
-        alert("Event updated successfully");
-        closeModal();
-
-        // --- Update calendar without reload ---
-        const index = studentEvents.findIndex((e) => e.id == eventId);
+    .then((res) => {
+      if (res.includes("success")) {
+        const index = studentEvents.findIndex(
+          (e) => e.event_id == eventId
+        );
 
         if (index > -1) {
-          studentEvents[index].event_title = formData.get("event_title");
-          studentEvents[index].event_date = formData.get("event_date");
-          studentEvents[index].event_time = formData.get("event_time");
+          studentEvents[index].event_title =
+            formData.get("event_title");
+          studentEvents[index].event_date =
+            formData.get("event_date");
+          studentEvents[index].event_time =
+            formData.get("event_time");
           studentEvents[index].event_description =
             formData.get("event_description");
         }
 
+        closeModal();
         renderCalendar();
       } else {
-        console.error("Update failed. Server response:", response);
-        alert(
-          "Something went wrong. Check the console (F12) for the server error."
-        );
+        alert("Update failed");
       }
-    })
-    .catch((err) => {
-      console.error(err);
-      alert("Error updating event");
     });
 }
 
-function closeModal() {
-  eventModal.style.display = "none";
-}
-
-closeBtn.addEventListener("click", closeModal);
-cancelBtn.addEventListener("click", closeModal);
-window.addEventListener("click", (e) => {
-  if (e.target === eventModal) closeModal();
-});
-
-// --- Calendar rendering ---
+// ---------------- CALENDAR RENDER ----------------
 function renderCalendar() {
   calendarGrid.innerHTML = "";
 
@@ -153,109 +131,85 @@ function renderCalendar() {
     month: "long",
   }).format(currentDate);
 
-  // Weekday headers
-  ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach((day) => {
-    const weekdayCell = document.createElement("div");
-    weekdayCell.classList.add("calendar-weekday");
-    weekdayCell.textContent = day;
-    calendarGrid.appendChild(weekdayCell);
+  // Weekdays
+  ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].forEach((d) => {
+    const w = document.createElement("div");
+    w.classList.add("calendar-weekday");
+    w.textContent = d;
+    calendarGrid.appendChild(w);
   });
 
-  const firstDayOfMonth = new Date(year, month, 1);
-  const startDayOfWeek = firstDayOfMonth.getDay();
-
-  // Empty cells before first day
-  for (let i = 0; i < startDayOfWeek; i++) {
-    const emptyCell = document.createElement("div");
-    emptyCell.classList.add("calendar-day", "empty");
-    calendarGrid.appendChild(emptyCell);
+  const firstDay = new Date(year, month, 1).getDay();
+  for (let i = 0; i < firstDay; i++) {
+    calendarGrid.appendChild(document.createElement("div"));
   }
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   for (let day = 1; day <= daysInMonth; day++) {
-    const dayCell = document.createElement("div");
-    dayCell.classList.add("calendar-day");
-    dayCell.innerHTML = `<div class="day-number">${day}</div>`;
-
-    const today = new Date();
-    if (
-      year === today.getFullYear() &&
-      month === today.getMonth() &&
-      day === today.getDate()
-    ) {
-      dayCell.classList.add("current-day");
-    }
+    const cell = document.createElement("div");
+    cell.classList.add("calendar-day");
+    cell.innerHTML = `<div class="day-number">${day}</div>`;
 
     const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(
       day
     ).padStart(2, "0")}`;
 
-    // Filter events for this day
     const eventsForDay = studentEvents.filter(
-      (ev) => ev.event_date === dateStr
+      (e) => e.event_date === dateStr
     );
 
-    // Add event pills
     eventsForDay.forEach((event) => {
-      const eventDiv = document.createElement("div");
-      eventDiv.classList.add("event-pill");
-      eventDiv.textContent = event.event_title;
-      dayCell.appendChild(eventDiv);
+      const pill = document.createElement("div");
+      pill.classList.add("event-pill");
+      pill.textContent = event.event_title;
 
-      // Click to edit
-      eventDiv.addEventListener("click", (e) => {
+      pill.onclick = (e) => {
         e.stopPropagation();
         openModal(event.event_date, event);
-      });
+      };
+
+      cell.appendChild(pill);
     });
 
-    // Hover tooltip that follows cursor closely
-    if (eventsForDay.length > 0) {
-      dayCell.addEventListener("mouseenter", (e) => {
+    // Tooltip
+    if (eventsForDay.length) {
+      cell.onmouseenter = () => {
         tooltip.style.display = "block";
         tooltip.innerHTML = eventsForDay
-          .map((ev) => {
-            const timePart = ev.event_time
-              ? `<small>🕒 ${ev.event_time}</small><br>`
-              : "";
-            const descPart = ev.event_description || "";
-            return `<strong>${ev.event_title}</strong><br>${timePart}${descPart}`;
-          })
+          .map(
+            (e) =>
+              `<strong>${e.event_title}</strong><br>
+               ${e.event_time ? "🕒 " + e.event_time + "<br>" : ""}
+               ${e.event_description || ""}`
+          )
           .join("<hr>");
-      });
+      };
 
-      // Move tooltip to stay right beside the cursor
-      dayCell.addEventListener("mousemove", (e) => {
-        const offsetX = 12;
-        const offsetY = 10;
-        tooltip.style.top = e.pageY + offsetY + "px";
-        tooltip.style.left = e.pageX + offsetX + "px";
-      });
+      cell.onmousemove = (e) => {
+        tooltip.style.left = e.pageX + 12 + "px";
+        tooltip.style.top = e.pageY + 10 + "px";
+      };
 
-      // Hide tooltip when mouse leaves
-      dayCell.addEventListener("mouseleave", () => {
+      cell.onmouseleave = () => {
         tooltip.style.display = "none";
-      });
+      };
     }
 
-    // Click to add new event
-    dayCell.addEventListener("click", () => openModal(dateStr));
-
-    calendarGrid.appendChild(dayCell);
+    cell.onclick = () => openModal(dateStr);
+    calendarGrid.appendChild(cell);
   }
 }
 
-// Initial render
+// ---------------- INIT ----------------
 renderCalendar();
 
-// Month navigation
-document.getElementById("prev-month-btn").addEventListener("click", () => {
+document.getElementById("prev-month-btn").onclick = () => {
   currentDate.setMonth(currentDate.getMonth() - 1);
   renderCalendar();
-});
+};
 
-document.getElementById("next-month-btn").addEventListener("click", () => {
+document.getElementById("next-month-btn").onclick = () => {
   currentDate.setMonth(currentDate.getMonth() + 1);
   renderCalendar();
-});
+};

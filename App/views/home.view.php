@@ -7,10 +7,7 @@
     <link href="<?php  echo ROOT ?>/assets/css/style.css" rel="stylesheet" />
     <link href="<?php  echo ROOT ?>/assets/css/component/nav.css" rel="stylesheet" />
     <link href="<?php  echo ROOT ?>/assets/css/component/card.css" rel="stylesheet" />   
-        <link
-      href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css"
-      rel="stylesheet"
-    />
+    <link href="<?php  echo ROOT ?>/assets/css/component/footer-styles.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   </head>
   <body>
@@ -18,7 +15,19 @@
         <?php include __DIR__.'/Component/nav.view.php'; ?>
     </section>
     <section class="home-section home-hero-container">
-      <img src="<?php  echo ROOT ?>/assets/images/hero_3.jpg">
+        <div class="hero-slider">
+            <?php if (!empty($data['hero_ads'])): ?>
+                <?php foreach ($data['hero_ads'] as $index => $ad): ?>
+                    <div class="slide <?= $index === 0 ? 'active' : '' ?>">
+                        <img src="<?= ROOT ?>/<?= htmlspecialchars($ad->poster_path) ?>" alt="Advertisement">
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="slide active">
+                    <p style="text-align:center; padding-top:200px; color:white;">No Active Ads</p>
+                </div>
+            <?php endif; ?>
+        </div>
     </section>
     <section class="home-section home-famous-class-container">
       <h3>Level Up Your Learning with Expert-Led Classes</h3>
@@ -28,13 +37,17 @@
       </p>
 
       
-      <div class="courses-container">
-        <?php  foreach (range(1, 5) as $i): ?>
-        <a href="<?php echo ROOT ?>/ClassPage?id=<?php echo $class['class_id']; ?>" class="card-link-wrapper">
-        <?php include __DIR__.'/Component/card.view.php'; ?>
-        </a>
-        <?php endforeach; ?>
-      </div>
+    <div class="courses-container">
+        <?php if (!empty($data['class_ads'])): ?>
+            <?php foreach ($data['class_ads'] as $item): ?> <a href="<?= ROOT ?>/ClassPage?class_id=<?= $item->class_id ?>" class="card-link-wrapper">
+                    <?php include __DIR__.'/Component/card.view.php'; ?>
+                </a>
+
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No sponsored classes.</p>
+        <?php endif; ?>
+    </div>
         
     </section>
 
@@ -50,8 +63,8 @@
           Chemistry
         </button>
         <button class="home-subject-btn" data-subject="Biology">Biology</button>
-        <button class="home-subject-btn" data-subject="Mathematics">
-          Mathematics
+        <button class="home-subject-btn" data-subject="Combined Mathematics">
+          Combined Mathematics
         </button>
         <button class="home-subject-btn" data-subject="ICT">ICT</button>
         <button class="home-subject-btn" data-subject="Accounting">
@@ -60,25 +73,41 @@
         <button class="home-subject-btn" data-subject="Economics">
           Economics
         </button>
-        <button class="home-subject-btn" data-subject="Business_Studies">
-          Business Studies
-        </button>
+        <button class="home-subject-btn" data-subject="Business Studies">Business Studies</button>
+        <button class="home-subject-btn" data-subject="Political Science">Political Science</button>
         <button class="home-subject-btn" data-subject="Media">Media</button>
-        <button class="home-subject-btn" data-subject="Political_Science">
-          Political Science
-        </button>
       </div>
-      <div class="home-subject-result">
-          <button class="home-scroll-btn-left" id="scrollLeft">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M201.4 297.4C188.9 309.9 188.9 330.2 201.4 342.7L361.4 502.7C373.9 515.2 394.2 515.2 406.7 502.7C419.2 490.2 419.2 469.9 406.7 457.4L269.3 320L406.6 182.6C419.1 170.1 419.1 149.8 406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3L201.3 297.3z"/></svg>
-          </button>
-          <?php  foreach (range(1, 4) as $i): ?>
-          <?php include __DIR__.'/Component/card.view.php'; ?>
-          <?php endforeach; ?>
-          <button class="home-scroll-btn-left" id="scrollLeft">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M439.1 297.4C451.6 309.9 451.6 330.2 439.1 342.7L279.1 502.7C266.6 515.2 246.3 515.2 233.8 502.7C221.3 490.2 221.3 469.9 233.8 457.4L371.2 320L233.9 182.6C221.4 170.1 221.4 149.8 233.9 137.3C246.4 124.8 266.7 124.8 279.2 137.3L439.2 297.3z"/></svg>
-          </button>
-      </div>
+<div class="home-subject-result">
+    <button class="home-scroll-btn-left" id="scrollLeft">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M201.4 297.4C188.9 309.9 188.9 330.2 201.4 342.7L361.4 502.7C373.9 515.2 394.2 515.2 406.7 502.7C419.2 490.2 419.2 469.9 406.7 457.4L269.3 320L406.6 182.6C419.1 170.1 419.1 149.8 406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3L201.3 297.3z"/></svg>
+    </button>
+
+    <div id="cards-container" class="cards-scroll-container">
+        
+        <?php if (!empty($all_class_details)): ?>
+            <?php foreach ($all_class_details as $subject => $classes): ?>
+                <?php if (is_array($classes)): ?>
+                    <?php foreach ($classes as $item): ?>
+                    
+                        <a href="<?= ROOT ?>/ClassPage?class_id=<?= $item->class_id ?>" class="card-link-wrapper">
+                            
+                            <div class="class-card-wrapper hidden" data-subject="<?= htmlspecialchars($subject) ?>"> 
+                                <?php include __DIR__.'/Component/card.view.php'; ?>
+                            </div>
+
+                        </a> <?php endforeach; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="no-classes-msg">No classes available at the moment.</p>
+        <?php endif; ?>
+
+    </div>
+
+    <button class="home-scroll-btn-left" id="scrollRight">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M439.1 297.4C451.6 309.9 451.6 330.2 439.1 342.7L279.1 502.7C266.6 515.2 246.3 515.2 233.8 502.7C221.3 490.2 221.3 469.9 233.8 457.4L371.2 320L233.9 182.6C221.4 170.1 221.4 149.8 233.9 137.3C246.4 124.8 266.7 124.8 279.2 137.3L439.2 297.3z"/></svg>
+    </button>
+</div>
 
     </section>
 
@@ -125,5 +154,6 @@
 
     </section>
     <?php include __DIR__.'/Component/footer.view.php'; ?>
+    <script src="<?php echo ROOT ?>/assets/js/home.js"></script>
   </body>
 </html>

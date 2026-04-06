@@ -1,0 +1,65 @@
+:root {
+  --primary-color: #1e2a5e;
+  --secondary-color: #fed352;
+}
+
+.filter-dropdown {
+  margin: 2rem;
+  position: relative;
+  left: 84%;
+  display: inline-block;
+  font-family: "Poppins", sans-serif;
+}
+
+.dropdown-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dropdown-btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 160px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  z-index: 10;
+  margin-top: 4px;
+  overflow: hidden;
+}
+
+.dropdown-menu li {
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-menu li:hover {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+.class-container {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+.card-container {
+  margin: 0 15rem;
+  padding: 4rem;
+  display: flex;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 3rem;
+}

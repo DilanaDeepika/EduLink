@@ -13,7 +13,10 @@
   </head>
   <body>
         <?php include __DIR__.'/Component/nav.view.php'; ?>
- 
+        <?php 
+          $analyticsDetails = $data['analytics_details'];
+          $weekly_logins = $data['Weekly_login_counts'];
+        ?>
 
   <div class="admin-layout">
     <aside class="sidebar">
@@ -43,34 +46,39 @@
             <div class="kpi-title">
               Total Students <span class="kpi-icon primary"></span>
             </div>
-            <div class="kpi-value">150</div>
+            <div class="kpi-value"><?= $analyticsDetails[0]?></div>
             <div class="kpi-subtext">Registered in Class</div>
           </div>
           <div class="kpi-card kpi-secondary">
             <div class="kpi-title">
               Active Classes <span class="kpi-icon secondary"></span>
             </div>
-            <div class="kpi-value">40</div>
+            <div class="kpi-value"><?= $analyticsDetails[1]?></div>
             <div class="kpi-subtext">Currently Running</div>
           </div>
           <div class="kpi-card kpi-primary">
             <div class="kpi-title">
               Registered Institute <span class="kpi-icon primary"></span>
             </div>
-            <div class="kpi-value">10</div>
+            <div class="kpi-value"><?= $analyticsDetails[2]?></div>
             <div class="kpi-subtext">Across Sri Lanka</div>
           </div>
           <div class="kpi-card kpi-secondary">
             <div class="kpi-title">
               Registered Teachers <span class="kpi-icon secondary"></span>
             </div>
-            <div class="kpi-value">25</div>
+            <div class="kpi-value"><?= $analyticsDetails[3]?></div>
             <div class="kpi-subtext">Collected Data</div>
           </div>
         </div>
         <section>
           <h2>Performance Trends</h2>
-          <div><p>Chart Area is Ready to be Developed</p></div>
+          <div>
+            <p>Chart Area is Ready to be Developed</p>
+            <div>
+              <canvas id="admin-chart"></canvas>
+            </div>       
+          </div>
         </section>
       </div>
 
@@ -90,26 +98,25 @@
           <table class="request-table">
             <thead>
               <tr>
+                <th>Applicant ID</th>
                 <th>Applicant Name</th>
-                <th>Email Address</th>
+                <th>Subject</th>
                 <th>Date Submitted</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Dr. Aruni Silva</td>
-                <td>aruni.s@email.com</td>
-                <td>Oct 15, 2025</td>
-                <td><button class="btn-review">Review</button></td>
-              </tr>
-              <tr>
-                <td>Kasun Perera</td>
-                <td>kasun.p@email.com</td>
-                <td>Oct 14, 2025</td>
-                <td><button class="btn-review">Review</button></td>
-              </tr>
-            </tbody>
+                    <tbody>
+           
+                      <?php foreach($data["teacher_pending_req"] as $req): ?>
+                        <tr>
+                          <td><?= htmlspecialchars($req->teacher_id ) ?></td>
+                            <td><?= htmlspecialchars($req->	first_name)?> - <?=htmlspecialchars($req->last_name)?></td>
+                            <td><?= htmlspecialchars($req-> subjects_taught) ?></td>
+                            <td><?= htmlspecialchars($req->account_info->created_at) ?></td>
+                            <td><button class="btn-review" onclick='openAcceptModel(<?= json_encode($req) ?>)'>Review</button></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
           </table>
         </div>
 
@@ -118,20 +125,27 @@
           <table class="request-table">
             <thead>
               <tr>
+                <th>Institute Id</th>
                 <th>Institute Name</th>
-                <th>Contact Person</th>
+                <th>location</th>
                 <th>Date Submitted</th>
                 <th>Actions</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Bright Future Academy</td>
-                <td>Mr. Saman Kumara</td>
-                <td>Oct 12, 2025</td>
-                <td><button class="btn-review">Review</button></td>
-              </tr>
-            </tbody>
+                    <tbody>
+           
+                      <?php foreach($data["institute_pending_req"] as $req): ?>
+                        <tr>
+                          <td><?= htmlspecialchars($req->institute_id ) ?></td>
+                            <td><?= htmlspecialchars($req->institute_name)?> </td>
+                            <td><?= htmlspecialchars($req->location) ?></td>
+                            <td><?= htmlspecialchars($req->account_info->created_at) ?></td>
+
+                            
+                            <td><button class="btn-review" onclick='openAcceptModel(<?= json_encode($req) ?>)'>Review</button></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
           </table>
         </div>
       </div>
@@ -146,29 +160,41 @@
           <h4>Applicant Details</h4>
           <p>
             <strong>Name:</strong>
-            <span id="applicantName">Dr. Aruni Silva</span>
+            <span id="applicantName"></span>
           </p>
           <p>
             <strong>Email:</strong>
-            <span id="applicantEmail">aruni.s@email.com</span>
+            <span id="applicantEmail"></span>
           </p>
           <h4>Submitted Documents</h4>
-          <ul class="document-list">
-            <li>
-              <a href="#" download>University_Degree.pdf <span>&darr;</span></a>
-            </li>
-            <li>
-              <a href="#" download>National_ID_Copy.pdf <span>&darr;</span></a>
-            </li>
-          </ul>
-          <h4>Response Message (Optional)</h4>
-          <textarea
-            placeholder="Enter a reason for rejection or a welcome message..."
-          ></textarea>
+            <div id= "acceptModalDownloadContainer"></div>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-reject">Reject Request</button>
-          <button class="btn btn-approve">Approve</button>
+                        <form action="<?php echo ROOT ?>/Admin/aprovelSend" method="POST" id="pendingReviewForm">
+                          <strong>Actions: </strong><br>
+
+                          <input type="hidden" name="user_id" id="user_id">
+                          <input type="hidden" name="user_email" id="user_email">
+
+                          <label>
+                            <input type="radio" name="status" value="approved" required> 
+                            Approve The User
+                          </label>
+                          <br>
+                          <label>
+                              <input type="radio" name="status" value="rejected"> 
+                              Reject The User
+                          </label>
+
+                          <br><br>
+                          <div class="hidden" id="message_container" style="display:none;"> 
+                              <label for="admin_message">Admin Message:</label><br>
+                              <textarea id="admin_message" name="admin_message" rows="4" cols="50"></textarea>
+                          </div>
+
+                          <br><br>
+                          <button type="submit">Submit Update</button>
+                      </form>
         </div>
       </div>
     </div>
@@ -179,7 +205,7 @@
         <section id="community-view" class="content-section">
           <div class="content-header">
             <h1><i class="fa-solid fa-users"></i> My Communities</h1>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary btn-open-admin-create">
               <i class="fa-solid fa-plus"></i> Create New Community
             </button>
           </div>
@@ -190,107 +216,241 @@
           </div>
 
           <div class="community-list">
+            <?php foreach($data["community_details"]  as $community): ?>
             <div class="community-card">
               <div class="community-info">
-                <h3>Physics A-Level Study Group</h3>
+                <h3><?= htmlspecialchars($community->name) ?></h3>
                 <div class="community-meta">
-                  <span><i class="fa-solid fa-users"></i> 125 Members</span>
+                  <span><i class="fa-solid fa-users"></i><?= htmlspecialchars($community->description) ?></span>
                 </div>
               </div>
-              <button class="btn btn-secondary">Manage</button>
+              <button class="btn btn-secondary"><a class="btn btn-secondary" href="<?= ROOT ?>/community?community_id=<?= htmlspecialchars($community->id) ?>">Manage</a></button>
             </div>
-
-            <div class="community-card">
-              <div class="community-info">
-                <h3>Combined Maths 2025 Batch</h3>
-                <div class="community-meta">
-                  <span><i class="fa-solid fa-users"></i> 82 Members</span>
-                </div>
-              </div>
-              <button class="btn btn-secondary">Manage</button>
-            </div>
+            <?php endforeach; ?>
           </div>
         </section>  
 
+       <!-- Admin Create Global Community Modal -->
+      <div id="adminCreateCommunityModal" class="modal-overlay">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Create Global Community</h3>
+            <span class="close-button">&times;</span>
+          </div>
+          <div class="modal-body">
+            <form id="adminCreateCommunityForm" method="POST" action="<?php echo ROOT ?>/admin/communityCreate" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="communityName">Community Name</label>
+                <input type="text" id="communityName" name="communityName" placeholder="Enter community name" required>
+              </div>
 
-        <div id="advertises-view" class="content-section">
-            <h1 class="content-header">Advertisement Requests</h1>
-            <table class="request-table">
-                <thead>
-                    <tr>
-                        <th>Advertiser Name</th>
-                        <th>Request Type</th>
-                        <th>Date Submitted</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>TechZone Tutors</td>
-                        <td>Homepage Poster</td>
-                        <td>Oct 16, 2025</td>
-                        <td><button class="btn-review btn-review-ad">Review</button></td>
-                    </tr>
-                    <tr>
-                        <td>Creative Minds Institute</td>
-                        <td>Class Placement</td>
-                        <td>Oct 15, 2025</td>
-                        <td><button class="btn-review btn-review-ad">Review</button></td>
-                    </tr>
-                </tbody>
-            </table>
+              <div class="form-group">
+                <label for="communityDesc">Description</label>
+                <textarea id="communityDesc" name="communityDesc" placeholder="Enter a description..." required></textarea>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-cancel">Cancel</button>
+                <button type="submit" class="btn btn-create">Create Community</button>
+              </div>
+            </form>
+          </div>
         </div>
-    </div>
+      </div> 
 
-    <div id="adReviewModal" class="modal-overlay">
+
+
+ <!-- ======================================== -->
+        <!-- 5. My advertises Request Section     -->
+        <!-- ======================================== -->
+
+        <section id="advertises-view" class="content-section">
+            <h1 class="content-header">Advertisement Requests</h1>
+            <div class="tabs">
+                <button class="tab-link active" data-tab="homepage-content">
+                    Homepage Requests
+                </button>
+                <button class="tab-link" data-tab="community-content">
+                    Community Requests
+                </button>
+            </div>
+
+            <!-- Homepage Requests Tab -->
+            <div id="homepage-content" class="tab-content active">
+                <h3>Pending Homepage Requests</h3>
+                <table class="request-table">
+                    <thead>
+                        <tr>
+                            <th>Advertiser Name</th>
+                            <th>Start datetime</th>
+                            <th>End datetime</th>
+                            <th>Actions</th>
+                            <th>Left Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+           
+                      <?php foreach($data['home_request_details'] as $req): ?>
+                        <?php  
+                            $createdDate = new DateTime($req->created_at);
+                            $expiryDate  = clone $createdDate;
+                            $expiryDate->modify('+5 days'); 
+
+                            $now = new DateTime();
+
+                            $interval = $now->diff($expiryDate);
+                          
+                            $isUrgent =  ($interval->days < 1);
+
+                            if($isUrgent) {
+                                $timeStyle = 'color: red; font-weight: bold;';
+                                $leftTime = $interval->format('%h hrs %i mins left');
+                            } else {
+                                $timeStyle = 'color: green; font-weight: bold;';
+                                $leftTime = $interval->format('%a days left');
+                            }
+                          
+                          ?>
+                        <tr>
+                            <td><?= htmlspecialchars($req->advertiser_name) ?></td>
+                            <td><?= htmlspecialchars($req-> start_datetime) ?></td>
+                            <td><?= htmlspecialchars($req-> end_datetime) ?></td>
+                            <td><button class="btn-review-ad" onclick='openAdModal(<?= json_encode($req) ?>)'>Review</button></td>
+                            <td style="<?= $timeStyle ?>"> <?= htmlspecialchars($leftTime) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Community Requests Tab -->
+            <div id="community-content" class="tab-content">
+                <h3>Pending Community Poster Requests</h3>
+                <table class="request-table">
+                    <thead>
+                        <tr>
+                            <th>Advertiser Name</th>
+                            <th>Start Datetime</th>
+                            <th>End Datetime</th>
+                            <th>Actions</th>
+                            <th>Left Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach($data['comm_request_details'] as $req): ?>
+                        <?php  
+                            $createdDate = new DateTime($req->created_at);
+                            $expiryDate  = clone $createdDate;
+                            $expiryDate->modify('+5 days'); 
+
+                            $now = new DateTime();
+
+                            $interval = $now->diff($expiryDate);
+
+                            $isUrgent =  ($interval->days < 1);
+
+                            if($isUrgent) {
+                                $timeStyle = 'color: red; font-weight: bold;';
+                                $leftTime = $interval->format('%h hrs %i mins left');
+                            } else {
+                                $timeStyle = 'color: green; font-weight: bold;';
+                                $leftTime = $interval->format('%a days left');
+                            }
+                          
+                          ?>
+                        <tr >
+                            <td><?= htmlspecialchars($req->advertiser_name) ?></td>
+                            <td><?= htmlspecialchars($req-> start_datetime) ?></td>
+                            <td><?= htmlspecialchars($req-> end_datetime) ?></td>
+                            <td><button class="btn-review-ad" onclick='openAdModal(<?= json_encode($req) ?>, <?= json_encode($data["community_details"]?? []) ?>)'>Review</button></td>
+                            <td style="<?= $timeStyle ?>"> <?= htmlspecialchars($leftTime) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+      <div id="adReviewModal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Review Advertisement Request</h3>
                 <span class="close-button">&times;</span>
             </div>
             <div class="modal-body">
+                <!-- Advertiser Info -->
                 <h4>Advertiser Details</h4>
-                <p><strong>Name:</strong> TechZone Tutors</p>
-                <p><strong>Contact:</strong> contact@techzone.com</p>
+                <p><strong>Name:</strong><span id="modalAdvertiserName"></span></p>
+                <p><strong>Hours For Ad:</strong><span id="modalAdDate"> </span></p>
 
-                <h4>Select Placement Option</h4>
-                <div class="placement-options">
-                    <label><input type="radio" name="placement" value="home-poster" checked> Place Poster on Homepage</label>
-                    <label><input type="radio" name="placement" value="home-class"> Place in Homepage Class Section</label>
-                    <label><input type="radio" name="placement" value="community"> Place Poster in a Community</label>
-                </div>
+                
+                <!-- Document Downloads -->
+                <h4>Submitted Documents</h4>
+                    <div id= "modalDownloadContainer"></div>
 
-                <div class="form-group">
-                    <label for="community-select">Select Community (if applicable)</label>
-                    <select id="community-select">
-                        <option>Physics A-Level Community</option>
-                        <option>Chemistry Study Group</option>
-                        <option>General Knowledge Forum</option>
-                    </select>
-                </div>
-
-                <h4>Schedule Advertisement</h4>
-                <div class="schedule-group">
-                    <div class="form-group">
-                        <label for="start-date">Start Date</label>
-                        <input type="date" id="start-date">
-                    </div>
-                    <div class="form-group">
-                        <label for="duration">Duration (in days)</label>
-                        <input type="number" id="duration" value="7" min="1">
-                    </div>
+                <!-- Community Selection (only if placement is community) -->
+                <div class="form-group hidden" id="communitySelectWrapper" >
+                    <label for="community-select">Selected Community</label>
+                    <span id="community-select">
+                        <!--  dynamically filled here -->
+                      </span>
                 </div>
             </div>
+            
+
             <div class="modal-footer">
-                <button class="btn btn-reject">Reject</button>
-                <button class="btn btn-approve">Approve & Place Ad</button>
-            </div>
+
+              <form action="<?php  echo ROOT ?>/Admin/reviewSend" method="POST" id="reviewForm">
+                  <strong>Actions:</strong><br>
+
+                  <input type="hidden" id="adRequestId" name="ad_id" value="">
+
+                  <label>
+                      <input type="radio" name="status" value="Poster Approval" required> 
+                      Approve Poster
+                  </label>
+                  <br>
+                  <label>
+                      <input type="radio" name="status" value="Rejected"> 
+                      Reject Poster
+                  </label>
+
+                  <br><br>
+
+                  <label>Hourly Rate (Rs):</label><br>
+                  <input type="number" id="hourlyRate" name="hourly_rate" step="0.01" min="0" placeholder="Enter rate per hour">
+                  
+                  <br><br>
+
+                  <label>Total Calculated Cost (Rs):</label><br>
+                  <input type="text" id="totalCost" name="total_cost" readonly value="0.00">
+
+                  <br><br>
+
+                  <label for="admin_message">Admin Message:</label><br>
+                  <textarea id="admin_message" name="admin_message" rows="4" cols="50"></textarea>
+
+
+                  <br><br>
+
+                  <button type="submit">Submit Update</button>
+              </form>
         </div>
-    </div>
+      </div>
+
       
   </div>
+  
   </div>
-  <?php include __DIR__.'/Component/footer.view.php'; ?>
+  </div>
+  
+  <script>
+    const weeklyData = <?php echo json_encode($weekly_logins); ?>;
+  </script>
+  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="<?php  echo ROOT ?>/assets/js/admin.js"></script>
+    <script src="<?php  echo ROOT ?>/assets/js/admin_chart.js"></script>
+    <?php include __DIR__.'/Component/footer.view.php'; ?>
   </body>
 </html>

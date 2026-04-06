@@ -1,0 +1,312 @@
+[33mcommit 6cd3e8259a12d759fda28f012e466864add2ea07[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mEduLink_Comp_2_local[m[33m)[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Wed Nov 19 22:07:37 2025 +0530
+
+    fix image and video upload in create class
+
+[33mcommit 2e42c7a8fa5eca869818b6f3ed9da6200d5719ed[m
+Merge: b7391e3 8b21602
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Thu Nov 6 03:59:18 2025 +0530
+
+    Merge https://github.com/DilanaDeepika/EduLink into EduLink_Comp_2_local
+
+[33mcommit b7391e3c51c27d479a26df1cd1304bfae5a592b7[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Thu Nov 6 03:57:28 2025 +0530
+
+    modify database add
+
+[33mcommit 8b216026ae5def18f1065f733edc14a31e24781d[m
+Merge: f27c0b8 4746114
+Author: DilanaDeepika <dilanasuwendra@gmail.com>
+Date:   Thu Nov 6 01:47:53 2025 +0530
+
+    Merge pull request #10 from DilanaDeepika/EduLink_Comp_2_local
+    
+    marge 3 conflict
+
+[33mcommit 474611425d2e2a138f40e5753e86068ca592fed0[m
+Merge: 704d796 f27c0b8
+Author: DilanaDeepika <dilanasuwendra@gmail.com>
+Date:   Thu Nov 6 01:46:50 2025 +0530
+
+    Merge branch 'master' into EduLink_Comp_2_local
+
+[33mcommit f27c0b8e3476330e105159dabcf331da64aa9fe5[m
+Merge: 31a2820 0a86ee2
+Author: DilanaDeepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 24 08:45:50 2025 +0530
+
+    Merge pull request #9 from DilanaDeepika/Edulink_Comp_2_local
+    
+    Edulink comp 2 local
+
+[33mcommit 704d796c3dbcdd929f2bddc3d0a3c26ca770e9fd[m[33m ([m[1;31morigin/EduLink_Comp_2_local[m[33m)[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 24 08:42:22 2025 +0530
+
+    alignment chnage
+
+[33mcommit 0a86ee2292ce566b008426ed26ecf7fc307b253c[m
+Merge: ba122e1 7fb1e3a
+Author: DilanaDeepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 24 08:31:25 2025 +0530
+
+    Merge pull request #8 from zeenathjiffry/Edulink_Comp_2_local
+    
+    added uploadDocment function
+
+[33mcommit fa80d700454117d3f28dbb3779db24a0b9f987f1[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 24 08:29:55 2025 +0530
+
+    error correction
+
+[33mcommit 7fb1e3a3c455ec6a5812cf2495b70ff642295541[m
+Author: zeenathjiffry <zeenathjiffry96@gmail.com>
+Date:   Wed Oct 22 19:40:16 2025 +0530
+
+    added uploadDocment function
+
+[33mcommit ba122e1c5a792974b94d631a76bf2ae72ab4055e[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Wed Oct 22 16:03:41 2025 +0530
+
+    updated db
+
+[33mcommit 81ae8d9e5b0a0cea16bcb86a33e586acb3d389ee[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Wed Oct 22 15:43:08 2025 +0530
+
+    modify the core files for backend
+
+[33mcommit 4079cf80680a4d2df7aadb066c34102268cfd54a[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Tue Oct 21 11:27:18 2025 +0530
+
+    Make correction and Add database export file
+
+[33mcommit 31a2820136647a16535ff3150108ae7d73b1f84b[m
+Merge: 6098d91 e3b9b03
+Author: DilanaDeepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 17 14:15:28 2025 +0530
+
+    Merge pull request #7 from DilanaDeepika/EduLink_Comp_2
+    
+    create few controllers
+
+[33mcommit e3b9b031813755c4347fcb18cbdb8211ff5659ff[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 17 14:14:04 2025 +0530
+
+    create few controllers
+
+[33mcommit 6098d91fc1ebf05ed396c4058af38becc181ebff[m
+Merge: bb68720 c7033dc
+Author: DilanaDeepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 17 14:09:12 2025 +0530
+
+    Merge pull request #6 from DilanaDeepika/EduLink_Comp_2
+    
+    Edu link comp 2 marge  with teacher vle admin class managemnet
+
+[33mcommit c7033dc23c07f66f18ff55cfe11a932133e9ab9a[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 17 10:44:58 2025 +0530
+
+    add class manage page
+
+[33mcommit 9675a78fbbd5b4572b0ed6d60822b64aa50d441c[m
+Merge: b40ad39 bb68720
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 17 05:09:48 2025 +0530
+
+    Merge branch 'EduLink_Comp_2' of https://github.com/DilanaDeepika/EduLink into EduLink_Comp_2_local
+
+[33mcommit b40ad395aacb19afe193a9835be54b27e29298b0[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 17 04:56:39 2025 +0530
+
+    add user_profile calander admin teacher vle
+
+[33mcommit bb687200a088d824feddbe6bc5e31a2573e96a51[m
+Merge: 916cae9 4c11523
+Author: DilanaDeepika <dilanasuwendra@gmail.com>
+Date:   Fri Oct 17 02:42:30 2025 +0530
+
+    Merge pull request #5 from zeenathjiffry/master
+    
+    student Vle files added
+
+[33mcommit 4c11523342aedc68bd4347789a7a0e97ac9f2725[m
+Author: zeenathjiffry <zeenathjiffry96@gmail.com>
+Date:   Fri Oct 17 02:17:10 2025 +0530
+
+    class Management 2 files added (acedemic details and Performance)
+
+[33mcommit 6f73ff9f34287fef53221e10ab5b003de48d1066[m
+Author: zeenathjiffry <zeenathjiffry96@gmail.com>
+Date:   Fri Oct 17 01:29:11 2025 +0530
+
+    student Vle files added
+
+[33mcommit 916cae9b9a83df1184fe484d8895e93868321872[m
+Author: dulmisehajini <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Thu Oct 16 13:58:42 2025 +0530
+
+    Finish create Class component
+
+[33mcommit 6ae539a2fdbd1317ebe1c4033354cb5903f4c494[m
+Author: Thanser <thanseerahamed7962@gmail.com>
+Date:   Tue Sep 2 15:58:54 2025 +0530
+
+    i push footer files
+
+[33mcommit e1a9d9131da06b7f1ffdb8a0750bb4e9e80c6a4c[m
+Author: dulmisehajini <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Sat Aug 30 19:50:01 2025 +0530
+
+    Revert "Merge pull request #3 from dulmisehajini/merge-fix"
+    
+    This reverts commit e0a3a8cbd7b2cb57d9409521ced62279b0702a9b, reversing
+    changes made to 93298c878bbda9f21c3d004fd7dd5d835f3a1c0d.
+
+[33mcommit e0a3a8cbd7b2cb57d9409521ced62279b0702a9b[m
+Merge: 93298c8 759aad1
+Author: Dulmi Sehajinie <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Sat Aug 30 19:29:52 2025 +0530
+
+    Merge pull request #3 from dulmisehajini/merge-fix
+    
+    Refactor navigation inclusion and stylesheet paths in multiple view files
+
+[33mcommit 759aad18ee2f9a7d66583954a26dd993ea8457fa[m
+Merge: 0a38b9d 93298c8
+Author: Dulmi Sehajinie <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Sat Aug 30 19:29:17 2025 +0530
+
+    Merge branch 'master' into merge-fix
+
+[33mcommit 0a38b9dd689148946f112a6a187c57fea6196ebe[m
+Author: dulmisehajini <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Sat Aug 30 19:07:38 2025 +0530
+
+    changes  in nav
+
+[33mcommit 93298c878bbda9f21c3d004fd7dd5d835f3a1c0d[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Mon Aug 25 14:09:02 2025 +0530
+
+    add variable.css file and modife the home page
+
+[33mcommit 871c9609604e116001e1fb6e3e2fe3556374a5c4[m
+Author: dulmisehajini <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Fri Aug 15 02:54:34 2025 +0530
+
+    Remove home view file and its associated content
+
+[33mcommit 624b5029338b2e18a4ecae98334d1fd1678a8aaa[m
+Author: dulmisehajini <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Fri Aug 15 02:47:14 2025 +0530
+
+    with linking
+
+[33mcommit dbcf7377da237e73b8940f21699d9a26a6803bc9[m
+Author: zeenathjiffry <zeenathjiffry96@gmail.com>
+Date:   Fri Aug 15 01:42:57 2025 +0530
+
+    css file path corrected in clas _view.php
+
+[33mcommit a93b2f82c93d6f9763adbe2cf644c8c1efc75678[m
+Author: zeenathjiffry <zeenathjiffry96@gmail.com>
+Date:   Fri Aug 15 01:37:09 2025 +0530
+
+    Class_viewstyle.css file added
+
+[33mcommit f96bf5f8c71b1032c45af3d37b24ccb3f13c06d9[m
+Author: zeenathjiffry <zeenathjiffry96@gmail.com>
+Date:   Fri Aug 15 01:32:36 2025 +0530
+
+    class_view.php file added
+
+[33mcommit 6ab222c7385c1a96386c17a402bd1ef51ade4afd[m
+Author: zeenathjiffry <zeenathjiffry96@gmail.com>
+Date:   Fri Aug 15 00:52:54 2025 +0530
+
+    Student_signup.css file added
+
+[33mcommit d0ef913c94d25646c0b6a2491b6186ca073d1d71[m
+Author: zeenathjiffry <zeenathjiffry96@gmail.com>
+Date:   Fri Aug 15 00:46:22 2025 +0530
+
+    Student_signup.view.php file uploaded
+
+[33mcommit 1808580434f20e8f344efe792033e820ae2dbb93[m
+Author: Achira Gaming <86994940+achiragaming@users.noreply.github.com>
+Date:   Thu Aug 14 22:36:35 2025 +0530
+
+    Refactor navigation inclusion and stylesheet paths in multiple view files
+
+[33mcommit 49e2d5330327921606f83317540b51270dd403c2[m
+Author: Achira Gaming <86994940+achiragaming@users.noreply.github.com>
+Date:   Thu Aug 14 22:23:10 2025 +0530
+
+    Revert "Merge pull request #2 from dulmisehajini/master"
+    
+    This reverts commit 0d3a6a21a3a75cf4b1b0c32c899b4cfdd082dcda, reversing
+    changes made to 0c6e6ba9f9f6ced60acea383ba70a95c61ef69aa.
+
+[33mcommit 0d3a6a21a3a75cf4b1b0c32c899b4cfdd082dcda[m
+Merge: 0c6e6ba ad7b60a
+Author: Dulmi Sehajinie <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Thu Aug 14 22:09:34 2025 +0530
+
+    Merge pull request #2 from dulmisehajini/master
+    
+    Refactor navigation inclusion and stylesheet paths in registration an…
+
+[33mcommit ad7b60ac6b37aa52ed935ea6fc39978eae7f4706[m
+Author: dulmisehajini <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Thu Aug 14 21:21:38 2025 +0530
+
+    Refactor navigation inclusion and stylesheet paths in registration and signup views (remake with linking)
+
+[33mcommit 0c6e6ba9f9f6ced60acea383ba70a95c61ef69aa[m
+Merge: 50d1d7c ae8c06c
+Author: DilanaDeepika <dilanasuwendra@gmail.com>
+Date:   Thu Aug 14 18:35:51 2025 +0530
+
+    Merge pull request Implement navigation and registration pages with associated styles from dulmisehajini/master
+    
+    Create signup.php
+
+[33mcommit ae8c06c7e87d8e532d3da5456f85b37b6f6f2d5a[m
+Author: dulmisehajini <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Thu Aug 14 16:40:21 2025 +0530
+
+    Implement navigation and registration pages with associated styles
+
+[33mcommit 50d1d7ccadf981ef3c669fe3c4201ff568e82299[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Thu Aug 14 04:08:44 2025 +0530
+
+    Modify the home.view.php and add new compnet called card.view.php with  css files
+
+[33mcommit c46a0d97aa01f690cc5ed635dd0e3458985bdf6c[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Wed Aug 13 13:26:46 2025 +0530
+
+    Updated the Home view file
+
+[33mcommit 31f49d501cc35652c5fc85d2566851522a5132ff[m
+Author: dulmisehajini <152590953+dulmisehajini@users.noreply.github.com>
+Date:   Mon Aug 11 20:28:04 2025 +0530
+
+    Create signup.php
+
+[33mcommit 9d9413fcdaffca7e7fae5e3caa494d9f018a4dd6[m
+Author: Dilana Deepika <dilanasuwendra@gmail.com>
+Date:   Sun Aug 10 13:53:26 2025 +0530
+
+    I completed MVC Architecture

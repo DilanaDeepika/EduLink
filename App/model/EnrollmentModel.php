@@ -1,7 +1,7 @@
 <?php
 class EnrollmentModel extends Model
 {
-    protected $table = "Enrollments"; 
+    protected $table = "enrollments"; 
 
     protected $allowedColumns = [
         'enrollment_id',

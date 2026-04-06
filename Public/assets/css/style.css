@@ -8,8 +8,30 @@ body {
 }
 
 .home-hero-container {
-  height: 800px;
+  position: relative;
+  width: 100%;
+  height: 500px;
   overflow: hidden;
+}
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .home-hero-container img {
@@ -31,7 +53,12 @@ body {
 }
 .courses-container {
   display: flex;
-  justify-content: space-evenly;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+  padding: 0 50px;
+  box-sizing: border-box;
 }
 .home-section p {
   color: var(--text-primary);
@@ -177,4 +204,44 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+/* --- New Additions for Subject Filtering --- */
+
+.cards-scroll-container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+  padding: 0 50px;
+  box-sizing: border-box;
+}
+
+.cards-scroll-container::-webkit-scrollbar {
+  height: 8px;
+}
+.cards-scroll-container::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.class-card-wrapper {
+  display: block;
+  flex-shrink: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.home-subject-btn.active-subject {
+  background-color: #1e2a5e;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+}
+.card-link-wrapper {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
