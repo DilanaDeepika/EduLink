@@ -121,6 +121,88 @@ class Teacher extends Model
     ]);
 }
 
+public function getTeachersByInstituteAndSubject($institute_id, $subject)
+    {
+    $query = "
+        SELECT DISTINCT t.*
+        FROM teachers t
+        INNER JOIN classes c ON t.teacher_id = c.teacher_id
+        WHERE c.institute_id = :institute_id
+          AND c.subject_name LIKE :subject
+        ORDER BY t.first_name, t.last_name
+    ";
+
+    return $this->query($query, [
+        'institute_id' => $institute_id,
+        'subject' => '%' . $subject . '%'
+    ]);
+    }
+
+    public function getTeachersBySubject($subject)
+    {
+    $query = "SELECT * FROM teachers 
+              WHERE subjects_taught LIKE :subject";
+
+    return $this->query($query, [
+        'subject' => '%' . $subject . '%'
+    ]);
+
+    }
+    public function getTeachersByInstituteSubjectAndSearch($institute_id, $subject, $search)
+{
+    $query = "
+        SELECT DISTINCT t.*
+        FROM teachers t
+        INNER JOIN classes c ON c.teacher_id = t.teacher_id
+        WHERE c.institute_id = :institute_id
+        AND c.subject_name = :subject
+        AND (
+            t.first_name LIKE :search
+            OR t.last_name LIKE :search
+        )
+    ";
+
+    return $this->query($query, [
+        'institute_id' => $institute_id,
+        'subject' => $subject,
+        'search' => '%' . $search . '%'
+    ]);
+}
+    public function searchTeachersByInstitute($institute_id, $search)
+    {
+    $query = "
+        SELECT DISTINCT t.*
+        FROM teachers t
+        INNER JOIN classes c ON c.teacher_id = t.teacher_id
+        WHERE c.institute_id = :institute_id
+        AND (
+            t.first_name LIKE :search
+            OR t.last_name LIKE :search
+        )
+    ";
+
+    return $this->query($query, [
+        'institute_id' => $institute_id,
+        'search' => '%' . $search . '%'
+    ]);
+    }
+
+    public function getTeachersByInstitute($institute_id)
+    {
+    $query = "
+        SELECT DISTINCT t.*
+        FROM teachers t
+        INNER JOIN classes c ON t.teacher_id = c.teacher_id
+        WHERE c.institute_id = :institute_id
+        ORDER BY t.first_name, t.last_name
+    ";
+
+    return $this->query($query, [
+        'institute_id' => $institute_id
+    ]);
+    }
+
+
 
 
 
