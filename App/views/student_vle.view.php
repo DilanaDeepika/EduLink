@@ -9,7 +9,6 @@
   
   <link rel="stylesheet" href="<?php echo ROOT ?>/assets/css/component/header_vle.css">
   
-  <link rel="stylesheet" href="<?php  echo ROOT ?>/assets/css/component/calander.css"/>
 
   <link href="<?php  echo ROOT ?>/assets/css/component/nav.css" rel="stylesheet" />
   
@@ -35,7 +34,6 @@
     <div class="tabs">
   <a href="#" class="tab active" data-target="schedule">Schedule</a>
   <a href="#" class="tab" data-target="content">Content</a>
-  <a href="#" class="tab" data-target="participation">Participation</a>
   <a href="#" class="tab" data-target="grades">Grades</a>
   <a href="#" class="tab" data-target="analysis">Analysis</a>
   <span class="tab-indicator"></span>
@@ -470,13 +468,7 @@ $isPastDue = $dueTime && $now > $dueTime;
 </div> <!-- CLOSE CONTENT PANEL -->
 
 
-    <div id="participation" class="panel">
-                  <div class="calendar-placeholder">
-            <p>Your calendar will be displayed here.</p>
-            <?php include __DIR__.'/Component/calander.php'; ?>
-          </div>
-        </div>
-      </div>
+  
 <div id="grades" class="panel">
   
 <div class="stats-container">
@@ -742,7 +734,7 @@ window.analysisData = <?= json_encode($analysisData ?? []) ?>;
 </script>
 
   <?php include __DIR__.'/Component/footer.view.php'; ?>
-              <script src="<?php  echo ROOT ?>/assets/js/calander.js"></script>
+             
   <script src="<?php echo ROOT ?>/assets/js/studentVle.js"></script>
 </body>
 </html>
