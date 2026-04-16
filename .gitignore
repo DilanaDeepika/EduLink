@@ -1,0 +1,5 @@
+# Temporary PHP files
+*2026*.php
+
+# VS Code history
+.history/
