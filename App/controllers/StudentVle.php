@@ -39,10 +39,17 @@ class StudentVle extends Controller
         $data = [];
 
       
-        $scheduleModel = new ClassScheduleModel();
-        $data['schedules'] = $scheduleModel->where([
-            'class_id' => $class_id
-        ]);
+       
+
+        $classSessionsModel = new ClassSessionsModel();
+
+
+$classSessionsModel->ensureMonthlySessionsExist($class_id);
+
+
+$data['session_details'] = $classSessionsModel->where([
+    'class_id' => $class_id
+]);
 
         
         $contentModel = new ClassContent();
@@ -115,8 +122,8 @@ $data['submissionFiles'] = $submissionFiles;
 // ====================
 
 $quizModel = new QuizModel();
-$questionModel = new QuizQuestionModel();
-$optionModel = new QuizOptionModel();
+$questionModel = new QuizQuestionsModel();
+$optionModel = new QuizOptionsModel();
 
 // Get quizzes for this class
 $quizzes = $quizModel->where([
@@ -155,8 +162,8 @@ $data['quizData'] = $quizData;
 // PAPERS & GRADES
 // ====================
 
-$paperModel     = new PaperModel();
-$paperMarkModel = new PaperMarkModel();
+$paperModel     = new PapersModel();
+$paperMarkModel = new PaperMarksModel();
 
 // Get all papers for this class
 $papers = $paperModel->where([
