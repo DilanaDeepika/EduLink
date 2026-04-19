@@ -34,4 +34,22 @@ public function getStudentRankingsByClass($class_id)
 
     return $this->query($query, ['class_id' => $class_id]);
 }
+
+public function countCorrectedPapersByClass($class_id)
+    {
+    $sql = "
+        SELECT COUNT(*) AS total
+        FROM papers p
+        WHERE p.class_id = :class_id
+          AND p.is_released = 1
+          AND EXISTS (
+              SELECT 1
+              FROM paper_marks pm
+              WHERE pm.paper_id = p.paper_id
+          )
+    ";
+
+    $result = $this->query($sql, ['class_id' => $class_id]);
+    return $result[0]->total ?? 0;
+    }
 }
