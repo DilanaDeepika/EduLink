@@ -967,4 +967,60 @@ if (quizModal) {
 
 })();
 
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".watch-btn");
+  if (!btn) return;
+
+  const link = btn.dataset.video;
+
+  if (!link) {
+    alert("No video available");
+    return;
+  }
+
+  openVideoModal(link);
+});
+function openVideoModal(link) {
+
+    console.log(link);
+
+    const modal = document.getElementById("videoModal");
+    const container = document.getElementById("videoContainer");
+
+    let content = "";
+
+   
+    if (link.includes("youtube.com") || link.includes("youtu.be")) {
+      const match = link.match(/(youtu\.be\/|v=)([^&]+)/);
+      const videoId = match ? match[2] : "";
+
+      content = `
+      <iframe 
+        src="https://www.youtube.com/embed/${videoId}"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+    `;
+    } else if (link.match(/\.(mp4|webm|ogg)$/)) {
+      content = `
+      <video controls autoplay>
+        <source src="${link}" type="video/mp4">
+      </video>
+    `;
+    } else {
+      content = `<a href="${link}" target="_blank">Open Video</a>`;
+    }
+
+    container.innerHTML = content;
+    modal.style.display = "flex";
+  }
+
+  window.closeVideoModal = () => {
+    const modal = document.getElementById("videoModal");
+    const container = document.getElementById("videoContainer");
+
+    modal.style.display = "none";
+    container.innerHTML = "";
+  };
+
 }); // END DOMContentLoaded
